@@ -19,10 +19,6 @@
         <engine name="cordova-android" version=">=9.0.0"/>
     </engines>
 
-    <js-module src="www/index.js" name="KioskReader">
-        <clobbers target="window.useKioskReader"/>
-    </js-module>
-
     <platform name="android">
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.NFC"/>
