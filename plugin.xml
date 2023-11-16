@@ -1,22 +1,23 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android"
-        id="webdesk-kiosk-nfc-plugin" version="1.0.0">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="WebdeskKioskNFCPlugin" version="1.0.0">
 
     <name>Webdesk Kiosk NFC plugin</name>
     <license>MIT</license>
     <author>Adrian Vasquez</author>
 
     <description>
-       A
+        A
     </description>
     <keywords></keywords>
     <repo></repo>
     <issue></issue>
 
     <engines>
-        <engine name="cordova" version=">=9.0.0"/>
-        <engine name="cordova-android" version=">=9.0.0"/>
+        <engine name="cordova" version=">=9.0.0" />
+        <engine name="cordova-android" version=">=9.0.0" />
     </engines>
 
     <js-module src="www/index.js" name="WebdeskKioskNFCPlugin">
@@ -25,15 +26,20 @@
 
     <platform name="android">
         <config-file target="AndroidManifest.xml" parent="/*">
-            <uses-permission android:name="android.permission.NFC"/>
-            <uses-permission android:name="android.permission.USB"/>
+            <uses-permission android:name="android.permission.NFC" />
+            <uses-permission android:name="android.permission.USB" />
         </config-file>
 
-      
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="WebdeskKioskNFCPlugin">
+                <param name="android-package" value="at.workflow.WebdeskKioskNFCPlugin" />
+            </feature>
+        </config-file>
+
         <!-- source-files -->
-        <source-file src="src/android/WebdeskKioskNFCPlugin.java" target-dir="src/at/workflow"/>
- 
-    
+        <source-file src="src/android/WebdeskKioskNFCPlugin.java" target-dir="src/at/workflow" />
+     
+
     </platform>
 
 </plugin>
