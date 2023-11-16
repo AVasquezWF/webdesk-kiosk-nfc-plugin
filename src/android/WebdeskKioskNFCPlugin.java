@@ -13,7 +13,7 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         System.out.println(action);
         System.out.println(data);
         System.out.println(callbackContext);
-        return true;
+     
     }
 
 }
