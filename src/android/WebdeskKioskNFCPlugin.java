@@ -8,13 +8,10 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) {
-       
-        switch (action) {
-            case "init"
-                return true;
-            default:
-                return false;
-        }
+        System.out.println(action);
+        System.out.println(data);
+        System.out.println(callbackContext);
+        return true;
     }
 
 }
