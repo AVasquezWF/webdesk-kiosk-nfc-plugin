@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const cordova_1 = require("cordova");
-const pluginName = "webdesk-kiosk-nfc-plugin";
+const pluginName = "WebdeskKioskNFCPlugin";
 var Methods;
 (function (Methods) {
     Methods["checkIsReady"] = "checkIsReady";

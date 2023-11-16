@@ -1,6 +1,6 @@
 import { exec } from "cordova";
 
-const pluginName = "webdesk-kiosk-nfc-plugin";
+const pluginName = "WebdeskKioskNFCPlugin";
 enum Methods {
     checkIsReady = "checkIsReady",
     addListener = "addListener",
