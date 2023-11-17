@@ -1,4 +1,3 @@
-package at.workflow;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
