@@ -1,19 +1,21 @@
+package glorystar;
 
-import static Constant.BEEP;
-import static Constant.HFTAG_HIDICLASS;
-import static Constant.HFTAG_MIFARE;
-import static Constant.ICLASS_READ;
-import static Constant.LFTAG_EM4102;
-import static Constant.LFTAG_HIDPROX;
-import static Constant.MIFARE_LOGIN;
-import static Constant.MIFARE_READ;
-import static Constant.SEARCH_TAG;
 
 import android.content.Context;
 import android.serialport.SerialPort;
 import android.serialport.SerialPortFinder;
 import android.text.TextUtils;
 import android.widget.Toast;
+
+import static glorystar.Constant.BEEP;
+import static glorystar.Constant.HFTAG_HIDICLASS;
+import static glorystar.Constant.HFTAG_MIFARE;
+import static glorystar.Constant.ICLASS_READ;
+import static glorystar.Constant.LFTAG_EM4102;
+import static glorystar.Constant.LFTAG_HIDPROX;
+import static glorystar.Constant.MIFARE_LOGIN;
+import static glorystar.Constant.MIFARE_READ;
+import static glorystar.Constant.SEARCH_TAG;
 
 import java.io.File;
 import java.io.IOException;
