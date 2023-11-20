@@ -41,7 +41,11 @@
         <source-file src="nfcPlugin/src/main/java/RS485Util.java" target-dir="src/at/workflow" />
         <source-file src="nfcPlugin/src/main/java/HexUtil.java" target-dir="src/at/workflow" />
         <source-file src="nfcPlugin/src/main/java/SerialReadThread.java" target-dir="src/at/workflow" />
-        <framework src="com.github.licheedev.Android-SerialPort-API:serialport:1.0.1" />
+        <!-- <framework src="nfcPlugin/build.gradle" custom="true" type="gradleReference" /> -->
+         <framework src="plugin.build.gradle" custom="true" type="gradleReference" />
+        <!-- <framework src="settings.gradle" custom="true" type="gradleReference" /> -->
+        <!-- <source-file src="settings.gradle" target-dir="src/.." />
+        <source-file src="nfcPlugin/build.gradle" target-dir="src/.." /> -->
     </platform>
 
 </plugin>
