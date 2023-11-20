@@ -37,9 +37,11 @@
         </config-file>
 
         <!-- source-files -->
-        <source-file src="src/android/WebdeskKioskNFCPlugin.java" target-dir="src/at/workflow" />
-        <source-file src="src/android/glorystar/RfidModuleUtil.java" target-dir="src/at/workflow/glorystar" />
-        <source-file src="src/android/glorystar/Constant.java" target-dir="src/at/workflow/glorystar" />
+        <source-file src="nfcPlugin/src/main/java/WebdeskKioskNFCPlugin.java" target-dir="src/at/workflow" />
+        <source-file src="nfcPlugin/src/main/java/RS485Util.java" target-dir="src/at/workflow" />
+        <source-file src="nfcPlugin/src/main/java/HexUtil.java" target-dir="src/at/workflow" />
+        <source-file src="nfcPlugin/src/main/java/SerialReadThread.java" target-dir="src/at/workflow" />
+        <framework src="nfcPlugin/build.gradle" custom="true" type="gradleReference" />
     </platform>
 
 </plugin>

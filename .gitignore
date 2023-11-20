@@ -1,3 +1,8 @@
 node_modules
 .idea
 .vscode
+.gradle
+
+out
+app
+!app/src/main
