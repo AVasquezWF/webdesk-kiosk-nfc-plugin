@@ -15,7 +15,7 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
     String TYPE_IC = "01";
 
     Context context;
-    RS485Util rfid;
+    RfidModuleUtil rfid;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -51,7 +51,7 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         if (rfid == null) {
             return false;
         }
-
+  /*
         rfid.getData((buffer, size) -> {
             byte[] data = new byte[size];
             for (int i = 0; i < size; i++) {
@@ -67,8 +67,8 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
                 cardData = hexData.substring(6, hexData.length() - 4);
             }
             System.out.println(cardData);
-        });
-      /*  rfid.getData((RfidModuleUtil.OnGetDataListener) (cardType, var1) -> cordova.getActivity().runOnUiThread(() -> {
+        });*/
+        rfid.getData((RfidModuleUtil.OnGetDataListener) (cardType, var1) -> cordova.getActivity().runOnUiThread(() -> {
             System.out.println(cardType + "--->" + var1);
 
             if ("unknown".equals(var1)){
@@ -86,21 +86,20 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
             if ("Success".equals(var1)) {
                 System.out.println(cardType + "--->" + "Success");
             }
-        }));*/
+        }));
         return true;
     }
 
     private boolean StartReader() {
-        /* rfid = new RfidModuleUtil(context);
+        rfid = new RfidModuleUtil(context);
         rfid.init();
-        return true;
-        */
-        RS485Util rfid = new RS485Util(context);
+        /* 
+         RS485Util rfid = new RS485Util(context);
 
         rfid.setCOM("/dev/ttyS7");
 
-        rfid.start();
-        return true;
+        rfid.start();*/
+        return true; 
     }
 
 
