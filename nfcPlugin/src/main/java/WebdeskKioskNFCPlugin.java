@@ -11,8 +11,11 @@ import org.json.JSONArray;
  */
 public class WebdeskKioskNFCPlugin extends CordovaPlugin {
 
+    String TYPE_ID = "02";
+    String TYPE_IC = "01";
+
     Context context;
-    RfidModuleUtil rfid;
+    RS485Util rfid;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -40,8 +43,7 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         if (rfid == null) {
             return false;
         }
-        rfid.readTag();
-        rfid.setBeep(true);
+        System.out.println(rfid);
         return true;
     }
 
@@ -50,7 +52,23 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
             return false;
         }
 
-        rfid.getData((RfidModuleUtil.OnGetDataListener) (cardType, var1) -> cordova.getActivity().runOnUiThread(() -> {
+        rfid.getData((buffer, size) -> {
+            byte[] data = new byte[size];
+            for (int i = 0; i < size; i++) {
+                data[i] = buffer[i];
+            }
+            String hexData = HexUtil.ByteArrToHex(data).replace(" ", "");
+            System.out.println(hexData);
+            String cardType = hexData.substring(4, 6);
+            String cardData = null;
+            if (cardType.equals(TYPE_ID)) {
+                cardData = hexData.substring(8, hexData.length() - 4);
+            } else if (cardType.equals(TYPE_IC)) {
+                cardData = hexData.substring(6, hexData.length() - 4);
+            }
+            System.out.println(cardData);
+        });
+      /*  rfid.getData((RfidModuleUtil.OnGetDataListener) (cardType, var1) -> cordova.getActivity().runOnUiThread(() -> {
             System.out.println(cardType + "--->" + var1);
 
             if ("unknown".equals(var1)){
@@ -68,43 +86,21 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
             if ("Success".equals(var1)) {
                 System.out.println(cardType + "--->" + "Success");
             }
-        }));
+        }));*/
         return true;
     }
 
     private boolean StartReader() {
-        rfid = new RfidModuleUtil(context);
+        /* rfid = new RfidModuleUtil(context);
         rfid.init();
         return true;
-
-          /*
-        String TYPE_ID = "02";
-        String TYPE_IC = "01";
-
-
+        */
         RS485Util rfid = new RS485Util(context);
+
         rfid.setCOM("/dev/ttyS7");
-        if (rfid == null) {
-            return false;
-        }
 
         rfid.start();
-        rfid.getData((buffer, size) -> {
-            byte[] data = new byte[size];
-            for (int i = 0; i < size; i++) {
-                data[i] = buffer[i];
-            }
-            String hexData = HexUtil.ByteArrToHex(data).replace(" ", "");
-            System.out.println(hexData);
-            String cardType = hexData.substring(4, 6);
-            String cardData = null;
-            if (cardType.equals(TYPE_ID)) {
-                cardData = hexData.substring(8, hexData.length() - 4);
-            } else if (cardType.equals(TYPE_IC)) {
-                cardData = hexData.substring(6, hexData.length() - 4);
-            }
-            System.out.println(cardData);
-        });*/
+        return true;
     }
 
 

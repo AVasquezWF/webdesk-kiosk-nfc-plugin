@@ -51,11 +51,9 @@ public class RS485Util {
         this.thread.setSerialPort(this.serialPort);
         this.thread.setSleepTime(this.sleepTime);
         this.thread.start();
-        this.thread.setOnDataReceiveListener(new SerialReadThread.OnDataReceiveListener() {
-            public void onDataReceive(byte[] buffer, int size) {
-                if (onDataListener != null) {
-                    onDataListener.onDataReceive(buffer, size);
-                }
+        this.thread.setOnDataReceiveListener((buffer, size) -> {
+            if (onDataListener != null) {
+                onDataListener.onDataReceive(buffer, size);
             }
         });
     }
