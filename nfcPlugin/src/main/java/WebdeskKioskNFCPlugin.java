@@ -32,7 +32,7 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         System.out.println(callbackContext);
 
         switch (action){
-            case "init": return StartReader();
+            case "init": return Init();
             case "checkIsReady": return CheckIsReady();
             case "addListener": return AddListener();
             default: return false;
@@ -45,7 +45,9 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         }
         System.out.println(rfid);
         rfid.searchTag();
+        System.out.println("[CheckIsReady] Tag searched");
         rfid.readTag();
+        System.out.println("[CheckIsReady] Tag read");
         return true;
     }
 
@@ -53,7 +55,29 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         if (rfid == null) {
             return false;
         }
-  /*
+
+        rfid.getData((RfidModuleUtil.OnGetDataListener) (cardType, var1) -> {
+            System.out.println(cardType + "--->" + var1);
+
+            if ("unknown".equals(var1)) {
+                System.out.println(cardType + "--->" + "unknown");
+            }
+
+            if ("Unsupported card type".equals(var1)) {
+                System.out.println(cardType + "--->" + "Unsupported card type");
+            }
+
+            if ("No tag".equals(var1)) {
+                System.out.println(cardType + "--->" + "No tag");
+            }
+
+            if ("Success".equals(var1)) {
+                System.out.println(cardType + "--->" + "Success");
+            }
+        });
+        System.out.println("[AddListener] Listener added");
+
+        /*
         rfid.getData((buffer, size) -> {
             byte[] data = new byte[size];
             for (int i = 0; i < size; i++) {
@@ -70,37 +94,20 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
             }
             System.out.println(cardData);
         });*/
-        rfid.getData((RfidModuleUtil.OnGetDataListener) (cardType, var1) -> cordova.getActivity().runOnUiThread(() -> {
-            System.out.println(cardType + "--->" + var1);
-
-            if ("unknown".equals(var1)){
-                System.out.println(cardType + "--->" + "unknown");
-            }
-
-            if ("Unsupported card type".equals(var1)) {
-                System.out.println(cardType + "--->" + "Unsupported card type");
-            }
-
-            if ("No tag".equals(var1)) {
-                System.out.println(cardType + "--->" + "No tag");
-            }
-
-            if ("Success".equals(var1)) {
-                System.out.println(cardType + "--->" + "Success");
-            }
-        }));
         return true;
     }
 
-    private boolean StartReader() {
+    private boolean Init() {
         rfid = new RfidModuleUtil(context);
+        rfid.setBeep(true);
         rfid.init();
+        System.out.println("[Init] RfidModuleUtil initialized");
         rfid.start();
-        /* 
-         RS485Util rfid = new RS485Util(context);
+        System.out.println("[Init] RfidModuleUtil started");
 
+        /*
+        RS485Util rfid = new RS485Util(context);
         rfid.setCOM("/dev/ttyS7");
-
         rfid.start();*/
         return true; 
     }
