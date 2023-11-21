@@ -27,20 +27,19 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) {
-        System.out.println(action);
-        System.out.println(data);
-        System.out.println(callbackContext);
-
         switch (action){
-            case "init": return Init();
-            case "checkIsReady": return CheckIsReady();
-            case "addListener": return AddListener();
-            default: return false;
+            case "init": return Init(callbackContext);
+            case "checkIsReady": return CheckIsReady(callbackContext);
+            case "addListener": return AddListener(callbackContext);
+            default:
+                callbackContext.error("[execute]: No action found");
+                return false;
         }
     }
 
-    private boolean CheckIsReady() {
+    private boolean CheckIsReady(CallbackContext callbackContext) {
         if (rfid == null) {
+            callbackContext.error("[CheckIsReady]: No rfid installed");
             return false;
         }
         System.out.println(rfid);
@@ -48,11 +47,13 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         System.out.println("[CheckIsReady] Tag searched");
         rfid.readTag();
         System.out.println("[CheckIsReady] Tag read");
+        callbackContext.success();
         return true;
     }
 
-    private boolean AddListener() {
+    private boolean AddListener(CallbackContext callbackContext) {
         if (rfid == null) {
+            callbackContext.error("[AddListener]: No rfid installed");
             return false;
         }
 
@@ -76,7 +77,7 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
             }
         });
         System.out.println("[AddListener] Listener added");
-
+        callbackContext.success();
         /*
         rfid.getData((buffer, size) -> {
             byte[] data = new byte[size];
@@ -97,7 +98,7 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         return true;
     }
 
-    private boolean Init() {
+    private boolean Init(CallbackContext callbackContext) {
         rfid = new RfidModuleUtil(context);
         rfid.setBeep(true);
         rfid.init();
@@ -109,6 +110,7 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         RS485Util rfid = new RS485Util(context);
         rfid.setCOM("/dev/ttyS7");
         rfid.start();*/
+        callbackContext.success();
         return true; 
     }
 
