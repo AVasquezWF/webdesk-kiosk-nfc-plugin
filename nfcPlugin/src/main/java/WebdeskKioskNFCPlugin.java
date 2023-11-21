@@ -12,6 +12,7 @@ import org.json.JSONArray;
 public class WebdeskKioskNFCPlugin extends CordovaPlugin {
 
     Context context;
+    RfidModuleUtil rfid;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -29,14 +30,52 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
 
         switch (action){
             case "init": return StartReader();
-            case "checkIsReady": return StartReader();
-            case "addListener": return StartReader();
+            case "checkIsReady": return CheckIsReady();
+            case "addListener": return AddListener();
             default: return false;
         }
     }
 
+    private boolean CheckIsReady() {
+        if (rfid == null) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean AddListener() {
+        if (rfid == null) {
+            return false;
+        }
+
+        rfid.getData((RfidModuleUtil.OnGetDataListener) (cardType, var1) -> cordova.getActivity().runOnUiThread(() -> {
+            System.out.println(cardType + "--->" + var1);
+
+            if ("unknown".equals(var1)){
+                System.out.println(cardType + "--->" + "unknown");
+            }
+
+            if ("Unsupported card type".equals(var1)) {
+                System.out.println(cardType + "--->" + "Unsupported card type");
+            }
+
+            if ("No tag".equals(var1)) {
+                System.out.println(cardType + "--->" + "No tag");
+            }
+
+            if ("Success".equals(var1)) {
+                System.out.println(cardType + "--->" + "Success");
+            }
+        }));
+        return true;
+    }
+
     private boolean StartReader() {
-        /*
+        rfid = new RfidModuleUtil(context);
+        rfid.init();
+        return true;
+
+          /*
         String TYPE_ID = "02";
         String TYPE_IC = "01";
 
@@ -64,39 +103,6 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
             }
             System.out.println(cardData);
         });*/
-
-
-        RfidModuleUtil rfid = new RfidModuleUtil(context);
-
-        if (rfid == null) {
-            return false;
-        }
-
-        rfid.init();
-        rfid.getData((RfidModuleUtil.OnGetDataListener) (cardType, var1) -> cordova.getActivity().runOnUiThread(() -> {
-            System.out.println(cardType + "--->" + var1);
-
-
-            if ("unknown".equals(var1)){
-                System.out.println(cardType + "--->" + "unknown");
-            }
-
-            if ("Unsupported card type".equals(var1)) {
-                System.out.println(cardType + "--->" + "Unsupported card type");
-            }
-
-
-            if ("No tag".equals(var1)) {
-                System.out.println(cardType + "--->" + "No tag");
-            }
-
-            if ("Success".equals(var1)) {
-                System.out.println(cardType + "--->" + "Success");
-            }
-        }));
-
-        return true;
-
     }
 
 
