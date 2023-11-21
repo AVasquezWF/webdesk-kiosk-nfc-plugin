@@ -148,7 +148,7 @@ public class RfidModuleUtil {
         void onDataReceive(String cardType,String var1);
     }
 
-    public void setBeep(){
+    public void setBeep(boolean beep){
         beepStatus = beep;
     }
 
