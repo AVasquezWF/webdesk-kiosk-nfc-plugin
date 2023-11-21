@@ -36,8 +36,10 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
     }
 
     private boolean StartReader() {
+        /*
         String TYPE_ID = "02";
         String TYPE_IC = "01";
+
 
         RS485Util rfid = new RS485Util(context);
         rfid.setCOM("/dev/ttyS7");
@@ -61,7 +63,38 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
                 cardData = hexData.substring(6, hexData.length() - 4);
             }
             System.out.println(cardData);
-        });
+        });*/
+
+
+        RfidModuleUtil rfid = new RfidModuleUtil(context);
+
+        if (rfid == null) {
+            return false;
+        }
+
+        rfid.init();
+        rfid.getData((RfidModuleUtil.OnGetDataListener) (cardType, var1) -> cordova.getActivity().runOnUiThread(() -> {
+            System.out.println(cardType + "--->" + var1);
+
+
+            if ("unknown".equals(var1)){
+                System.out.println(cardType + "--->" + "unknown");
+            }
+
+            if ("Unsupported card type".equals(var1)) {
+                System.out.println(cardType + "--->" + "Unsupported card type");
+            }
+
+
+            if ("No tag".equals(var1)) {
+                System.out.println(cardType + "--->" + "No tag");
+            }
+
+            if ("Success".equals(var1)) {
+                System.out.println(cardType + "--->" + "Success");
+            }
+        }));
+
         return true;
 
     }
