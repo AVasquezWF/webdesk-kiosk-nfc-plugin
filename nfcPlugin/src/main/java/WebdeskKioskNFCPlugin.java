@@ -95,6 +95,7 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
     private boolean StartReader() {
         rfid = new RfidModuleUtil(context);
         rfid.init();
+        rfid.start();
         /* 
          RS485Util rfid = new RS485Util(context);
 
