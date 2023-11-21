@@ -44,6 +44,8 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
             return false;
         }
         System.out.println(rfid);
+        rfid.searchTag();
+        rfid.readTag();
         return true;
     }
 
