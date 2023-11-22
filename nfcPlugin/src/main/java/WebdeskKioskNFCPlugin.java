@@ -10,10 +10,6 @@ import org.json.JSONArray;
  *
  */
 public class WebdeskKioskNFCPlugin extends CordovaPlugin {
-
-    String TYPE_ID = "02";
-    String TYPE_IC = "01";
-
     Context context;
     RfidModuleUtil rfid;
 
@@ -27,14 +23,33 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) {
-        switch (action){
-            case "init": return Init(callbackContext);
-            case "checkIsReady": return CheckIsReady(callbackContext);
-            case "addListener": return AddListener(callbackContext);
+        switch (action) {
+            case "init":
+                return Init(callbackContext);
+            case "checkIsReady":
+                return CheckIsReady(callbackContext);
+            case "addListener":
+                return AddListener(callbackContext);
+            case "poolReadTag":
+                return PoolReadTag(callbackContext);
             default:
                 callbackContext.error("[execute]: No action found");
                 return false;
         }
+    }
+
+    private boolean PoolReadTag(CallbackContext callbackContext) {
+        if (rfid == null) {
+            callbackContext.error("[PoolReadTag]: No rfid installed");
+            return false;
+        }
+        this.AddListener(callbackContext);
+        System.out.println(rfid);
+        rfid.searchTag();
+        System.out.println("[CheckIsReady] Tag searched");
+        rfid.readTag();
+        System.out.println("[CheckIsReady] Tag read");
+        return true;
     }
 
     private boolean CheckIsReady(CallbackContext callbackContext) {
@@ -42,12 +57,6 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
             callbackContext.error("[CheckIsReady]: No rfid installed");
             return false;
         }
-        System.out.println(rfid);
-        rfid.searchTag();
-        System.out.println("[CheckIsReady] Tag searched");
-        rfid.readTag();
-        System.out.println("[CheckIsReady] Tag read");
-        this.AddListener(callbackContext);
         callbackContext.success();
         return true;
     }
@@ -59,43 +68,22 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         }
 
         rfid.getData((RfidModuleUtil.OnGetDataListener) (cardType, var1) -> {
+            callbackContext.error("[OnGetDataListener]: Data was retrieved");
             System.out.println(cardType + "--->" + var1);
 
             if ("unknown".equals(var1)) {
                 System.out.println(cardType + "--->" + "unknown");
-            }
-
-            if ("Unsupported card type".equals(var1)) {
+            } else if ("Unsupported card type".equals(var1)) {
                 System.out.println(cardType + "--->" + "Unsupported card type");
-            }
-
-            if ("No tag".equals(var1)) {
+            } else if ("No tag".equals(var1)) {
                 System.out.println(cardType + "--->" + "No tag");
-            }
-
-            if ("Success".equals(var1)) {
+            } else if ("Success".equals(var1)) {
                 System.out.println(cardType + "--->" + "Success");
+            } else {
+                callbackContext.success(var1);
             }
         });
         System.out.println("[AddListener] Listener added");
-        callbackContext.success();
-        /*
-        rfid.getData((buffer, size) -> {
-            byte[] data = new byte[size];
-            for (int i = 0; i < size; i++) {
-                data[i] = buffer[i];
-            }
-            String hexData = HexUtil.ByteArrToHex(data).replace(" ", "");
-            System.out.println(hexData);
-            String cardType = hexData.substring(4, 6);
-            String cardData = null;
-            if (cardType.equals(TYPE_ID)) {
-                cardData = hexData.substring(8, hexData.length() - 4);
-            } else if (cardType.equals(TYPE_IC)) {
-                cardData = hexData.substring(6, hexData.length() - 4);
-            }
-            System.out.println(cardData);
-        });*/
         return true;
     }
 
@@ -106,14 +94,8 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         System.out.println("[Init] RfidModuleUtil initialized");
         rfid.start();
         System.out.println("[Init] RfidModuleUtil started");
-
-        /*
-        RS485Util rfid = new RS485Util(context);
-        rfid.setCOM("/dev/ttyS7");
-        rfid.start();*/
         callbackContext.success();
-        return true; 
+        return true;
     }
-
 
 }

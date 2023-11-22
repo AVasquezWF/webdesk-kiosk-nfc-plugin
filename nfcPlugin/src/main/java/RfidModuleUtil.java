@@ -69,72 +69,70 @@ public class RfidModuleUtil {
         this.thread.setSerialPort(this.serialPort);
         this.thread.setSleepTime(this.sleepTime);
         this.thread.start();
-        this.thread.setOnDataReceiveListener(new SerialReadThread.OnDataReceiveListener() {
-            public void onDataReceive(byte[] buffer, int size) {
-                String str = new String(buffer, 0, size).toString();
-                if (onDataListener != null) {
-                    System.out.println(str.trim());
-                    if (str.length() >10) {
-                        StringBuilder builder = new StringBuilder();
-                        cardValue = "";
-                        if (str.trim().substring(0,4).equals("0001")){
-                            switch (str.substring(4,6)){
-                                case "80":
-                                    cardType = Constant.HFTAG_MIFARE;
-                                    cardId = str.substring(10);
-                                    break;
-                                case "84":
-                                    cardType = Constant.HFTAG_HIDICLASS;
-                                    cardId = str.substring(10);
-                                    break;
-                                case "40":
-                                    cardType = Constant.LFTAG_EM4102;
-                                    cardId = str.substring(10);
-                                    break;
-                                case "49":
-                                    cardType = Constant.LFTAG_HIDPROX;
-                                    cardId = str.substring(10);
-                                    break;
-                                default:
-                                    if (cardType.equals(Constant.HFTAG_MIFARE)){
-                                        cardValue = str.substring(9);
-                                    }else if (cardType.equals(Constant.HFTAG_HIDICLASS)){
-                                        cardValue = str.substring(8);
-                                    }
-                                    break;
+        this.thread.setOnDataReceiveListener((buffer, size) -> {
+            String str = new String(buffer, 0, size).toString();
+            if (onDataListener == null) return;
+            System.out.println(str.trim());
+            if (str.length() >10) {
+                StringBuilder builder = new StringBuilder();
+                cardValue = "";
+                if (str.trim().substring(0,4).equals("0001")){
+                    switch (str.substring(4,6)){
+                        case "80":
+                            cardType = Constant.HFTAG_MIFARE;
+                            cardId = str.substring(10);
+                            break;
+                        case "84":
+                            cardType = Constant.HFTAG_HIDICLASS;
+                            cardId = str.substring(10);
+                            break;
+                        case "40":
+                            cardType = Constant.LFTAG_EM4102;
+                            cardId = str.substring(10);
+                            break;
+                        case "49":
+                            cardType = Constant.LFTAG_HIDPROX;
+                            cardId = str.substring(10);
+                            break;
+                        default:
+                            if (cardType.equals(Constant.HFTAG_MIFARE)){
+                                cardValue = str.substring(9);
+                            }else if (cardType.equals(Constant.HFTAG_HIDICLASS)){
+                                cardValue = str.substring(8);
                             }
-
-                            String bit = str.substring(6,8);
-
-                            int bit_ten = Integer.parseInt(bit, 16);
-                            System.out.println("bit--->"+bit_ten);
-                            System.out.println("cardid--->"+cardId);
-                            if (!TextUtils.isEmpty(cardId)) {
-                                String binary = HexUtil.hex2bin(cardId.trim());
-                                cardId = HexUtil.bin2Hex(binary.substring(0, bit_ten));
-                            }
-                            if (TextUtils.isEmpty(cardValue)) {
-                                builder.append("Card Type:" + cardType + "\n");
-                                builder.append("Card Id:" + cardId);
-                            }else {
-                                builder.append("Data:"+cardValue);
-                            }
-                            onDataListener.onDataReceive(cardType,builder.toString());
-                            if (beepStatus){
-                                thread.sendCmds(Constant.BEEP.getBytes());
-                            }
-                        } else {
-                            onDataListener.onDataReceive(cardType,"Unsupported card type");
-                        }
-                    }else if (str.trim().equals("0000")){
-                        onDataListener.onDataReceive(cardType,"No tag");
-                    }else if (str.trim().equals("0001")){
-                        onDataListener.onDataReceive(cardType,"Success");
-                    }else {
-                        onDataListener.onDataReceive(cardType,"unknown");
+                            break;
                     }
+
+                    String bit = str.substring(6,8);
+
+                    int bit_ten = Integer.parseInt(bit, 16);
+                    System.out.println("bit--->"+bit_ten);
+                    System.out.println("cardid--->"+cardId);
+                    if (!TextUtils.isEmpty(cardId)) {
+                        String binary = HexUtil.hex2bin(cardId.trim());
+                        cardId = HexUtil.bin2Hex(binary.substring(0, bit_ten));
+                    }
+                    if (TextUtils.isEmpty(cardValue)) {
+                        builder.append("Card Type:" + cardType + "\n");
+                        builder.append("Card Id:" + cardId);
+                    }else {
+                        builder.append("Data:"+cardValue);
+                    }
+                    onDataListener.onDataReceive(cardType, builder.toString());
+                    if (beepStatus){
+                        thread.sendCmds(Constant.BEEP.getBytes());
+                    }
+                } else {
+                    onDataListener.onDataReceive(cardType,"Unsupported card type");
                 }
+            }else if (str.trim().equals("0000")){
+                onDataListener.onDataReceive(cardType,"No tag");
+            }else if (str.trim().equals("0001")){
+                onDataListener.onDataReceive(cardType,"Success");
+            }else {
+                onDataListener.onDataReceive(cardType,"unknown");
             }
+
         });
     }
 
