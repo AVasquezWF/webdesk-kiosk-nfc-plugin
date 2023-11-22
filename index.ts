@@ -28,7 +28,7 @@ const useKioskReader = (): KioskReaderPlugin => {
     const poolReadTag: UseExecTemplate = (success, error) => {
         const executor = useExec(Methods.poolReadTag);
         clearInterval(poolReadTagId);
-        poolReadTagId = setInterval(() => executor(success, error), 2000);
+        poolReadTagId = setInterval(() => executor(success, error), 1000);
     };
     const addListener = useExec(Methods.addListener);
     const init = useExec(Methods.init);
