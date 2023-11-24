@@ -38,6 +38,7 @@
 
         <!-- source-files -->
         <source-file src="nfcPlugin/src/main/java/WebdeskKioskNFCPlugin.java" target-dir="src/" />
+        <source-file src="nfcPlugin/src/main/java/HexUtil.java" target-dir="src/" />
         <source-file src="nfcPlugin/src/main/java/SerialReadThread.java" target-dir="src/" />
         <source-file src="nfcPlugin/src/main/java/Constant.java" target-dir="src/" />
         <source-file src="nfcPlugin/src/main/java/RfidModuleUtil.java" target-dir="src/" />
