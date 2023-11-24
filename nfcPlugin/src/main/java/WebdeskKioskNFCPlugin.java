@@ -11,7 +11,7 @@ import org.json.JSONArray;
  */
 public class WebdeskKioskNFCPlugin extends CordovaPlugin {
     Context context;
-    RfidModuleUtil rfid;
+    RfidModuleUtil rfid = null;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -28,23 +28,36 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
                 return Init(callbackContext);
             case "checkIsReady":
                 return CheckIsReady(callbackContext);
-            case "addListener":
-                return AddListener(callbackContext);
-            case "poolReadTag":
-                return PoolReadTag(callbackContext);
+            case "readCard":
+                return ReadCard(callbackContext);
             default:
                 callbackContext.error("[execute]: No action found");
                 return false;
         }
     }
 
-    private boolean PoolReadTag(CallbackContext callbackContext) {
+    private boolean ReadCard(CallbackContext callbackContext) {
         if (rfid == null) {
-            callbackContext.error("[PoolReadTag]: No rfid installed");
+            callbackContext.error("[AddListener]: No rfid installed");
             return false;
         }
-        this.AddListener(callbackContext);
-        System.out.println(rfid);
+        rfid.getData((cardType, cardData) -> {
+            callbackContext.error("[OnGetDataListener]: Data was retrieved");
+            
+            if ("unknown".equals(cardData)) {
+                System.out.println(cardType + "--->" + "unknown");
+            } else if ("Unsupported card type".equals(cardData)) {
+                System.out.println(cardType + "--->" + "Unsupported card type");
+            } else if ("No tag".equals(cardData)) {
+                System.out.println(cardType + "--->" + "No tag");
+            } else if ("Success".equals(cardData)) {
+                System.out.println(cardType + "--->" + "Success");
+            } else {
+                System.out.println(cardType + "--->" + cardData);
+                callbackContext.success(cardData);
+            }
+        });
+        System.out.println("[AddListener] Listener added");
         rfid.searchTag();
         System.out.println("[CheckIsReady] Tag searched");
         rfid.readTag();
@@ -58,32 +71,6 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
             return false;
         }
         callbackContext.success();
-        return true;
-    }
-
-    private boolean AddListener(CallbackContext callbackContext) {
-        if (rfid == null) {
-            callbackContext.error("[AddListener]: No rfid installed");
-            return false;
-        }
-
-        rfid.getData((RfidModuleUtil.OnGetDataListener) (cardType, var1) -> {
-            callbackContext.error("[OnGetDataListener]: Data was retrieved");
-            System.out.println(cardType + "--->" + var1);
-
-            if ("unknown".equals(var1)) {
-                System.out.println(cardType + "--->" + "unknown");
-            } else if ("Unsupported card type".equals(var1)) {
-                System.out.println(cardType + "--->" + "Unsupported card type");
-            } else if ("No tag".equals(var1)) {
-                System.out.println(cardType + "--->" + "No tag");
-            } else if ("Success".equals(var1)) {
-                System.out.println(cardType + "--->" + "Success");
-            } else {
-                callbackContext.success(var1);
-            }
-        });
-        System.out.println("[AddListener] Listener added");
         return true;
     }
 

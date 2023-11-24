@@ -5,28 +5,21 @@ const pluginName = "WebdeskKioskNFCPlugin";
 var Methods;
 (function (Methods) {
     Methods["checkIsReady"] = "checkIsReady";
-    Methods["poolReadTag"] = "poolReadTag";
-    Methods["addListener"] = "addListener";
+    Methods["readCard"] = "readCard";
     Methods["init"] = "init";
 })(Methods || (Methods = {}));
 const useKioskReader = () => {
     let poolReadTagId = 0;
-    const useExec = (method) => (success, error) => {
-        (0, cordova_1.exec)(success, error, pluginName, method, []);
-    };
-    const checkIsReady = useExec(Methods.checkIsReady);
-    const poolReadTag = (success, error) => {
-        const executor = useExec(Methods.poolReadTag);
+    const useBasicExecutor = (method) => (success, error) => (0, cordova_1.exec)(success, error, pluginName, method, []);
+    const addListener = (success, error) => {
+        const executor = useBasicExecutor(Methods.readCard);
         clearInterval(poolReadTagId);
-        poolReadTagId = setInterval(() => executor(success, error), 2000);
+        poolReadTagId = setInterval(() => executor(success, error), 1000);
     };
-    const addListener = useExec(Methods.addListener);
-    const init = useExec(Methods.init);
     return {
-        checkIsReady,
-        poolReadTag,
+        checkIsReady: useBasicExecutor(Methods.checkIsReady),
         addListener,
-        init,
+        init: useBasicExecutor(Methods.init),
     };
 };
 window.useKioskReader = useKioskReader();

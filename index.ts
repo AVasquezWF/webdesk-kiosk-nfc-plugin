@@ -3,41 +3,39 @@ import { exec } from "cordova";
 const pluginName = "WebdeskKioskNFCPlugin";
 enum Methods {
     checkIsReady = "checkIsReady",
-    poolReadTag = "poolReadTag",
-    addListener = "addListener",
+    readCard = "readCard",
     init = "init",
 }
 
-type UseExecTemplate = (success: () => void, error: () => void) => void;
+type CordovaCallback = (data: any) => any;
+type UseExecTemplate = (
+    success: CordovaCallback,
+    error: CordovaCallback
+) => void;
 interface KioskReaderPlugin {
     checkIsReady: UseExecTemplate;
-    poolReadTag: UseExecTemplate;
     addListener: UseExecTemplate;
     init: UseExecTemplate;
 }
 
 const useKioskReader = (): KioskReaderPlugin => {
     let poolReadTagId: number | NodeJS.Timeout = 0;
-    const useExec =
+    
+    const useBasicExecutor =
         (method: Methods): UseExecTemplate =>
-        (success: any, error: any) => {
+        (success, error) =>
             exec(success, error, pluginName, method, []);
-        };
 
-    const checkIsReady = useExec(Methods.checkIsReady);
-    const poolReadTag: UseExecTemplate = (success, error) => {
-        const executor = useExec(Methods.poolReadTag);
+    const addListener: UseExecTemplate = (success, error) => {
+        const executor = useBasicExecutor(Methods.readCard);
         clearInterval(poolReadTagId);
         poolReadTagId = setInterval(() => executor(success, error), 1000);
     };
-    const addListener = useExec(Methods.addListener);
-    const init = useExec(Methods.init);
 
     return {
-        checkIsReady,
-        poolReadTag,
+        checkIsReady: useBasicExecutor(Methods.checkIsReady),
         addListener,
-        init,
+        init: useBasicExecutor(Methods.init),
     };
 };
 
