@@ -25,18 +25,18 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) {
         switch (action) {
             case "init":
-                return Init(callbackContext);
+                return init(callbackContext);
             case "checkIsReady":
-                return CheckIsReady(callbackContext);
+                return checkIsReady(callbackContext);
             case "readCard":
-                return ReadCard(callbackContext);
+                return readCard(callbackContext);
             default:
                 callbackContext.error("[execute]: No action found");
                 return false;
         }
     }
 
-    private boolean ReadCard(CallbackContext callbackContext) {
+    private boolean readCard(CallbackContext callbackContext) {
         if (rfid == null) {
             callbackContext.error("[AddListener]: No rfid installed");
             return false;
@@ -65,7 +65,7 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         return true;
     }
 
-    private boolean CheckIsReady(CallbackContext callbackContext) {
+    private boolean checkIsReady(CallbackContext callbackContext) {
         if (rfid == null) {
             callbackContext.error("[CheckIsReady]: No rfid installed");
             return false;
@@ -74,7 +74,7 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         return true;
     }
 
-    private boolean Init(CallbackContext callbackContext) {
+    private boolean init(CallbackContext callbackContext) {
         rfid = new RfidModuleUtil(context);
         rfid.setBeep(true);
         rfid.init();
