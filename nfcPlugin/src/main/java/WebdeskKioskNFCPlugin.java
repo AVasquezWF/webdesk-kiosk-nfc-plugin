@@ -5,7 +5,6 @@ import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
-import org.json.JSONTokener;
 
 /**
  *
@@ -29,8 +28,8 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
                 return init(callbackContext);
             case "checkIsReady":
                 return checkIsReady(callbackContext);
-            case "readCard":
-                return readCard(callbackContext);
+            case "addListener":
+                return addListener(callbackContext);
             default:
                 callbackContext.error("[execute]: No action found");
                 return false;
@@ -39,7 +38,7 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
 
     private boolean readCard(CallbackContext callbackContext) {
         if (rfid == null) {
-            callbackContext.error("[AddListener]: No rfid installed");
+            callbackContext.error("[readCard]: No rfid installed");
             return false;
         }
         rfid.searchTag();
@@ -51,25 +50,20 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
 
     private boolean checkIsReady(CallbackContext callbackContext) {
         if (rfid == null) {
-            callbackContext.error("[CheckIsReady]: No rfid installed");
+            callbackContext.error("[checkIsReady]: No rfid installed");
             return false;
         }
         callbackContext.success();
         return true;
     }
 
-    private boolean init(CallbackContext callbackContext) {
-        rfid = new RfidModuleUtil(context);
-        rfid.setBeep(false);
-
-        rfid.init();
-        System.out.println("[Init] RfidModuleUtil initialized");
-
-        rfid.start();
-        System.out.println("[Init] RfidModuleUtil started");
-
+    private boolean addListener(CallbackContext callbackContext) {
+        if (rfid == null) {
+            callbackContext.error("[addListener]: No rfid installed");
+            return false;
+        }
         rfid.getData((cardType, cardData) -> {
-            System.out.println("[Init.OnGetDataListener]: Data was retrieved");
+            System.out.println("[addListener.onGetDataListener]: Data was retrieved");
 
             if (!cardType.equals("")) {
                 System.out.println(cardType + "--->" + cardData);
@@ -78,7 +72,19 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
                 callbackContext.error(cardData);
             }
         });
-        System.out.println("[Init] Listener added");
+        System.out.println("[addListener] Listener added");
+        return this.readCard(callbackContext);
+    }
+
+    private boolean init(CallbackContext callbackContext) {
+        rfid = new RfidModuleUtil(context);
+        rfid.setBeep(false);
+
+        rfid.init();
+        System.out.println("[init] RfidModuleUtil initialized");
+
+        rfid.start();
+        System.out.println("[init] RfidModuleUtil started");
         callbackContext.success();
         return true;
     }

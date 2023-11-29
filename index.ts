@@ -3,6 +3,7 @@ import { exec } from "cordova";
 const pluginName = "WebdeskKioskNFCPlugin";
 enum Methods {
     checkIsReady = "checkIsReady",
+    addListener = "addListener",
     readCard = "readCard",
     init = "init",
 }
@@ -20,11 +21,12 @@ interface KioskReaderPlugin {
 
 const useKioskReader = (): KioskReaderPlugin => {
     let poolReadTagId: number | NodeJS.Timeout = 0;
-    
+
     const useBasicExecutor =
         (method: Methods): UseExecTemplate =>
-        (success, error) =>
-            exec(success, error, pluginName, method, []);
+            (success, error) =>
+                exec(success, error, pluginName, method, []);
+
 
     const addListener: UseExecTemplate = (success, error) => {
         const executor = useBasicExecutor(Methods.readCard);
@@ -34,7 +36,7 @@ const useKioskReader = (): KioskReaderPlugin => {
 
     return {
         checkIsReady: useBasicExecutor(Methods.checkIsReady),
-        addListener,
+        addListener: useBasicExecutor(Methods.addListener),
         init: useBasicExecutor(Methods.init),
     };
 };

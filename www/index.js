@@ -5,6 +5,7 @@ const pluginName = "WebdeskKioskNFCPlugin";
 var Methods;
 (function (Methods) {
     Methods["checkIsReady"] = "checkIsReady";
+    Methods["addListener"] = "addListener";
     Methods["readCard"] = "readCard";
     Methods["init"] = "init";
 })(Methods || (Methods = {}));
@@ -18,7 +19,7 @@ const useKioskReader = () => {
     };
     return {
         checkIsReady: useBasicExecutor(Methods.checkIsReady),
-        addListener,
+        addListener: useBasicExecutor(Methods.addListener),
         init: useBasicExecutor(Methods.init),
     };
 };
