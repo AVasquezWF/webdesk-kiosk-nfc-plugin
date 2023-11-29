@@ -50,12 +50,12 @@ public class RfidModuleUtil {
             try {
                 this.serialPort = new SerialPort(new File(this.COM), this.baudrate, 0);
                 ret = 1;
-            } catch (IOException var2) {
+            } catch (IOException ioException) {
                 Toast.makeText(mContext, "Failed to open serial port", Toast.LENGTH_SHORT).show();
-                var2.printStackTrace();
-            } catch (SecurityException var3) {
+                ioException.printStackTrace();
+            } catch (SecurityException securityException) {
                 Toast.makeText(mContext, "Failed to open serial port: no read / write permission", Toast.LENGTH_SHORT).show();
-                var3.printStackTrace();
+                securityException.printStackTrace();
             }
         }
         return ret;
@@ -105,12 +105,11 @@ public class RfidModuleUtil {
             cardId = HexUtil.bin2Hex(binary.substring(0, bit_ten));
         }
 
-        if (TextUtils.isEmpty(cardValue)) {
-            tagInformation.put("type", cardType );
-            tagInformation.put("cardId",  cardId);
-        } else {
+        if (!TextUtils.isEmpty(cardValue)) {
             tagInformation.put("value", cardValue);
-        }
+        } 
+        tagInformation.put("type", cardType);
+        tagInformation.put("cardId",  cardId);
 
         if (beepStatus){
             thread.sendCmds(Constant.BEEP.getBytes());
