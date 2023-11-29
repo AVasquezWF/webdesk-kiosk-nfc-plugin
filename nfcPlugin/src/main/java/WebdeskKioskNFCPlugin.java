@@ -42,17 +42,6 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
             callbackContext.error("[AddListener]: No rfid installed");
             return false;
         }
-        rfid.getData((cardType, cardData) -> {
-            System.out.println("[OnGetDataListener]: Data was retrieved");
-
-            if (isValidJson(cardData)) {
-                System.out.println(cardType + "--->" + cardData);
-                callbackContext.success(cardData);
-            } else {
-                callbackContext.error(cardData);
-            }
-        });
-        System.out.println("[AddListener] Listener added");
         rfid.searchTag();
         System.out.println("[CheckIsReady] Tag searched");
         rfid.readTag();
@@ -71,23 +60,26 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
 
     private boolean init(CallbackContext callbackContext) {
         rfid = new RfidModuleUtil(context);
-        rfid.setBeep(true);
+        rfid.setBeep(false);
+
         rfid.init();
         System.out.println("[Init] RfidModuleUtil initialized");
+
         rfid.start();
         System.out.println("[Init] RfidModuleUtil started");
+
+        rfid.getData((cardType, cardData) -> {
+            System.out.println("[Init.OnGetDataListener]: Data was retrieved");
+
+            if (!cardType.equals("")) {
+                System.out.println(cardType + "--->" + cardData);
+                callbackContext.success(cardData);
+            } else {
+                callbackContext.error(cardData);
+            }
+        });
+        System.out.println("[Init] Listener added");
         callbackContext.success();
         return true;
-    }
-
-    private boolean isValidJson(String jsonString) {
-        try {
-            // Use JSONTokener to check if the string is a valid JSON
-            new JSONTokener(jsonString).nextValue();
-            return true;
-        } catch (Exception e) {
-            // JSONTokener throws an exception if the string is not valid JSON
-            return false;
-        }
     }
 }

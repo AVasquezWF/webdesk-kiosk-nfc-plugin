@@ -135,14 +135,14 @@ public class RfidModuleUtil {
                 try {
                     onDataListener.onDataReceive(cardType, extractTagInformation(str));
                 } catch (JSONException e) {
-                    onDataListener.onDataReceive(cardType, "Failed successfully");
+                    onDataListener.onDataReceive("", "Failed successfully");
                 }
             }else if (str.trim().equals("0000")){
-                onDataListener.onDataReceive(cardType, "No tag");
+                onDataListener.onDataReceive("", "No tag");
             }else if (str.trim().equals("0001")){
-                onDataListener.onDataReceive(cardType, "Success");
+                onDataListener.onDataReceive("", "Success");
             }else {
-                onDataListener.onDataReceive(cardType, "unknown");
+                onDataListener.onDataReceive("", "unknown");
             }
 
         });
