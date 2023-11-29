@@ -5,6 +5,7 @@ import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
+import org.json.JSONTokener;
 
 /**
  *
@@ -42,19 +43,13 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
             return false;
         }
         rfid.getData((cardType, cardData) -> {
-            callbackContext.error("[OnGetDataListener]: Data was retrieved");
-            
-            if ("unknown".equals(cardData)) {
-                System.out.println(cardType + "--->" + "unknown");
-            } else if ("Unsupported card type".equals(cardData)) {
-                System.out.println(cardType + "--->" + "Unsupported card type");
-            } else if ("No tag".equals(cardData)) {
-                System.out.println(cardType + "--->" + "No tag");
-            } else if ("Success".equals(cardData)) {
-                System.out.println(cardType + "--->" + "Success");
-            } else {
+            System.out.println("[OnGetDataListener]: Data was retrieved");
+
+            if (isValidJson(cardData)) {
                 System.out.println(cardType + "--->" + cardData);
                 callbackContext.success(cardData);
+            } else {
+                callbackContext.error(cardData);
             }
         });
         System.out.println("[AddListener] Listener added");
@@ -85,4 +80,14 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         return true;
     }
 
+    private boolean isValidJson(String jsonString) {
+        try {
+            // Use JSONTokener to check if the string is a valid JSON
+            new JSONTokener(jsonString).nextValue();
+            return true;
+        } catch (Exception e) {
+            // JSONTokener throws an exception if the string is not valid JSON
+            return false;
+        }
+    }
 }

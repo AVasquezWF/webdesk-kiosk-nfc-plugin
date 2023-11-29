@@ -1,10 +1,11 @@
-
-
 import android.content.Context;
 import android.serialport.SerialPort;
 import android.serialport.SerialPortFinder;
 import android.text.TextUtils;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,6 +61,64 @@ public class RfidModuleUtil {
         return ret;
     }
 
+    private String extractTagInformation (String str) throws JSONException {
+        JSONObject tagInformation = new JSONObject();
+        cardValue = "";
+        if (!str.trim().startsWith("0001")) {
+            return "Unsupported card type";
+        }
+
+        switch (str.substring(4,6)){
+            case "80":
+                cardType = Constant.HFTAG_MIFARE;
+                cardId = str.substring(10);
+                break;
+            case "84":
+                cardType = Constant.HFTAG_HIDICLASS;
+                cardId = str.substring(10);
+                break;
+            case "40":
+                cardType = Constant.LFTAG_EM4102;
+                cardId = str.substring(10);
+                break;
+            case "49":
+                cardType = Constant.LFTAG_HIDPROX;
+                cardId = str.substring(10);
+                break;
+            default:
+                if (cardType.equals(Constant.HFTAG_MIFARE)){
+                    cardValue = str.substring(9);
+                } else if (cardType.equals(Constant.HFTAG_HIDICLASS)){
+                    cardValue = str.substring(8);
+                }
+                break;
+        }
+
+        String bit = str.substring(6,8);
+
+        int bit_ten = Integer.parseInt(bit, 16);
+        System.out.println("bit--->"+bit_ten);
+        System.out.println("cardId--->"+cardId);
+
+        if (!TextUtils.isEmpty(cardId)) {
+            String binary = HexUtil.hex2bin(cardId.trim());
+            cardId = HexUtil.bin2Hex(binary.substring(0, bit_ten));
+        }
+
+        if (TextUtils.isEmpty(cardValue)) {
+            tagInformation.put("type", cardType );
+            tagInformation.put("cardId",  cardId);
+        } else {
+            tagInformation.put("value", cardValue);
+        }
+
+        if (beepStatus){
+            thread.sendCmds(Constant.BEEP.getBytes());
+        }
+
+        return tagInformation.toString();
+    }
+
     public void start() {
         if (ret != 1){
             return;
@@ -70,67 +129,21 @@ public class RfidModuleUtil {
         this.thread.setSleepTime(this.sleepTime);
         this.thread.start();
         this.thread.setOnDataReceiveListener((buffer, size) -> {
-            String str = new String(buffer, 0, size).toString();
+            String str = new String(buffer, 0, size);
             if (onDataListener == null) return;
             System.out.println(str.trim());
             if (str.length() >10) {
-                StringBuilder builder = new StringBuilder();
-                cardValue = "";
-                if (str.trim().substring(0,4).equals("0001")){
-                    switch (str.substring(4,6)){
-                        case "80":
-                            cardType = Constant.HFTAG_MIFARE;
-                            cardId = str.substring(10);
-                            break;
-                        case "84":
-                            cardType = Constant.HFTAG_HIDICLASS;
-                            cardId = str.substring(10);
-                            break;
-                        case "40":
-                            cardType = Constant.LFTAG_EM4102;
-                            cardId = str.substring(10);
-                            break;
-                        case "49":
-                            cardType = Constant.LFTAG_HIDPROX;
-                            cardId = str.substring(10);
-                            break;
-                        default:
-                            if (cardType.equals(Constant.HFTAG_MIFARE)){
-                                cardValue = str.substring(9);
-                            }else if (cardType.equals(Constant.HFTAG_HIDICLASS)){
-                                cardValue = str.substring(8);
-                            }
-                            break;
-                    }
-
-                    String bit = str.substring(6,8);
-
-                    int bit_ten = Integer.parseInt(bit, 16);
-                    System.out.println("bit--->"+bit_ten);
-                    System.out.println("cardid--->"+cardId);
-                    if (!TextUtils.isEmpty(cardId)) {
-                        String binary = HexUtil.hex2bin(cardId.trim());
-                        cardId = HexUtil.bin2Hex(binary.substring(0, bit_ten));
-                    }
-                    if (TextUtils.isEmpty(cardValue)) {
-                        builder.append("Card Type:" + cardType + "\n");
-                        builder.append("Card Id:" + cardId);
-                    }else {
-                        builder.append("Data:"+cardValue);
-                    }
-                    onDataListener.onDataReceive(cardType, builder.toString());
-                    if (beepStatus){
-                        thread.sendCmds(Constant.BEEP.getBytes());
-                    }
-                } else {
-                    onDataListener.onDataReceive(cardType,"Unsupported card type");
+                try {
+                    onDataListener.onDataReceive(cardType, extractTagInformation(str));
+                } catch (JSONException e) {
+                    onDataListener.onDataReceive(cardType, "Failed successfully");
                 }
             }else if (str.trim().equals("0000")){
-                onDataListener.onDataReceive(cardType,"No tag");
+                onDataListener.onDataReceive(cardType, "No tag");
             }else if (str.trim().equals("0001")){
-                onDataListener.onDataReceive(cardType,"Success");
+                onDataListener.onDataReceive(cardType, "Success");
             }else {
-                onDataListener.onDataReceive(cardType,"unknown");
+                onDataListener.onDataReceive(cardType, "unknown");
             }
 
         });
