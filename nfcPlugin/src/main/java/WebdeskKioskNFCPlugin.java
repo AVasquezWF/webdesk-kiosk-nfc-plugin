@@ -68,9 +68,10 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
             System.out.println("[addListener.onGetDataListener]: Data was retrieved");
 
             if (!cardType.equals("")) {
-                System.out.println(cardType + "--->" + cardData);
+                System.out.println("[addListener.onGetDataListener]" + cardType + " => " + cardData);
                 callbackContext.success(cardData);
             } else {
+                System.out.println("[addListener.onGetDataListener] error => " + cardData);
                 callbackContext.error(cardData);
             }
         });

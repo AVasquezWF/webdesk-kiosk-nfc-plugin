@@ -43,7 +43,7 @@ public class RfidModuleUtil {
         if (comList.contains(COM)){
             ret = 0;
         }else {
-            Toast.makeText(mContext,"Please connect the module first",Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Please connect the module first", Toast.LENGTH_SHORT).show();
             ret = -1;
         }
         if (ret == 0) {
@@ -97,8 +97,8 @@ public class RfidModuleUtil {
         String bit = str.substring(6,8);
 
         int bit_ten = Integer.parseInt(bit, 16);
-        System.out.println("bit--->"+bit_ten);
-        System.out.println("cardId--->"+cardId);
+        System.out.println("bit ---> "+bit_ten);
+        System.out.println("cardId ---> "+cardId);
 
         if (!TextUtils.isEmpty(cardId)) {
             String binary = HexUtil.hex2bin(cardId.trim());
