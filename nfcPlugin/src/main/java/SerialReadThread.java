@@ -43,20 +43,24 @@ public class SerialReadThread extends Thread{
             if (serialPort == null){
                 return;
             }
+            inputStream = serialPort.getInputStream();
+            outputStream =serialPort.getOutputStream();
             try {
+                if (inputStream.available() <= 0) return;
+
                 //当接收到数据时，sleep 500毫秒（sleep时间自己把握）
                 Thread.sleep(sleepTime);
                 //sleep过后，再读取数据，基本上都是完整的数据
-                inputStream = serialPort.getInputStream();
-                outputStream =serialPort.getOutputStream();
-                if (inputStream.available() <= 0) return;
+
                 byte[] buffer = new byte[inputStream.available()];
                 int size = inputStream.read(buffer);
-                if (size > 0) {
-                    System.out.println("[run] Thread running");
-                    if (null != onDataReceiveListener) {
-                        onDataReceiveListener.onDataReceive(buffer, size);
-                    }
+
+                if (size <= 0) return;
+                
+                System.out.println("[run] Thread running");
+                
+                if (null != onDataReceiveListener) {
+                    onDataReceiveListener.onDataReceive(buffer, size);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
