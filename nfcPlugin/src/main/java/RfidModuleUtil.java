@@ -128,23 +128,28 @@ public class RfidModuleUtil {
         this.thread.setSleepTime(this.sleepTime);
         this.thread.start();
         this.thread.setOnDataReceiveListener((buffer, size) -> {
+            if (onDataListener == null) {
+                System.out.println("[start] No dataListener defined");
+                return;
+            }
             String str = new String(buffer, 0, size);
-            if (onDataListener == null) return;
+            String error = "";
             System.out.println(str.trim());
-            if (str.length() >10) {
+
+            if (str.length() > 10) {
                 try {
                     onDataListener.onDataReceive(cardType, extractTagInformation(str));
                 } catch (JSONException e) {
-                    onDataListener.onDataReceive("", "Failed successfully");
+                    error = e.toString();
                 }
-            }else if (str.trim().equals("0000")){
-                onDataListener.onDataReceive("", "No tag");
-            }else if (str.trim().equals("0001")){
-                onDataListener.onDataReceive("", "Success");
-            }else {
-                onDataListener.onDataReceive("", "unknown");
+            } else if (str.trim().equals("0000")) {
+                error = "No tag read";
+            } else if (str.trim().equals("0001")) {
+                error = "Successful read, but no data was found";
+            } else {
+                error = "Unknown data";
             }
-
+            onDataListener.onDataReceive("", error);
         });
     }
 
@@ -155,7 +160,7 @@ public class RfidModuleUtil {
     }
 
     public interface OnGetDataListener {
-        void onDataReceive(String cardType,String var1);
+        void onDataReceive(String cardType, String cardData);
     }
 
     public void setBeep(boolean beep){
