@@ -47,6 +47,7 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         System.out.println("[CheckIsReady] Tag searched");
         rfid.readTag();
         System.out.println("[CheckIsReady] Tag read");
+        callbackContext.success();
         return true;
     }
 
