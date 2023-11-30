@@ -73,11 +73,11 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
                 callbackContext.error(cardData);
             } else {
                 System.out.println("[addListener.onGetDataListener]" + cardType + " => " + cardData);
-                callbackContext.success(cardData);
+                    callbackContext.success(cardData);
             }
         });
         System.out.println("[addListener] Listener added");
-        return this.readCard(callbackContext);
+        return true;
     }
 
     private boolean init(CallbackContext callbackContext) {
