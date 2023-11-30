@@ -44,14 +44,15 @@ public class SerialReadThread extends Thread{
                 return;
             }
             try {
-                //当接收到数据时，sleep 500毫秒（sleep时间自己把握）
-                Thread.sleep(sleepTime);
-                //sleep过后，再读取数据，基本上都是完整的数据
-                
+
                 inputStream = serialPort.getInputStream();
                 outputStream =serialPort.getOutputStream();
 
                 if (inputStream.available() == 0) continue;
+
+                //当接收到数据时，sleep 500毫秒（sleep时间自己把握）
+                Thread.sleep(sleepTime);
+                //sleep过后，再读取数据，基本上都是完整的数据
 
 
                 byte[] buffer = new byte[inputStream.available()];
