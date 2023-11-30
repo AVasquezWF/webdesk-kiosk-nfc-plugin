@@ -66,8 +66,8 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         }
         rfid.getData((cardType, cardData) -> {
             System.out.println("[addListener.onGetDataListener]: Data was retrieved");
-
-            if (!cardType.equals("")) {
+            
+            if (!cardType.trim().isEmpty()) {
                 System.out.println("[addListener.onGetDataListener]" + cardType + " => " + cardData);
                 callbackContext.success(cardData);
             } else {
