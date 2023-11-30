@@ -18,7 +18,7 @@ public class RfidModuleUtil {
     private SerialReadThread thread = null;
     private SerialPort serialPort = null;
     private String COM = "/dev/ttyACM1";
-    private long sleepTime = 500L;
+    private long sleepTime = 500;
     private int baudrate = 9600;
     private boolean beepStatus = true;
     private String cardType = "";
@@ -68,7 +68,7 @@ public class RfidModuleUtil {
             return "Unsupported card type";
         }
 
-        switch (str.substring(4,6)){
+        switch (str.substring(4,6)) {
             case "80":
                 cardType = Constant.HFTAG_MIFARE;
                 cardId = str.substring(10);

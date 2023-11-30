@@ -82,6 +82,10 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
     }
 
     private boolean init(CallbackContext callbackContext) {
+        if (rfid != null) {
+           rfid.stop();
+        }
+
         rfid = new RfidModuleUtil(context);
         rfid.setBeep(false);
 
