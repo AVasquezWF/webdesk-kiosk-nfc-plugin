@@ -149,7 +149,7 @@ public class RfidModuleUtil {
             } else {
                 error = "Unknown data";
             }
-            onDataListener.onDataReceive("", error);
+            onDataListener.onDataReceive(null, error);
         });
     }
 
