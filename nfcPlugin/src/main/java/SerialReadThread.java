@@ -43,6 +43,7 @@ public class SerialReadThread extends Thread{
             if (serialPort == null){
                 return;
             }
+            System.out.println("[run] Thread running");
             inputStream = serialPort.getInputStream();
             outputStream =serialPort.getOutputStream();
             try {

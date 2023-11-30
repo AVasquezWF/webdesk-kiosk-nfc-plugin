@@ -75,6 +75,8 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
                 callbackContext.success(cardData);
             }
         });
+        rfid.searchTag();
+        rfid.readTag();
         System.out.println("[addListener] Listener added");
         return true;
     }
