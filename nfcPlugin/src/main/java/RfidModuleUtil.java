@@ -138,7 +138,8 @@ public class RfidModuleUtil {
 
             if (str.length() > 10) {
                 try {
-                    onDataListener.onDataReceive(cardType, extractTagInformation(str));
+                    String tagInformation = extractTagInformation(str);
+                    onDataListener.onDataReceive(cardType, tagInformation);
                 } catch (JSONException e) {
                     error = e.toString();
                 }
