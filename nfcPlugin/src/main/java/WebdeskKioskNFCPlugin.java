@@ -30,6 +30,8 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
                 return checkIsReady(callbackContext);
             case "addListener":
                 return addListener(callbackContext);
+            case "readCard":
+                return readCard(callbackContext);
             default:
                 callbackContext.error("[execute]: No action found");
                 return false;

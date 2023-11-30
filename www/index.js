@@ -12,14 +12,16 @@ var Methods;
 const useKioskReader = () => {
     let poolReadTagId = 0;
     const useBasicExecutor = (method) => (success, error) => (0, cordova_1.exec)(success, error, pluginName, method, []);
-    const addListener = (success, error) => {
+    const addListenerPool = (success, error) => {
         const executor = useBasicExecutor(Methods.readCard);
         clearInterval(poolReadTagId);
         poolReadTagId = setInterval(() => executor(success, error), 1000);
     };
     return {
         checkIsReady: useBasicExecutor(Methods.checkIsReady),
+        addListenerPool,
         addListener: useBasicExecutor(Methods.addListener),
+        readCard: useBasicExecutor(Methods.readCard),
         init: useBasicExecutor(Methods.init),
     };
 };

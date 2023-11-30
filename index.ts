@@ -15,7 +15,9 @@ type UseExecTemplate = (
 ) => void;
 interface KioskReaderPlugin {
     checkIsReady: UseExecTemplate;
+    addListenerPool: UseExecTemplate;
     addListener: UseExecTemplate;
+    readCard: UseExecTemplate;
     init: UseExecTemplate;
 }
 
@@ -28,7 +30,7 @@ const useKioskReader = (): KioskReaderPlugin => {
                 exec(success, error, pluginName, method, []);
 
 
-    const addListener: UseExecTemplate = (success, error) => {
+    const addListenerPool: UseExecTemplate = (success, error) => {
         const executor = useBasicExecutor(Methods.readCard);
         clearInterval(poolReadTagId);
         poolReadTagId = setInterval(() => executor(success, error), 1000);
@@ -36,7 +38,9 @@ const useKioskReader = (): KioskReaderPlugin => {
 
     return {
         checkIsReady: useBasicExecutor(Methods.checkIsReady),
+        addListenerPool,
         addListener: useBasicExecutor(Methods.addListener),
+        readCard: useBasicExecutor(Methods.readCard),
         init: useBasicExecutor(Methods.init),
     };
 };
