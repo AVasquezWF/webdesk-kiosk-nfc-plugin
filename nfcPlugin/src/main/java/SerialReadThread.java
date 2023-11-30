@@ -46,7 +46,7 @@ public class SerialReadThread extends Thread{
             inputStream = serialPort.getInputStream();
             outputStream =serialPort.getOutputStream();
             try {
-                if (inputStream.available() <= 0) return;
+                if (inputStream.available() == 0) break;
 
                 //当接收到数据时，sleep 500毫秒（sleep时间自己把握）
                 Thread.sleep(sleepTime);
@@ -55,7 +55,7 @@ public class SerialReadThread extends Thread{
                 byte[] buffer = new byte[inputStream.available()];
                 int size = inputStream.read(buffer);
 
-                if (size <= 0) return;
+                if (size == 0) break;
                 
                 System.out.println("[run] Thread running");
                 
