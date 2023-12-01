@@ -59,9 +59,8 @@ public class SerialReadThread extends Thread{
                 int size = inputStream.read(buffer);
 
                 if (size == 0) continue;
-                
-                System.out.println("[run] Thread running");
-                
+
+                System.out.println("[run] Thread running");                
                 if (null != onDataReceiveListener) {
                     onDataReceiveListener.onDataReceive(buffer, size);
                 }
