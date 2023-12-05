@@ -63,8 +63,9 @@ public class RfidModuleUtil {
         return ret;
     }
 
-    private String extractTagInformation (String str) throws JSONException {
+    private String extractTagInformation (String str) throws JSONException, StringIndexOutOfBoundsException {
         JSONObject tagInformation = new JSONObject();
+
         cardValue = "";
         if (!str.trim().startsWith("0001")) {
             return "Unsupported card type";
@@ -109,7 +110,7 @@ public class RfidModuleUtil {
 
         if (!TextUtils.isEmpty(cardValue)) {
             tagInformation.put("value", cardValue);
-        } 
+        }
         tagInformation.put("type", cardType);
         tagInformation.put("cardId",  cardId);
 
@@ -143,6 +144,9 @@ public class RfidModuleUtil {
                     String tagInformation = extractTagInformation(str);
                     onDataListener.onDataReceive(cardType, tagInformation);
                 } catch (JSONException e) {
+                    error = e.toString();
+                } catch (StringIndexOutOfBoundsException e) {
+                    System.out.println("[setOnDataReceiveListener] Caught StringIndexOutOfBoundsException: " + e.getMessage());
                     error = e.toString();
                 }
             } else if (str.trim().equals("0000")) {
