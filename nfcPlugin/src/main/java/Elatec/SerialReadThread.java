@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class SerialReadThread extends Thread{
+public class SerialReadThread extends Thread {
     private OnDataReceiveListener onDataReceiveListener = null;
     public static boolean isStop = false;
     private InputStream inputStream = null;
@@ -43,12 +43,15 @@ public class SerialReadThread extends Thread{
         super.run();
         while (!isStop) {
             if (serialPort == null){
+                System.out.println("[run] Stop thread ");   
                 return;
             }
             try {
 
+                System.out.println("[run] Start thread iteration");   
+
                 inputStream = serialPort.getInputStream();
-                outputStream =serialPort.getOutputStream();
+                outputStream = serialPort.getOutputStream();
 
                 if (inputStream.available() == 0) continue;
 
@@ -62,7 +65,8 @@ public class SerialReadThread extends Thread{
 
                 if (size == 0) continue;
 
-                System.out.println("[run] Thread running");                
+                System.out.println("[run] Data was read");      
+          
                 if (null != onDataReceiveListener) {
                     onDataReceiveListener.onDataReceive(buffer, size);
                 }

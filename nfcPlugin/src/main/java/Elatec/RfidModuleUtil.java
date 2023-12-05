@@ -44,7 +44,7 @@ public class RfidModuleUtil {
         comList = Arrays.asList(finder.getAllDevicesPath());
         if (comList.contains(COM)){
             ret = 0;
-        }else {
+        } else {
             Toast.makeText(mContext, "Please connect the module first", Toast.LENGTH_SHORT).show();
             ret = -1;
         }
@@ -68,7 +68,7 @@ public class RfidModuleUtil {
 
         cardValue = "";
         if (!str.trim().startsWith("0001")) {
-            return "Unsupported card type";
+            throw "Unsupported card type: " + str.trim();
         }
 
         switch (str.substring(4,6)) {
