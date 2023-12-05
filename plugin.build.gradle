@@ -13,5 +13,6 @@ repositories {
 dependencies {
     implementation 'org.apache.cordova:framework:9.0.0'
     implementation 'com.github.licheedev.Android-SerialPort-API:serialport:1.0.1'
+    implementation fileTree(dir: 'lib', include: ['*.jar'])
 }
 
