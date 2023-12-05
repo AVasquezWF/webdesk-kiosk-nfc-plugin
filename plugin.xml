@@ -47,8 +47,6 @@
         <source-file src="nfcPlugin/src/main/java/Elatec/RfidModuleUtil.java"
             target-dir="src/Elatec/" />
         <!-- ACS -->
-        <source-file src="nfcPlugin/src/main/java/ACS/ACRNFCReaderPhoneGapPlugin.java"
-            target-dir="src/ACS" />
         <source-file src="nfcPlugin/src/main/java/ACS/NFCReader.java" target-dir="src/ACS" />
         <source-file src="nfcPlugin/src/main/java/ACS/Util.java" target-dir="src/ACS" />
         <source-file src="nfcPlugin/src/main/java/ACS/Chip.java" target-dir="src/ACS" />
