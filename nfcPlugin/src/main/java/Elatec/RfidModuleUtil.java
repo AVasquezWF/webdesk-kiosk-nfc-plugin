@@ -68,7 +68,7 @@ public class RfidModuleUtil {
 
         cardValue = "";
         if (!str.trim().startsWith("0001")) {
-            throw "Unsupported card type: " + str.trim();
+            throw new Error("Unsupported card type: " + str.trim());
         }
 
         switch (str.substring(4,6)) {
