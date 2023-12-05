@@ -1,3 +1,5 @@
+package Elatec;
+
 import android.serialport.SerialPort;
 
 import java.io.IOException;

@@ -6,6 +6,8 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
 
+import Elatec.RfidModuleUtil;
+
 /**
  *
  */
@@ -92,9 +94,9 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         int result = rfid.init();
 
         if (result == 1){
-            System.out.println("[init] RfidModuleUtil initialized");
+            System.out.println("[init] Elatec.RfidModuleUtil initialized");
             rfid.start();
-            System.out.println("[init] RfidModuleUtil started");
+            System.out.println("[init] Elatec.RfidModuleUtil started");
             callbackContext.success();
         } else {
             callbackContext.error(result);

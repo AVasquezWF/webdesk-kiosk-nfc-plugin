@@ -1,3 +1,5 @@
+package Elatec;
+
 public class HexUtil {
     //十六进制转二进制
     public static String hex2bin(String input) {

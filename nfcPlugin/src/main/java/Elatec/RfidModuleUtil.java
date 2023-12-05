@@ -1,3 +1,5 @@
+package Elatec;
+
 import android.content.Context;
 import android.serialport.SerialPort;
 import android.serialport.SerialPortFinder;

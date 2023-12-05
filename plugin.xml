@@ -38,10 +38,10 @@
 
         <!-- source-files -->
         <source-file src="nfcPlugin/src/main/java/WebdeskKioskNFCPlugin.java" target-dir="src/" />
-        <source-file src="nfcPlugin/src/main/java/HexUtil.java" target-dir="src/" />
-        <source-file src="nfcPlugin/src/main/java/SerialReadThread.java" target-dir="src/" />
-        <source-file src="nfcPlugin/src/main/java/Constant.java" target-dir="src/" />
-        <source-file src="nfcPlugin/src/main/java/RfidModuleUtil.java" target-dir="src/" />
+        <source-file src="nfcPlugin/src/main/java/Elatec/HexUtil.java" target-dir="src/Elatec/" />
+        <source-file src="nfcPlugin/src/main/java/Elatec/SerialReadThread.java" target-dir="src/Elatec/" />
+        <source-file src="nfcPlugin/src/main/java/Elatec/Constant.java" target-dir="src/Elatec/" />
+        <source-file src="nfcPlugin/src/main/java/Elatec/RfidModuleUtil.java" target-dir="src/Elatec/" />
         <framework src="plugin.build.gradle" custom="true" type="gradleReference" />
     </platform>
 
