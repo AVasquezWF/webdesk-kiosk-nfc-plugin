@@ -114,9 +114,7 @@ public class RfidModuleUtil {
         tagInformation.put("type", cardType);
         tagInformation.put("cardId",  cardId);
 
-        if (beepStatus){
-            thread.sendCmds(Constant.BEEP.getBytes());
-        }
+     
 
         return tagInformation.toString();
     }
@@ -142,6 +140,9 @@ public class RfidModuleUtil {
             if (str.length() > 10) {
                 try {
                     String tagInformation = extractTagInformation(str);
+                    if (beepStatus){
+                        thread.sendCmds(Constant.BEEP.getBytes());
+                    }
                     onDataListener.onDataReceive(cardType, tagInformation);
                 } catch (JSONException e) {
                     error = e.toString();
