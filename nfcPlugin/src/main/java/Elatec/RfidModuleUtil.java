@@ -20,7 +20,7 @@ public class RfidModuleUtil {
     private SerialReadThread thread = null;
     private SerialPort serialPort = null;
     private String COM = "/dev/ttyACM1";
-    private long sleepTime = 500;
+    private long sleepTime = 1000L;
     private int baudrate = 9600;
     private boolean beepStatus = true;
     private String cardType = "";
@@ -68,7 +68,7 @@ public class RfidModuleUtil {
 
         cardValue = "";
         if (!str.trim().startsWith("0001")) {
-            throw new Error("Unsupported card type: " + str.trim());
+            throw new JSONException("Unsupported card type: " + str.trim());
         }
 
         switch (str.substring(4,6)) {
