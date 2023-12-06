@@ -21,7 +21,7 @@ public class RfidModuleUtil {
     private SerialReadThread thread = null;
     private SerialPort serialPort = null;
     private String COM = "/dev/ttyACM1";
-    private long sleepTime = 1000L;
+    private long sleepTime = 100L;
     private int baudrate = 9600;
     private boolean beepStatus = true;
     private String cardType = "";
