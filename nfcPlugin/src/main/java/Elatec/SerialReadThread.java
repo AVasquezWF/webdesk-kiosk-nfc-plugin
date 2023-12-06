@@ -55,9 +55,7 @@ public class SerialReadThread extends Thread {
 
                 if (inputStream.available() == 0) continue;
 
-                //当接收到数据时，sleep 500毫秒（sleep时间自己把握）
-                Thread.sleep(sleepTime);
-                //sleep过后，再读取数据，基本上都是完整的数据
+                System.out.println("[run] inputStream available");
 
                 byte[] buffer = new byte[inputStream.available()];
                 int size = inputStream.read(buffer);
@@ -67,6 +65,7 @@ public class SerialReadThread extends Thread {
                 System.out.println("[run] Data was read");      
           
                 if (null != onDataReceiveListener) {
+                    System.out.println("[run] On receive data");
                     onDataReceiveListener.onDataReceive(buffer, size);
                 }
             } catch (IOException e) {
