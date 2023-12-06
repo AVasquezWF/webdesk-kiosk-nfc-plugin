@@ -201,6 +201,14 @@ public class RfidModuleUtil {
     public void writeTag(String hexData){
         thread.sendCmds(("0B0202"+hexData+"\r\n").getBytes());
     }
+
+    public void listenForTag() {
+        this.thread.setOnIterationExecute(() -> {
+            this.searchTag();
+            this.readTag();
+        });
+    }
+
     public boolean sendCommand(String hexData) {
         return thread.sendCmds((hexData+"\r\n").getBytes());
     }

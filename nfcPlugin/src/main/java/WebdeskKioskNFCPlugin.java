@@ -4,6 +4,7 @@ import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -15,6 +16,8 @@ import Elatec.RfidModuleUtil;
 public class WebdeskKioskNFCPlugin extends CordovaPlugin {
     Context context;
     RfidModuleUtil rfid = null;
+
+    CallbackContext listener = null;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -66,13 +69,7 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
     }
 
     private boolean addListener(CallbackContext callbackContext) {
-        if (rfid == null) {
-            callbackContext.error("[addListener]: No rfid installed");
-            return false;
-        }
-        rfid.searchTag();
-        rfid.readTag();
-        System.out.println("[addListener] Listener added");
+        this.listener = callbackContext;
         return true;
     }
 
@@ -85,13 +82,23 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         rfid.setBeep(false);
 
         rfid.getData((cardType, cardData) -> {
+            if (this.listener == null){
+                return;
+            }
+
             System.out.println("[addListener.onGetDataListener]: Data was retrieved: " + cardType + " - " + cardData);
+
             if (cardType == null) {
                 System.out.println("[addListener.onGetDataListener] Error found: " + cardData);
-                callbackContext.error(cardData);
+                PluginResult result = new PluginResult(PluginResult.Status.ERROR, cardData);
+                result.setKeepCallback(true);
+                this.listener.sendPluginResult(result);
+
             } else {
                 System.out.println("[addListener.onGetDataListener]" + cardType + " => " + cardData);
-                callbackContext.success(cardData);
+                PluginResult result = new PluginResult(PluginResult.Status.OK, cardData);
+                result.setKeepCallback(true);
+                this.listener.sendPluginResult(result);
             }
         });
 
@@ -101,6 +108,7 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
             System.out.println("[init] Elatec.RfidModuleUtil initialized");
             rfid.start();
             System.out.println("[init] Elatec.RfidModuleUtil started");
+            rfid.listenForTag();
             callbackContext.success();
         } else {
             callbackContext.error(result);

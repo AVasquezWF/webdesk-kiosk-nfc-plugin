@@ -8,6 +8,7 @@ import java.io.OutputStream;
 
 public class SerialReadThread extends Thread {
     private OnDataReceiveListener onDataReceiveListener = null;
+    private OnIterationExecute onIterationExecute = null;
     public static boolean isStop = false;
     private InputStream inputStream = null;
     private OutputStream outputStream = null;
@@ -34,8 +35,16 @@ public class SerialReadThread extends Thread {
         void onDataReceive(byte[] buffer, int size);
     }
 
+    public interface OnIterationExecute {
+        void executeEveryIteration();
+    }
+
     public void setOnDataReceiveListener(OnDataReceiveListener dataReceiveListener) {
         onDataReceiveListener = dataReceiveListener;
+    }
+
+    public void setOnIterationExecute(OnIterationExecute executeOnIteration) {
+        onIterationExecute = executeOnIteration;
     }
 
     @Override
@@ -49,6 +58,10 @@ public class SerialReadThread extends Thread {
             try {
                 System.out.println("[run] Start thread iteration");
                 Thread.sleep(sleepTime);
+
+                if (null != onIterationExecute) {
+                    onIterationExecute.executeEveryIteration();
+                }
 
                 inputStream = serialPort.getInputStream();
                 outputStream = serialPort.getOutputStream();
