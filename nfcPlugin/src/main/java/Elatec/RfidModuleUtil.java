@@ -210,9 +210,6 @@ public class RfidModuleUtil {
 
     public void listenForTag() {
         this.thread.setOnIterationExecute(() -> {
-            if (Objects.equals(cardId, "")){
-                return;
-            }
             this.searchTag();
             this.readTag();
         });
