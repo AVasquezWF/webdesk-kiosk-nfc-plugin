@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class RfidModuleUtil {
     private OnGetDataListener onDataListener = null;
@@ -139,11 +140,13 @@ public class RfidModuleUtil {
 
             if (str.length() > 10) {
                 try {
+                    onDataListener.onTagAttached();
                     String tagInformation = extractTagInformation(str);
                     if (beepStatus){
                         thread.sendCmds(Constant.BEEP.getBytes());
                     }
                     onDataListener.onDataReceive(cardType, tagInformation);
+                    return;
                 } catch (JSONException e) {
                     error = e.toString();
                 } catch (StringIndexOutOfBoundsException e) {
@@ -157,6 +160,7 @@ public class RfidModuleUtil {
             } else {
                 error = "Unknown data";
             }
+            onDataListener.onTagDetached();
             onDataListener.onDataReceive(null, error);
         });
     }
@@ -169,6 +173,8 @@ public class RfidModuleUtil {
 
     public interface OnGetDataListener {
         void onDataReceive(String cardType, String cardData);
+        void onTagDetached();
+        void onTagAttached();
     }
 
     public void setBeep(boolean beep){
@@ -204,6 +210,9 @@ public class RfidModuleUtil {
 
     public void listenForTag() {
         this.thread.setOnIterationExecute(() -> {
+            if (Objects.equals(cardId, "")){
+                return;
+            }
             this.searchTag();
             this.readTag();
         });

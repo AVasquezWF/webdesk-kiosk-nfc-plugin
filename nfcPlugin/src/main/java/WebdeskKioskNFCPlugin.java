@@ -81,24 +81,37 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         rfid = new RfidModuleUtil(context);
         rfid.setBeep(false);
 
-        rfid.getData((cardType, cardData) -> {
-            if (this.listener == null){
-                return;
+        rfid.getData(new RfidModuleUtil.OnGetDataListener() {
+            @Override
+            public void onDataReceive(String cardType, String cardData) {
+                if (listener == null){
+                    return;
+                }
+
+                System.out.println("[addListener.onGetDataListener]: Data was retrieved: " + cardType + " - " + cardData);
+
+                if (cardType == null) {
+                    System.out.println("[addListener.onGetDataListener] Error found: " + cardData);
+                    PluginResult result = new PluginResult(PluginResult.Status.ERROR, cardData);
+                    result.setKeepCallback(true);
+                    listener.sendPluginResult(result);
+
+                } else {
+                    System.out.println("[addListener.onGetDataListener]" + cardType + " => " + cardData);
+                    PluginResult result = new PluginResult(PluginResult.Status.OK, cardData);
+                    result.setKeepCallback(true);
+                    listener.sendPluginResult(result);
+                }
             }
 
-            System.out.println("[addListener.onGetDataListener]: Data was retrieved: " + cardType + " - " + cardData);
+            @Override
+            public void onTagDetached() {
+                System.out.println("[onTagDetached]");
+            }
 
-            if (cardType == null) {
-                System.out.println("[addListener.onGetDataListener] Error found: " + cardData);
-                PluginResult result = new PluginResult(PluginResult.Status.ERROR, cardData);
-                result.setKeepCallback(true);
-                this.listener.sendPluginResult(result);
-
-            } else {
-                System.out.println("[addListener.onGetDataListener]" + cardType + " => " + cardData);
-                PluginResult result = new PluginResult(PluginResult.Status.OK, cardData);
-                result.setKeepCallback(true);
-                this.listener.sendPluginResult(result);
+            @Override
+            public void onTagAttached() {
+                System.out.println("[onTagAttached]");
             }
         });
 
