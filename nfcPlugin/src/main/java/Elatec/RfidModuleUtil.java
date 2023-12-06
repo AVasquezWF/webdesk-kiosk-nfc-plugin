@@ -153,12 +153,10 @@ public class RfidModuleUtil {
                     if (Objects.equals(cardId, prevCardId)){
                         System.out.println("onDataListener.onTagEqual");
                     } else {
+                        onDataListener.onDataReceive(cardType, tagInformation);
                         onDataListener.onTagAttached();
                     }
-
                     prevCardId = cardId;
-
-                    onDataListener.onDataReceive(cardType, tagInformation);
 
                     return;
                 } catch (JSONException e) {
