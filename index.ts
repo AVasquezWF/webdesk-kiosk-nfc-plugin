@@ -21,7 +21,6 @@ interface KioskReaderPlugin {
 }
 
 const useKioskReader = (): KioskReaderPlugin => {
-    let poolReadTagId: number | NodeJS.Timeout = 0;
 
     const useBasicExecutor =
         (method: Methods): UseExecTemplate =>

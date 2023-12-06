@@ -67,6 +67,20 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
             callbackContext.error("[addListener]: No rfid installed");
             return false;
         }
+        rfid.searchTag();
+        rfid.readTag();
+        System.out.println("[addListener] Listener added");
+        return true;
+    }
+
+    private boolean init(CallbackContext callbackContext) {
+        if (rfid != null) {
+           rfid.stop();
+        }
+
+        rfid = new RfidModuleUtil(context);
+        rfid.setBeep(false);
+
         rfid.getData((cardType, cardData) -> {
             System.out.println("[addListener.onGetDataListener]: Data was retrieved: " + cardType + " - " + cardData);
             if (cardType == null) {
@@ -77,19 +91,6 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
                 callbackContext.success(cardData);
             }
         });
-        rfid.searchTag();
-        rfid.readTag();
-        System.out.println("[addListener] Listener added");
-        return true;
-    }
-
-    private boolean init(CallbackContext callbackContext) {
-        // if (rfid != null) {
-        //   rfid.stop();
-        //}
-
-        rfid = new RfidModuleUtil(context);
-        rfid.setBeep(false);
 
         int result = rfid.init();
 
