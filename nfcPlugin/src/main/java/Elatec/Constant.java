@@ -17,6 +17,7 @@ public class Constant {
     public static final String NEWLAND_LIGHT_MODE = "newland_light_mode";
     public static final String NEWLAND_SCAN_MODE = "newland_scan_mode";
     //rfid
+    public static final String GET_DEVICE_TYPE = "0006\r\n";
     public static final String SEARCH_TAG = "050010\r\n";
     public static final String MIFARE_LOGIN = "0B00FFFFFFFFFFFF0000\r\n";
     public static final String MIFARE_READ = "0B0102\r\n";

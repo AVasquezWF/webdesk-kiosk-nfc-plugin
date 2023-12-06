@@ -5,6 +5,7 @@ import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import Elatec.RfidModuleUtil;
 
@@ -34,6 +35,8 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
                 return addListener(callbackContext);
             case "readCard":
                 return readCard(callbackContext);
+            case "sendReaderCommand":
+                return sendReaderCommand(callbackContext, data);
             default:
                 callbackContext.error("[execute]: No action found");
                 return false;
@@ -103,5 +106,21 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
             callbackContext.error(result);
         }
         return true;
+    }
+
+    private boolean sendReaderCommand(CallbackContext callbackContext, JSONArray data) {
+        if (rfid == null) {
+            callbackContext.error("[checkIsReady]: No rfid installed");
+            return false;
+        }
+        try {
+            boolean res = rfid.sendCommand(data.getString(0));
+            callbackContext.success(data + " " + res);
+            return res;
+        } catch (JSONException e) {
+            callbackContext.error(e.toString());
+            e.printStackTrace();
+            return false;
+        }
     }
 }
