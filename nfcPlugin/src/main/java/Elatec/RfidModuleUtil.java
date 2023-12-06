@@ -32,6 +32,8 @@ public class RfidModuleUtil {
     private List<String> comList = new ArrayList<>();
     private int ret = -1;
 
+    private boolean isTagAttached = false;
+
     public RfidModuleUtil(Context context) {
         this.mContext = context;
     }
@@ -67,6 +69,8 @@ public class RfidModuleUtil {
     private String extractTagInformation (String str) throws JSONException, StringIndexOutOfBoundsException {
         JSONObject tagInformation = new JSONObject();
 
+        String prevCardId = cardId;
+        cardId = "";
         cardValue = "";
         if (!str.trim().startsWith("0001")) {
             throw new JSONException("Unsupported card type: " + str.trim());
@@ -96,6 +100,14 @@ public class RfidModuleUtil {
                     cardValue = str.substring(8);
                 }
                 break;
+        }
+
+        if (Objects.equals(cardId, "")){
+            onDataListener.onTagDetached();
+        } else if (Objects.equals(cardId, prevCardId)){
+            System.out.println("onDataListener.onTagEqual");
+        } else {
+            onDataListener.onTagAttached();
         }
 
         String bit = str.substring(6,8);
@@ -140,7 +152,6 @@ public class RfidModuleUtil {
 
             if (str.length() > 10) {
                 try {
-                    onDataListener.onTagAttached();
                     String tagInformation = extractTagInformation(str);
                     if (beepStatus){
                         thread.sendCmds(Constant.BEEP.getBytes());
@@ -160,7 +171,6 @@ public class RfidModuleUtil {
             } else {
                 error = "Unknown data";
             }
-            onDataListener.onTagDetached();
             onDataListener.onDataReceive(null, error);
         });
     }
