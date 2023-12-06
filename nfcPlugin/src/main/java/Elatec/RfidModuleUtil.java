@@ -33,6 +33,7 @@ public class RfidModuleUtil {
     private int ret = -1;
 
     private boolean isTagAttached = false;
+    String prevCardId = "";
 
     public RfidModuleUtil(Context context) {
         this.mContext = context;
@@ -69,8 +70,6 @@ public class RfidModuleUtil {
     private String extractTagInformation (String str) throws JSONException, StringIndexOutOfBoundsException {
         JSONObject tagInformation = new JSONObject();
 
-        String prevCardId = cardId;
-        cardId = "";
         cardValue = "";
         if (!str.trim().startsWith("0001")) {
             throw new JSONException("Unsupported card type: " + str.trim());
@@ -102,13 +101,7 @@ public class RfidModuleUtil {
                 break;
         }
 
-        if (Objects.equals(cardId, "")){
-            onDataListener.onTagDetached();
-        } else if (Objects.equals(cardId, prevCardId)){
-            System.out.println("onDataListener.onTagEqual");
-        } else {
-            onDataListener.onTagAttached();
-        }
+
 
         String bit = str.substring(6,8);
 
@@ -126,9 +119,6 @@ public class RfidModuleUtil {
         }
         tagInformation.put("type", cardType);
         tagInformation.put("cardId",  cardId);
-
-     
-
         return tagInformation.toString();
     }
 
@@ -146,6 +136,8 @@ public class RfidModuleUtil {
                 System.out.println("[start] No dataListener defined");
                 return;
             }
+
+            cardId = "";
             String str = new String(buffer, 0, size);
             String error = "";
             System.out.println(str.trim());
@@ -153,10 +145,21 @@ public class RfidModuleUtil {
             if (str.length() > 10) {
                 try {
                     String tagInformation = extractTagInformation(str);
+
                     if (beepStatus){
                         thread.sendCmds(Constant.BEEP.getBytes());
                     }
+
+                    if (Objects.equals(cardId, prevCardId)){
+                        System.out.println("onDataListener.onTagEqual");
+                    } else {
+                        onDataListener.onTagAttached();
+                    }
+
+                    prevCardId = cardId;
+
                     onDataListener.onDataReceive(cardType, tagInformation);
+
                     return;
                 } catch (JSONException e) {
                     error = e.toString();
@@ -171,6 +174,15 @@ public class RfidModuleUtil {
             } else {
                 error = "Unknown data";
             }
+
+            if (Objects.equals(cardId, prevCardId)){
+                System.out.println("onDataListener.onTagEqual");
+            } else {
+                onDataListener.onTagDetached();
+            }
+
+            prevCardId = cardId;
+
             onDataListener.onDataReceive(null, error);
         });
     }
