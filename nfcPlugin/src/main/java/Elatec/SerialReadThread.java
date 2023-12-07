@@ -5,6 +5,7 @@ import android.serialport.SerialPort;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 public class SerialReadThread extends Thread {
     private OnDataReceiveListener onDataReceiveListener = null;
@@ -97,7 +98,8 @@ public class SerialReadThread extends Thread {
      * @param cmd
      * @return
      */
-    public boolean sendCmds(byte[] cmd) {
+    public boolean sendCommand(byte[] cmd) {
+        System.out.println("[sendCommand] Sending " + Arrays.toString(cmd));
         boolean result = true;
         try {
             if (outputStream != null) {
@@ -114,16 +116,16 @@ public class SerialReadThread extends Thread {
 
     public static byte[] HexToByteArr(String inHex) {
         byte[] result;
-        int hexlen = inHex.length();
-        if (isOdd(hexlen) == 1) {
-            hexlen++;
-            result = new byte[(hexlen / 2)];
+        int hexLength = inHex.length();
+        if (isOdd(hexLength) == 1) {
+            hexLength++;
+            result = new byte[(hexLength / 2)];
             inHex = "0" + inHex;
         } else {
-            result = new byte[(hexlen / 2)];
+            result = new byte[(hexLength / 2)];
         }
         int j = 0;
-        for (int i = 0; i < hexlen; i += 2) {
+        for (int i = 0; i < hexLength; i += 2) {
             result[j] = HexToByte(inHex.substring(i, i + 2));
             j++;
         }

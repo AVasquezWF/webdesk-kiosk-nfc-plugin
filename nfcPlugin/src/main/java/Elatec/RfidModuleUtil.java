@@ -98,6 +98,14 @@ public class RfidModuleUtil {
                 cardType = Constant.LFTAG_HIDPROX;
                 cardId = str.substring(10);
                 break;
+            case "83":
+                cardType = Constant.LFTAG_LEGICPRIME;
+                cardId = str.substring(10);
+                break;
+            case "41":
+                cardType = Constant.LFTAG_HITAGS;
+                cardId = str.substring(10);
+                break;
             default:
                 if (cardType.equals(Constant.HFTAG_MIFARE)){
                     cardValue = str.substring(9);
@@ -124,7 +132,7 @@ public class RfidModuleUtil {
             tagInformation.put("value", cardValue);
         }
         tagInformation.put("type", cardType);
-        tagInformation.put("cardId",  cardId);
+        tagInformation.put("cardId", cardId);
         return tagInformation.toString();
     }
 
@@ -153,7 +161,7 @@ public class RfidModuleUtil {
                     String tagInformation = extractTagInformation(str);
 
                     if (beepStatus){
-                        thread.sendCmds(Constant.BEEP.getBytes());
+                        thread.sendCommand(Constant.BEEP.getBytes());
                     }
 
                     if (Objects.equals(cardId, prevCardId)){
@@ -209,17 +217,17 @@ public class RfidModuleUtil {
 
     public void searchTag(){
         cardType = "";
-        thread.sendCmds(Constant.SEARCH_TAG.getBytes());
+        thread.sendCommand(Constant.SEARCH_TAG.getBytes());
     }
 
     public void readTag(){
         switch (cardType){
             case Constant.HFTAG_MIFARE:
-                thread.sendCmds(Constant.MIFARE_LOGIN.getBytes());
-                thread.sendCmds(Constant.MIFARE_READ.getBytes());
+                thread.sendCommand(Constant.MIFARE_LOGIN.getBytes());
+                thread.sendCommand(Constant.MIFARE_READ.getBytes());
                 break;
             case Constant.HFTAG_HIDICLASS:
-                thread.sendCmds(Constant.ICLASS_READ.getBytes());
+                thread.sendCommand(Constant.ICLASS_READ.getBytes());
                 break;
             case Constant.LFTAG_EM4102:
                 break;
@@ -231,7 +239,7 @@ public class RfidModuleUtil {
     }
 
     public void writeTag(String hexData){
-        thread.sendCmds(("0B0202"+hexData+"\r\n").getBytes());
+        thread.sendCommand(("0B0202"+hexData+"\r\n").getBytes());
     }
 
     public void listenForTag() {
@@ -242,6 +250,6 @@ public class RfidModuleUtil {
     }
 
     public boolean sendCommand(String hexData) {
-        return thread.sendCmds((hexData+"\r\n").getBytes());
+        return thread.sendCommand((hexData+"\r\n").getBytes());
     }
 }

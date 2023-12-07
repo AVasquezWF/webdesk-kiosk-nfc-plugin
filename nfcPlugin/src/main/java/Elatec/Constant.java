@@ -29,4 +29,6 @@ public class Constant {
     public static final String HFTAG_HIDICLASS = "HID iCLASS"; //84
     public static final String LFTAG_EM4102 = "EM4x02/CASI-RUSCO"; //40
     public static final String LFTAG_HIDPROX = "HID Prox"; //49
+    public static final String LFTAG_LEGICPRIME = "Legic Prime"; //83
+    public static final String LFTAG_HITAGS = "Hitag S"; //41
 }
