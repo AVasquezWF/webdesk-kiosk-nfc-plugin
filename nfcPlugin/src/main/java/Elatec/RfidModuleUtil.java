@@ -124,8 +124,12 @@ public class RfidModuleUtil {
         System.out.println("cardId ---> "+cardId);
 
         if (!TextUtils.isEmpty(cardId)) {
-            String binary = HexUtil.hex2bin(cardId.trim());
-            cardId = HexUtil.bin2Hex(binary.substring(0, bit_ten));
+            try {
+                String binary = HexUtil.hex2bin(cardId.trim());
+                cardId = HexUtil.bin2Hex(binary.substring(0, bit_ten));
+            } catch (NumberFormatException e){
+                e.printStackTrace();
+            }
         }
 
         if (!TextUtils.isEmpty(cardValue)) {
