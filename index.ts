@@ -2,6 +2,7 @@ import { exec } from "cordova";
 
 const pluginName = "WebdeskKioskNFCPlugin";
 enum Methods {
+    setListenerInterval = "setListenerInterval",
     sendReaderCommand = "sendReaderCommand",
     checkIsReady = "checkIsReady",
     addListener = "addListener",
@@ -17,7 +18,10 @@ type UseExecTemplate = (
 interface KioskReaderPlugin {
     sendReaderCommand: (
         command: string
-    ) => Promise<boolean>;
+    ) => Promise<void>;
+    setListenerInterval: (
+        interval: number
+    ) => Promise<void>;
     checkIsReady: UseExecTemplate;
     addListener: UseExecTemplate;
     readCard: UseExecTemplate;
@@ -37,7 +41,8 @@ const useKioskReader = (): KioskReaderPlugin => {
                 exec(success, error, pluginName, method, []);
 
     return {
-        sendReaderCommand: (command: string) => asPromise<boolean>(Methods.sendReaderCommand, command),
+        setListenerInterval: (interval: number) => asPromise(Methods.setListenerInterval, interval),
+        sendReaderCommand: (command: string) => asPromise(Methods.sendReaderCommand, command),
         checkIsReady: useBasicExecutor(Methods.checkIsReady),
         addListener: useBasicExecutor(Methods.addListener),
         readCard: useBasicExecutor(Methods.readCard),

@@ -4,6 +4,7 @@ const cordova_1 = require("cordova");
 const pluginName = "WebdeskKioskNFCPlugin";
 var Methods;
 (function (Methods) {
+    Methods["setListenerInterval"] = "setListenerInterval";
     Methods["sendReaderCommand"] = "sendReaderCommand";
     Methods["checkIsReady"] = "checkIsReady";
     Methods["addListener"] = "addListener";
@@ -16,6 +17,7 @@ const asPromise = (method, ...args) => new Promise((res, rej) => {
 const useKioskReader = () => {
     const useBasicExecutor = (method) => (success, error) => (0, cordova_1.exec)(success, error, pluginName, method, []);
     return {
+        setListenerInterval: (interval) => asPromise(Methods.setListenerInterval, interval),
         sendReaderCommand: (command) => asPromise(Methods.sendReaderCommand, command),
         checkIsReady: useBasicExecutor(Methods.checkIsReady),
         addListener: useBasicExecutor(Methods.addListener),
