@@ -21,7 +21,7 @@ public class RfidModuleUtil {
     private SerialReadThread thread = null;
     private SerialPort serialPort = null;
     private String COM = "/dev/ttyACM1";
-    private long sleepTime = 100L;
+    private long sleepTime = 250L;
     private int baudrate = 9600;
     private boolean beepStatus = true;
     private String cardType = "";
@@ -32,7 +32,6 @@ public class RfidModuleUtil {
     private List<String> comList = new ArrayList<>();
     private int ret = -1;
 
-    private boolean isTagAttached = false;
     String prevCardId = "";
 
     public RfidModuleUtil(Context context) {
@@ -41,6 +40,13 @@ public class RfidModuleUtil {
 
     public void getData(OnGetDataListener dataListener) {
         this.onDataListener = dataListener;
+    }
+
+    public void setSleepTime(long time) {
+        this.sleepTime = time;
+        if (this.thread != null){
+            this.thread.setSleepTime(time);
+        }
     }
 
     public int init() {

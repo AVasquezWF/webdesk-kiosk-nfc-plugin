@@ -40,6 +40,8 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
                 return readCard(callbackContext);
             case "sendReaderCommand":
                 return sendReaderCommand(callbackContext, data);
+            case "setListenerInterval":
+                return setListenerInterval(callbackContext, data);
             default:
                 callbackContext.error("[execute]: No action found");
                 return false;
@@ -138,6 +140,22 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
             boolean res = rfid.sendCommand(data.getString(0));
             callbackContext.success(data + " " + res);
             return res;
+        } catch (JSONException e) {
+            callbackContext.error(e.toString());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean setListenerInterval(CallbackContext callbackContext, JSONArray data) {
+        if (rfid == null) {
+            callbackContext.error("[checkIsReady]: No rfid installed");
+            return false;
+        }
+        try {
+            rfid.setSleepTime(data.getLong(0));
+            callbackContext.success(data);
+            return true;
         } catch (JSONException e) {
             callbackContext.error(e.toString());
             e.printStackTrace();
