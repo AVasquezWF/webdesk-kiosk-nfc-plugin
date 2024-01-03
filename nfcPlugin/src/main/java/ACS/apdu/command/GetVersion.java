@@ -1,17 +1,17 @@
-package ACS.apdu.command;
+package acs.apdu.command;
 
 import android.util.Log;
 
 import com.acs.smartcard.ReaderException;
-import ACS.ATRHistorical;
-import ACS.Chip;
-import ACS.NFCReader;
-import ACS.Util;
-import ACS.apdu.Result;
-import ACS.task.TaskListener;
-import ACS.params.BaseParams;
-import ACS.reader.ACRReaderException;
-import ACS.reader.OnDataListener;
+import acs.ATRHistorical;
+import acs.Chip;
+import acs.NFCReader;
+import acs.Util;
+import acs.apdu.Result;
+import acs.task.TaskListener;
+import acs.params.BaseParams;
+import acs.reader.ACRReaderException;
+import acs.reader.OnDataListener;
 
 /**
  * Created by kevin on 5/27/15.

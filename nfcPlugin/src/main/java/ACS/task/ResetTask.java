@@ -1,15 +1,15 @@
-package ACS.task;
+package acs.task;
 
 import android.os.AsyncTask;
 
-import ACS.NFCReader;
-import ACS.apdu.Result;
-import ACS.apdu.command.GetVersion;
-import ACS.apdu.command.ReadBinaryBlock;
-import ACS.apdu.command.Reset;
-import ACS.apdu.command.UID;
-import ACS.params.BaseParams;
-import ACS.params.ReadParams;
+import acs.NFCReader;
+import acs.apdu.Result;
+import acs.apdu.command.GetVersion;
+import acs.apdu.command.ReadBinaryBlock;
+import acs.apdu.command.Reset;
+import acs.apdu.command.UID;
+import acs.params.BaseParams;
+import acs.params.ReadParams;
 
 
 /**

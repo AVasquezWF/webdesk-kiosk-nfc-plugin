@@ -1,13 +1,13 @@
-package ACS.task;
+package acs.task;
 
 import android.os.AsyncTask;
 
-import ACS.apdu.command.AutoStartPolling;
-import ACS.apdu.command.Beep;
-import ACS.apdu.command.BuzzerOff;
-import ACS.apdu.command.PICCOperatingParameter;
-import ACS.params.BaseParams;
-import ACS.params.PICCOperatingParameterParams;
+import acs.apdu.command.AutoStartPolling;
+import acs.apdu.command.Beep;
+import acs.apdu.command.BuzzerOff;
+import acs.apdu.command.PICCOperatingParameter;
+import acs.params.BaseParams;
+import acs.params.PICCOperatingParameterParams;
 
 /**
  * Created by kevin on 8/24/15.

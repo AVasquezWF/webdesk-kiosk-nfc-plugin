@@ -1,14 +1,14 @@
-package ACS.apdu.command.card;
+package acs.apdu.command.card;
 
 import android.util.Log;
 
-import ACS.Util;
-import ACS.apdu.Result;
-import ACS.apdu.command.Base;
-import ACS.params.InitNTAGParams;
-import ACS.reader.ACRReader;
-import ACS.reader.ACRReaderException;
-import ACS.reader.OnDataListener;
+import acs.Util;
+import acs.apdu.Result;
+import acs.apdu.command.Base;
+import acs.params.InitNTAGParams;
+import acs.reader.ACRReader;
+import acs.reader.ACRReaderException;
+import acs.reader.OnDataListener;
 
 /**
  * Created by kevin on 5/27/15.

@@ -1,4 +1,4 @@
-package ACS.params;
+package acs.params;
 
 import org.apache.cordova.CallbackContext;
 

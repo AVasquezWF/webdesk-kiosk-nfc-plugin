@@ -1,4 +1,4 @@
-package Elatec;
+package elatec;
 
 import android.serialport.SerialPort;
 
@@ -6,8 +6,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 public class SerialReadThread extends Thread {
+
+    Logger logger = Logger.getLogger(getClass().getName());
+    
     private OnDataReceiveListener onDataReceiveListener = null;
     private OnIterationExecute onIterationExecute = null;
     public static boolean isStop = false;
@@ -53,11 +57,11 @@ public class SerialReadThread extends Thread {
         super.run();
         while (!isStop) {
             if (serialPort == null){
-                System.out.println("[run] Stop thread ");   
+                logger.info("[run] Stop thread ");   
                 return;
             }
             try {
-                System.out.println("[run] Start thread iteration");
+                logger.info("[run] Start thread iteration");
                 Thread.sleep(sleepTime);
 
                 if (null != onIterationExecute) {
@@ -69,17 +73,17 @@ public class SerialReadThread extends Thread {
 
                 if (inputStream.available() == 0) continue;
 
-                System.out.println("[run] inputStream available");
+                logger.info("[run] inputStream available");
 
                 byte[] buffer = new byte[inputStream.available()];
                 int size = inputStream.read(buffer);
 
                 if (size == 0) continue;
 
-                System.out.println("[run] Data was read");      
+                logger.info("[run] Data was read");      
           
                 if (null != onDataReceiveListener) {
-                    System.out.println("[run] On receive data");
+                    logger.info("[run] On receive data");
                     onDataReceiveListener.onDataReceive(buffer, size);
                 }
             } catch (IOException e) {
@@ -99,7 +103,7 @@ public class SerialReadThread extends Thread {
      * @return
      */
     public boolean sendCommand(byte[] cmd) {
-        System.out.println("[sendCommand] Sending " + Arrays.toString(cmd));
+        logger.info("[sendCommand] Sending " + Arrays.toString(cmd));
         boolean result = true;
         try {
             if (outputStream != null) {

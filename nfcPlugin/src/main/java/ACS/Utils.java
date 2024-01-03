@@ -4,10 +4,10 @@
  * This software is the confidential and proprietary information of Advanced
  * Card Systems Ltd. ("Confidential Information").  You shall not disclose such
  * Confidential Information and shall use it only in accordance with the terms
- * of the license agreement you entered into with ACS.
+ * of the license agreement you entered into with acs.
  */
 
-package ACS;
+package acs;
 
 import java.util.Locale;
 

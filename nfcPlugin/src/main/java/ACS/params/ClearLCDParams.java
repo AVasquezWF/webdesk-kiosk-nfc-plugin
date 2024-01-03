@@ -1,6 +1,6 @@
-package ACS.params;
+package acs.params;
 
-import ACS.params.Params;
+import acs.params.Params;
 
 /**
  * Created by kevin on 6/10/15.

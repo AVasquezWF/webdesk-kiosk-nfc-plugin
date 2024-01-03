@@ -1,11 +1,11 @@
-package ACS.task;
+package acs.task;
 
 import android.os.AsyncTask;
 
-import ACS.Util;
-import ACS.apdu.command.UpdateBinaryBlock;
-import ACS.params.AuthParams;
-import ACS.params.WriteParams;
+import acs.Util;
+import acs.apdu.command.UpdateBinaryBlock;
+import acs.params.AuthParams;
+import acs.params.WriteParams;
 
 /**
  * Created by kevin on 6/10/15.

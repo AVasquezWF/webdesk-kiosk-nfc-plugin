@@ -1,4 +1,4 @@
-package Elatec;
+package elatec;
 
 import android.content.Context;
 import android.serialport.SerialPort;
@@ -15,9 +15,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 public class RfidModuleUtil {
-    private OnGetDataListener onDataListener = null;
+
+    Logger logger = Logger.getLogger(getClass().getName());
+    
+    private onGetDataListener onDataListener = null;
     private SerialReadThread thread = null;
     private SerialPort serialPort = null;
     private String COM = "/dev/ttyACM1";
@@ -38,7 +42,7 @@ public class RfidModuleUtil {
         this.mContext = context;
     }
 
-    public void getData(OnGetDataListener dataListener) {
+    public void getData(onGetDataListener dataListener) {
         this.onDataListener = dataListener;
     }
 
@@ -119,14 +123,14 @@ public class RfidModuleUtil {
 
         String bit = str.substring(6,8);
 
-        int bit_ten = Integer.parseInt(bit, 16);
-        System.out.println("bit ---> "+bit_ten);
-        System.out.println("cardId ---> "+cardId);
+        int bitTen = Integer.parseInt(bit, 16);
+        logger.info("bit ---> " + bitTen);
+        logger.info("cardId ---> " + cardId);
 
         if (!TextUtils.isEmpty(cardId)) {
             try {
                 String binary = HexUtil.hex2bin(cardId.trim());
-                cardId = HexUtil.bin2Hex(binary.substring(0, bit_ten));
+                cardId = HexUtil.bin2Hex(binary.substring(0, bitTen));
             } catch (NumberFormatException e){
                 e.printStackTrace();
             }
@@ -151,14 +155,14 @@ public class RfidModuleUtil {
         this.thread.start();
         this.thread.setOnDataReceiveListener((buffer, size) -> {
             if (onDataListener == null) {
-                System.out.println("[start] No dataListener defined");
+                logger.info("[start] No dataListener defined");
                 return;
             }
 
             cardId = "";
             String str = new String(buffer, 0, size);
             String error = "";
-            System.out.println(str.trim());
+            logger.info(str.trim());
 
             if (str.length() > 10) {
                 try {
@@ -169,7 +173,7 @@ public class RfidModuleUtil {
                     }
 
                     if (Objects.equals(cardId, prevCardId)){
-                        System.out.println("onDataListener.onTagEqual");
+                        logger.info("onDataListener.onTagEqual");
                     } else {
                         onDataListener.onDataReceive(cardType, tagInformation);
                         onDataListener.onTagAttached();
@@ -180,7 +184,7 @@ public class RfidModuleUtil {
                 } catch (JSONException e) {
                     error = e.toString();
                 } catch (StringIndexOutOfBoundsException e) {
-                    System.out.println("[setOnDataReceiveListener] Caught StringIndexOutOfBoundsException: " + e.getMessage());
+                    logger.info("[setOnDataReceiveListener] Caught StringIndexOutOfBoundsException: " + e.getMessage());
                     error = e.toString();
                 }
             } else if (str.trim().equals("0000")) {
@@ -192,7 +196,7 @@ public class RfidModuleUtil {
             }
 
             if (Objects.equals(cardId, prevCardId)){
-                System.out.println("onDataListener.onTagEqual");
+                logger.info("onDataListener.onTagEqual");
             } else {
                 onDataListener.onTagDetached();
             }
@@ -209,7 +213,7 @@ public class RfidModuleUtil {
         }
     }
 
-    public interface OnGetDataListener {
+    public interface onGetDataListener {
         void onDataReceive(String cardType, String cardData);
         void onTagDetached();
         void onTagAttached();

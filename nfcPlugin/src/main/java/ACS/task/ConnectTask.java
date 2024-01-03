@@ -1,8 +1,8 @@
-package ACS.task;
+package acs.task;
 
 import android.os.AsyncTask;
-import ACS.operate.ConnectReader;
-import ACS.params.ConnectParams;
+import acs.operate.ConnectReader;
+import acs.params.ConnectParams;
 
 /**
  * Created by cain on 16/4/26.

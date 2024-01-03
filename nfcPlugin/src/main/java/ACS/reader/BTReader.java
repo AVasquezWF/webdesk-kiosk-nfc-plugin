@@ -1,4 +1,4 @@
-package ACS.reader;
+package acs.reader;
 
 
 import android.app.Activity;
@@ -11,14 +11,14 @@ import android.os.Handler;
 import android.util.Log;
 import com.acs.bluetooth.*;
 import com.acs.smartcard.Reader;
-import ACS.ACRDevice;
-import ACS.NFCReader;
-import ACS.Util;
-import ACS.Utils;
-import ACS.apdu.OnGetResultListener;
-import ACS.operate.CustomDevice;
-import ACS.operate.OperateDataListener;
-import ACS.operate.OperateResult;
+import acs.ACRDevice;
+import acs.NFCReader;
+import acs.Util;
+import acs.Utils;
+import acs.apdu.OnGetResultListener;
+import acs.operate.CustomDevice;
+import acs.operate.OperateDataListener;
+import acs.operate.OperateResult;
 import org.apache.cordova.CallbackContext;
 import org.json.JSONException;
 import org.json.JSONObject;

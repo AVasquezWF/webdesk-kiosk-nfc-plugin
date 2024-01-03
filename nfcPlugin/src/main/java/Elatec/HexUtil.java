@@ -1,16 +1,16 @@
-package Elatec;
+package elatec;
 
 public class HexUtil {
-    //十六进制转二进制
+    //Hexadecimal to binary
     public static String hex2bin(String input) {
         StringBuilder sb = new StringBuilder();
         int len = input.length();
         for (int i = 0; i < len; i++){
-            //每1个十六进制位转换为4个二进制位
+            //Convert each hexadecimal digit to 4 binary digits
             String temp = input.substring(i, i + 1);
             int tempInt = Integer.parseInt(temp, 16);
             String tempBin = Integer.toBinaryString(tempInt);
-            //如果二进制数不足4位，补0
+            //If the binary number is less than 4 digits, add 0
             if (tempBin.length() < 4){
                 int num = 4 - tempBin.length();
                 for (int j = 0; j < num; j++){
@@ -23,14 +23,14 @@ public class HexUtil {
         return sb.toString();
     }
 
-    //二进制转十六进制
+    //Binary to hexadecimal
     public static String bin2Hex(String binary){
         StringBuffer sbuf = new StringBuffer();
-        int blength = binary.length() % 4;
-        if(blength != 0){
-            String first = binary.substring(0,blength);
+        int bLength = binary.length() % 4;
+        if(bLength != 0){
+            String first = binary.substring(0,bLength);
             sbuf.append(Integer.toHexString(Integer.parseInt(first,2)));
-            binary = binary.substring(blength);
+            binary = binary.substring(bLength);
         }
         int cnum = binary.length() / 4;
         for(int i=0;i<cnum;i++){
@@ -39,21 +39,21 @@ public class HexUtil {
         return sbuf.toString().toUpperCase();
     }
 
-    //字节转hex
-    public static String ByteArrToHex(byte[] inBytArr) {
+    //Bytes to hexadecimal
+    public static String byteArrToHex(byte[] inBytArr) {
         StringBuilder strBuilder = new StringBuilder();
         for (byte valueOf : inBytArr) {
-            strBuilder.append(Byte2Hex(Byte.valueOf(valueOf)));
+            strBuilder.append(byte2Hex(Byte.valueOf(valueOf)));
             strBuilder.append(" ");
         }
         return strBuilder.toString();
     }
 
-    public static String Byte2Hex(Byte inByte) {
+    public static String byte2Hex(Byte inByte) {
         return String.format("%02x", new Object[]{inByte}).toUpperCase();
     }
 
-    public static byte[] HexToByteArr(String inHex) {
+    public static byte[] hexToByteArr(String inHex) {
         byte[] result;
         int hexlen = inHex.length();
         if (isOdd(hexlen) == 1) {
@@ -65,7 +65,7 @@ public class HexUtil {
         }
         int j = 0;
         for (int i = 0; i < hexlen; i += 2) {
-            result[j] = HexToByte(inHex.substring(i, i + 2));
+            result[j] = hexToByte(inHex.substring(i, i + 2));
             j++;
         }
         return result;
@@ -75,7 +75,7 @@ public class HexUtil {
         return num & 1;
     }
 
-    public static byte HexToByte(String inHex) {
+    public static byte hexToByte(String inHex) {
         return (byte) Integer.parseInt(inHex, 16);
     }
 }

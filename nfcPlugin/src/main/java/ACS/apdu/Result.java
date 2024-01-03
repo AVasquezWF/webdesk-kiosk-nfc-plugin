@@ -1,9 +1,9 @@
-package ACS.apdu;
+package acs.apdu;
 
-import ACS.ChipMeta;
-import ACS.Util;
-import ACS.apdu.command.Base;
-import ACS.apdu.command.ToDataString;
+import acs.ChipMeta;
+import acs.Util;
+import acs.apdu.command.Base;
+import acs.apdu.command.ToDataString;
 
 import java.util.Arrays;
 

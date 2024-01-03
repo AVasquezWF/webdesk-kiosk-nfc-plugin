@@ -1,11 +1,11 @@
-package ACS.apdu.command;
+package acs.apdu.command;
 
-import ACS.apdu.Result;
-import ACS.task.TaskListener;
-import ACS.params.PICCOperatingParameterParams;
-import ACS.reader.ACRReader;
-import ACS.reader.ACRReaderException;
-import ACS.reader.OnDataListener;
+import acs.apdu.Result;
+import acs.task.TaskListener;
+import acs.params.PICCOperatingParameterParams;
+import acs.reader.ACRReader;
+import acs.reader.ACRReaderException;
+import acs.reader.OnDataListener;
 
 /**
  * Created by kevin on 8/24/15.

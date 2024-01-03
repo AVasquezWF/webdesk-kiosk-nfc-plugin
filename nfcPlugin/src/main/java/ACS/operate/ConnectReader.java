@@ -1,9 +1,9 @@
-package ACS.operate;
+package acs.operate;
 
 import com.acs.smartcard.ReaderException;
-import ACS.apdu.Result;
-import ACS.apdu.command.Base;
-import ACS.params.ConnectParams;
+import acs.apdu.Result;
+import acs.apdu.command.Base;
+import acs.params.ConnectParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 

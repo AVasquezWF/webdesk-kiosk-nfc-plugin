@@ -1,11 +1,11 @@
-package ACS.apdu.command;
+package acs.apdu.command;
 
-import ACS.apdu.Result;
-import ACS.params.BaseParams;
-import ACS.reader.ACRReader;
-import ACS.reader.ACRReaderException;
-import ACS.reader.OnDataListener;
-import ACS.task.TaskListener;
+import acs.apdu.Result;
+import acs.params.BaseParams;
+import acs.reader.ACRReader;
+import acs.reader.ACRReaderException;
+import acs.reader.OnDataListener;
+import acs.task.TaskListener;
 
 public class Beep extends Base<BaseParams> implements OnDataListener {
     private final String TAG = "Beep";

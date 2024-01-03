@@ -1,10 +1,10 @@
-package ACS.task;
+package acs.task;
 
 import android.os.AsyncTask;
-import ACS.apdu.command.*;
-import ACS.apdu.command.card.StopSession;
-import ACS.params.BaseParams;
-import ACS.params.ReadParams;
+import acs.apdu.command.*;
+import acs.apdu.command.card.StopSession;
+import acs.params.BaseParams;
+import acs.params.ReadParams;
 
 /**
  * Created by kevin on 6/2/15.

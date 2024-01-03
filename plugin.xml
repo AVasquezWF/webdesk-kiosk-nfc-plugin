@@ -38,170 +38,174 @@
 
         <!-- source-files -->
         <framework src="plugin.build.gradle" custom="true" type="gradleReference" />
-        <!-- Elatec -->
-        <source-file src="nfcPlugin/src/main/java/WebdeskKioskNFCPlugin.java" target-dir="src/" />
-        <source-file src="nfcPlugin/src/main/java/Elatec/HexUtil.java" target-dir="src/Elatec/" />
-        <source-file src="nfcPlugin/src/main/java/Elatec/SerialReadThread.java"
-            target-dir="src/Elatec/" />
-        <source-file src="nfcPlugin/src/main/java/Elatec/Constant.java" target-dir="src/Elatec/" />
-        <source-file src="nfcPlugin/src/main/java/Elatec/RfidModuleUtil.java"
-            target-dir="src/Elatec/" />
-        <!-- ACS -->
-        <source-file src="nfcPlugin/src/main/java/ACS/NFCReader.java" target-dir="src/ACS" />
-        <source-file src="nfcPlugin/src/main/java/ACS/Util.java" target-dir="src/ACS" />
-        <source-file src="nfcPlugin/src/main/java/ACS/Chip.java" target-dir="src/ACS" />
-        <source-file src="nfcPlugin/src/main/java/ACS/ChipMeta.java" target-dir="src/ACS" />
-        <source-file src="nfcPlugin/src/main/java/ACS/ATR.java" target-dir="src/ACS" />
-        <source-file src="nfcPlugin/src/main/java/ACS/ATRHistorical.java" target-dir="src/ACS" />
-        <source-file src="nfcPlugin/src/main/java/ACS/ACRDevice.java" target-dir="src/ACS" />
-        <source-file src="nfcPlugin/src/main/java/ACS/Utils.java" target-dir="src/ACS" />
+        <!-- Plugin -->
+        <source-file src="nfcPlugin/src/main/java/plugin/WebdeskKioskNFCPlugin.java" target-dir="src/plugin" />
+        <source-file src="nfcPlugin/src/main/java/plugin/ACRNFCReaderPhoneGapPlugin.java" target-dir="src/plugin" />
+        <!-- elatec -->
+        <source-file src="nfcPlugin/src/main/java/elatec/HexUtil.java" target-dir="src/elatec/" />
+        <source-file src="nfcPlugin/src/main/java/elatec/SerialReadThread.java"
+            target-dir="src/elatec/" />
+        <source-file src="nfcPlugin/src/main/java/elatec/Constant.java" target-dir="src/elatec/" />
+        <source-file src="nfcPlugin/src/main/java/elatec/RfidModuleUtil.java"
+            target-dir="src/elatec/" />
+        <!-- acs -->
+        <source-file src="nfcPlugin/src/main/java/acs/NFCReader.java" target-dir="src/acs" />
+        <source-file src="nfcPlugin/src/main/java/acs/Util.java" target-dir="src/acs" />
+        <source-file src="nfcPlugin/src/main/java/acs/Chip.java" target-dir="src/acs" />
+        <source-file src="nfcPlugin/src/main/java/acs/ChipMeta.java" target-dir="src/acs" />
+        <source-file src="nfcPlugin/src/main/java/acs/ATR.java" target-dir="src/acs" />
+        <source-file src="nfcPlugin/src/main/java/acs/ATRHistorical.java" target-dir="src/acs" />
+        <source-file src="nfcPlugin/src/main/java/acs/ACRDevice.java" target-dir="src/acs" />
+        <source-file src="nfcPlugin/src/main/java/acs/Utils.java" target-dir="src/acs" />
 
         <!--apdu-command-->
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/Base.java"
-            target-dir="src/ACS/apdu/command" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/UID.java"
-            target-dir="src/ACS/apdu/command" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/UpdateBinaryBlock.java"
-            target-dir="src/ACS/apdu/command" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/ReadBinaryBlock.java"
-            target-dir="src/ACS/apdu/command" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/Authentication.java"
-            target-dir="src/ACS/apdu/command" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/LoadAuthentication.java"
-            target-dir="src/ACS/apdu/command" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/Reset.java"
-            target-dir="src/ACS/apdu/command" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/OnGetResultListener.java"
-            target-dir="src/ACS/apdu" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/Result.java" target-dir="src/ACS/apdu" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/ClearCLD.java"
-            target-dir="src/ACS/apdu/command" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/SelectFile.java"
-            target-dir="src/ACS/apdu/command" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/Display.java"
-            target-dir="src/ACS/apdu/command" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/GetVersion.java"
-            target-dir="src/ACS/apdu/command" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/GetFirmwareVersion.java"
-            target-dir="src/ACS/apdu/command" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/card/CardCommand.java"
-            target-dir="src/ACS/apdu/command/card" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/ToDataString.java"
-            target-dir="src/ACS/apdu/command" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/card/InitChip.java"
-            target-dir="src/ACS/apdu/command/card" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/card/NTagAuth.java"
-            target-dir="src/ACS/apdu/command/card" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/card/StartSession.java"
-            target-dir="src/ACS/apdu/command/card" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/card/StopSession.java"
-            target-dir="src/ACS/apdu/command/card" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/PICCOperatingParameter.java"
-            target-dir="src/ACS/apdu/command" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/GetReceivedData.java"
-            target-dir="src/ACS/apdu/command" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/GetLedStatus.java"
-            target-dir="src/ACS/apdu/command" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/AutoStartPolling.java"
-            target-dir="src/ACS/apdu/command" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/BuzzerOff.java"
-            target-dir="src/ACS/apdu/command" />
-        <source-file src="nfcPlugin/src/main/java/ACS/apdu/command/Beep.java"
-            target-dir="src/ACS/apdu/command" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/Base.java"
+            target-dir="src/acs/apdu/command" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/UID.java"
+            target-dir="src/acs/apdu/command" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/UpdateBinaryBlock.java"
+            target-dir="src/acs/apdu/command" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/ReadBinaryBlock.java"
+            target-dir="src/acs/apdu/command" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/Authentication.java"
+            target-dir="src/acs/apdu/command" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/LoadAuthentication.java"
+            target-dir="src/acs/apdu/command" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/Reset.java"
+            target-dir="src/acs/apdu/command" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/OnGetResultListener.java"
+            target-dir="src/acs/apdu" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/Result.java" target-dir="src/acs/apdu" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/ClearCLD.java"
+            target-dir="src/acs/apdu/command" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/SelectFile.java"
+            target-dir="src/acs/apdu/command" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/Display.java"
+            target-dir="src/acs/apdu/command" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/GetVersion.java"
+            target-dir="src/acs/apdu/command" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/GetFirmwareVersion.java"
+            target-dir="src/acs/apdu/command" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/card/CardCommand.java"
+            target-dir="src/acs/apdu/command/card" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/ToDataString.java"
+            target-dir="src/acs/apdu/command" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/card/InitChip.java"
+            target-dir="src/acs/apdu/command/card" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/card/NTagAuth.java"
+            target-dir="src/acs/apdu/command/card" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/card/StartSession.java"
+            target-dir="src/acs/apdu/command/card" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/card/StopSession.java"
+            target-dir="src/acs/apdu/command/card" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/PICCOperatingParameter.java"
+            target-dir="src/acs/apdu/command" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/GetReceivedData.java"
+            target-dir="src/acs/apdu/command" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/GetLedStatus.java"
+            target-dir="src/acs/apdu/command" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/AutoStartPolling.java"
+            target-dir="src/acs/apdu/command" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/BuzzerOff.java"
+            target-dir="src/acs/apdu/command" />
+        <source-file src="nfcPlugin/src/main/java/acs/apdu/command/Beep.java"
+            target-dir="src/acs/apdu/command" />
 
         <!--params-->
-        <source-file src="nfcPlugin/src/main/java/ACS/params/Params.java"
-            target-dir="src/ACS/params" />
-        <source-file src="nfcPlugin/src/main/java/ACS/params/WriteParams.java"
-            target-dir="src/ACS/params" />
-        <source-file src="nfcPlugin/src/main/java/ACS/params/ReadParams.java"
-            target-dir="src/ACS/params" />
-        <source-file src="nfcPlugin/src/main/java/ACS/params/AuthParams.java"
-            target-dir="src/ACS/params" />
-        <source-file src="nfcPlugin/src/main/java/ACS/params/DisplayParams.java"
-            target-dir="src/ACS/params" />
-        <source-file src="nfcPlugin/src/main/java/ACS/params/ClearLCDParams.java"
-            target-dir="src/ACS/params" />
-        <source-file src="nfcPlugin/src/main/java/ACS/params/BaseParams.java"
-            target-dir="src/ACS/params" />
-        <source-file src="nfcPlugin/src/main/java/ACS/params/InitNTAGParams.java"
-            target-dir="src/ACS/params" />
-        <source-file src="nfcPlugin/src/main/java/ACS/params/SelectFileParams.java"
-            target-dir="src/ACS/params" />
-        <source-file src="nfcPlugin/src/main/java/ACS/params/PICCOperatingParameterParams.java"
-            target-dir="src/ACS/params" />
-        <source-file src="nfcPlugin/src/main/java/ACS/params/ConnectParams.java"
-            target-dir="src/ACS/params" />
-        <source-file src="nfcPlugin/src/main/java/ACS/params/DisconnectParams.java"
-            target-dir="src/ACS/params" />
+        <source-file src="nfcPlugin/src/main/java/acs/params/Params.java"
+            target-dir="src/acs/params" />
+        <source-file src="nfcPlugin/src/main/java/acs/params/WriteParams.java"
+            target-dir="src/acs/params" />
+        <source-file src="nfcPlugin/src/main/java/acs/params/ReadParams.java"
+            target-dir="src/acs/params" />
+        <source-file src="nfcPlugin/src/main/java/acs/params/AuthParams.java"
+            target-dir="src/acs/params" />
+        <source-file src="nfcPlugin/src/main/java/acs/params/DisplayParams.java"
+            target-dir="src/acs/params" />
+        <source-file src="nfcPlugin/src/main/java/acs/params/ClearLCDParams.java"
+            target-dir="src/acs/params" />
+        <source-file src="nfcPlugin/src/main/java/acs/params/BaseParams.java"
+            target-dir="src/acs/params" />
+        <source-file src="nfcPlugin/src/main/java/acs/params/InitNTAGParams.java"
+            target-dir="src/acs/params" />
+        <source-file src="nfcPlugin/src/main/java/acs/params/SelectFileParams.java"
+            target-dir="src/acs/params" />
+        <source-file src="nfcPlugin/src/main/java/acs/params/PICCOperatingParameterParams.java"
+            target-dir="src/acs/params" />
+        <source-file src="nfcPlugin/src/main/java/acs/params/ConnectParams.java"
+            target-dir="src/acs/params" />
+        <source-file src="nfcPlugin/src/main/java/acs/params/DisconnectParams.java"
+            target-dir="src/acs/params" />
 
         <!--task-->
-        <source-file src="nfcPlugin/src/main/java/ACS/task/StopSessionTimerTask.java"
-            target-dir="src/ACS/task" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/ReadTask.java" target-dir="src/ACS/task" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/WriteTask.java" target-dir="src/ACS/task" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/ResetTask.java" target-dir="src/ACS/task" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/TaskWithPassword.java"
-            target-dir="src/ACS/task" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/WriteAuthenticateTask.java"
-            target-dir="src/ACS/task" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/AuthenticateWithKeyA.java"
-            target-dir="src/ACS/task" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/AuthenticateWithKeyB.java"
-            target-dir="src/ACS/task" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/UIDTask.java" target-dir="src/ACS/task" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/DisplayTask.java"
-            target-dir="src/ACS/task" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/ClearLCDTask.java"
-            target-dir="src/ACS/task" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/SelectFileTask.java"
-            target-dir="src/ACS/task" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/GetVersionTask.java"
-            target-dir="src/ACS/task" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/InitNTAGTask.java"
-            target-dir="src/ACS/task" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/GetFirmwareVersionTask.java"
-            target-dir="src/ACS/task" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/PICCOperatingParameterTask.java"
-            target-dir="src/ACS/task" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/GetReceivedDataTask.java"
-            target-dir="src/ACS/task" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/GetLedStatusTask.java"
-            target-dir="src/ACS/task" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/TaskListener.java"
-            target-dir="src/ACS/apdu" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/AbstractTaskListener.java"
-            target-dir="src/ACS/apdu" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/GetBatteryLevelTask.java"
-            target-dir="src/ACS/apdu" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/ConnectTask.java"
-            target-dir="src/ACS/apdu" />
-        <source-file src="nfcPlugin/src/main/java/ACS/task/DisconnectTask.java"
-            target-dir="src/ACS/apdu" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/StopSessionTimerTask.java"
+            target-dir="src/acs/task" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/ReadTask.java" target-dir="src/acs/task" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/WriteTask.java" target-dir="src/acs/task" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/ResetTask.java" target-dir="src/acs/task" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/TaskWithPassword.java"
+            target-dir="src/acs/task" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/WriteAuthenticateTask.java"
+            target-dir="src/acs/task" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/AuthenticateWithKeyA.java"
+            target-dir="src/acs/task" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/AuthenticateWithKeyB.java"
+            target-dir="src/acs/task" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/UIDTask.java" target-dir="src/acs/task" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/DisplayTask.java"
+            target-dir="src/acs/task" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/ClearLCDTask.java"
+            target-dir="src/acs/task" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/SelectFileTask.java"
+            target-dir="src/acs/task" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/GetVersionTask.java"
+            target-dir="src/acs/task" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/InitNTAGTask.java"
+            target-dir="src/acs/task" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/GetFirmwareVersionTask.java"
+            target-dir="src/acs/task" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/PICCOperatingParameterTask.java"
+            target-dir="src/acs/task" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/GetReceivedDataTask.java"
+            target-dir="src/acs/task" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/GetLedStatusTask.java"
+            target-dir="src/acs/task" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/TaskListener.java"
+            target-dir="src/acs/apdu" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/AbstractTaskListener.java"
+            target-dir="src/acs/apdu" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/GetBatteryLevelTask.java"
+            target-dir="src/acs/apdu" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/ConnectTask.java"
+            target-dir="src/acs/apdu" />
+        <source-file src="nfcPlugin/src/main/java/acs/task/DisconnectTask.java"
+            target-dir="src/acs/apdu" />
 
-        <source-file src="nfcPlugin/src/main/java/ACS/reader/ACRReader.java"
-            target-dir="src/ACS/reader" />
-        <source-file src="nfcPlugin/src/main/java/ACS/reader/USBReader.java"
-            target-dir="src/ACS/reader" />
-        <source-file src="nfcPlugin/src/main/java/ACS/reader/BTReader.java"
-            target-dir="src/ACS/reader" />
-        <source-file src="nfcPlugin/src/main/java/ACS/reader/ACRReaderException.java"
-            target-dir="src/ACS/reader" />
-        <source-file src="nfcPlugin/src/main/java/ACS/reader/OnDataListener.java"
-            target-dir="src/ACS/reader" />
+        <source-file src="nfcPlugin/src/main/java/acs/reader/ACRReader.java"
+            target-dir="src/acs/reader" />
+        <source-file src="nfcPlugin/src/main/java/acs/reader/USBReader.java"
+            target-dir="src/acs/reader" />
+        <source-file src="nfcPlugin/src/main/java/acs/reader/BTReader.java"
+            target-dir="src/acs/reader" />
+        <source-file src="nfcPlugin/src/main/java/acs/reader/ACRReaderException.java"
+            target-dir="src/acs/reader" />
+        <source-file src="nfcPlugin/src/main/java/acs/reader/OnDataListener.java"
+            target-dir="src/acs/reader" />
 
         <!--operate-->
-        <source-file src="nfcPlugin/src/main/java/ACS/operate/ConnectReader.java"
-            target-dir="src/ACS/operate" />
-        <source-file src="nfcPlugin/src/main/java/ACS/operate/DisconnectReader.java"
-            target-dir="src/ACS/operate" />
-        <source-file src="nfcPlugin/src/main/java/ACS/operate/CustomDevice.java"
-            target-dir="src/ACS/operate" />
-        <source-file src="nfcPlugin/src/main/java/ACS/operate/OperateDataListener.java"
-            target-dir="src/ACS/operate" />
-        <source-file src="nfcPlugin/src/main/java/ACS/operate/OperateResult.java"
-            target-dir="src/ACS/operate" />
+        <source-file src="nfcPlugin/src/main/java/acs/operate/ConnectReader.java"
+            target-dir="src/acs/operate" />
+        <source-file src="nfcPlugin/src/main/java/acs/operate/DisconnectReader.java"
+            target-dir="src/acs/operate" />
+        <source-file src="nfcPlugin/src/main/java/acs/operate/CustomDevice.java"
+            target-dir="src/acs/operate" />
+        <source-file src="nfcPlugin/src/main/java/acs/operate/OperateDataListener.java"
+            target-dir="src/acs/operate" />
+        <source-file src="nfcPlugin/src/main/java/acs/operate/OperateResult.java"
+            target-dir="src/acs/operate" />
 
+
+        <!-- libs-->
         <source-file src="nfcPlugin/lib/acssmc-1.1.4.jar" target-dir="src/libs" />
         <source-file src="nfcPlugin/lib/acsbt-1.0.0preview7.jar" target-dir="src/libs" />
     </platform>

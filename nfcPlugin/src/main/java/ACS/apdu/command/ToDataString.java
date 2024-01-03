@@ -1,6 +1,6 @@
-package ACS.apdu.command;
+package acs.apdu.command;
 
-import ACS.apdu.Result;
+import acs.apdu.Result;
 
 /**
  * Created by kevin on 16/2/23.

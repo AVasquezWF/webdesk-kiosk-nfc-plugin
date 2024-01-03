@@ -1,9 +1,9 @@
-package ACS.task;
+package acs.task;
 
 import android.os.AsyncTask;
 
-import ACS.apdu.command.ClearCLD;
-import ACS.params.ClearLCDParams;
+import acs.apdu.command.ClearCLD;
+import acs.params.ClearLCDParams;
 
 /**
  * Created by kevin on 6/2/15.

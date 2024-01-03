@@ -1,4 +1,4 @@
-package ACS.reader;
+package acs.reader;
 
 
 import android.app.PendingIntent;
@@ -10,10 +10,10 @@ import org.apache.cordova.CallbackContext;
 
 import java.util.List;
 
-import ACS.ACRDevice;
-import ACS.NFCReader;
-import ACS.apdu.OnGetResultListener;
-import ACS.operate.OperateDataListener;
+import acs.ACRDevice;
+import acs.NFCReader;
+import acs.apdu.OnGetResultListener;
+import acs.operate.OperateDataListener;
 
 public interface ACRReader {
 

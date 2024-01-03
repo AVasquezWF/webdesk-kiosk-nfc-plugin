@@ -1,14 +1,14 @@
-package ACS.task;
+package acs.task;
 
 import android.util.Log;
 
-import ACS.NFCReader;
-import ACS.Util;
-import ACS.apdu.OnGetResultListener;
-import ACS.apdu.Result;
-import ACS.apdu.command.card.StopSession;
+import acs.NFCReader;
+import acs.Util;
+import acs.apdu.OnGetResultListener;
+import acs.apdu.Result;
+import acs.apdu.command.card.StopSession;
 
-import ACS.params.InitNTAGParams;
+import acs.params.InitNTAGParams;
 
 import java.util.TimerTask;
 

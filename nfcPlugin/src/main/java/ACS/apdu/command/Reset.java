@@ -1,12 +1,12 @@
-package ACS.apdu.command;
+package acs.apdu.command;
 
 import com.acs.smartcard.Reader;
-import ACS.NFCReader;
-import ACS.apdu.Result;
-import ACS.task.TaskListener;
-import ACS.params.BaseParams;
-import ACS.reader.ACRReaderException;
-import ACS.reader.OnDataListener;
+import acs.NFCReader;
+import acs.apdu.Result;
+import acs.task.TaskListener;
+import acs.params.BaseParams;
+import acs.reader.ACRReaderException;
+import acs.reader.OnDataListener;
 
 /**
  * Created by kevin on 5/27/15.

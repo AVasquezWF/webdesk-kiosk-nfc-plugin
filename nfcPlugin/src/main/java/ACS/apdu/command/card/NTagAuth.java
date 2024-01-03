@@ -1,8 +1,8 @@
-package ACS.apdu.command.card;
+package acs.apdu.command.card;
 
-import ACS.Util;
-import ACS.task.TaskListener;
-import ACS.params.InitNTAGParams;
+import acs.Util;
+import acs.task.TaskListener;
+import acs.params.InitNTAGParams;
 
 /**
  * Created by kevin on 5/27/15.

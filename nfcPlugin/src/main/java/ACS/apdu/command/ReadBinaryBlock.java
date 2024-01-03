@@ -1,14 +1,14 @@
-package ACS.apdu.command;
+package acs.apdu.command;
 
 import android.util.Log;
 
-import ACS.NFCReader;
-import ACS.Util;
-import ACS.apdu.Result;
-import ACS.task.TaskListener;
-import ACS.params.ReadParams;
-import ACS.reader.ACRReaderException;
-import ACS.reader.OnDataListener;
+import acs.NFCReader;
+import acs.Util;
+import acs.apdu.Result;
+import acs.task.TaskListener;
+import acs.params.ReadParams;
+import acs.reader.ACRReaderException;
+import acs.reader.OnDataListener;
 
 /**
  * Created by kevin on 5/27/15.

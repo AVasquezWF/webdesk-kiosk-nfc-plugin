@@ -1,4 +1,4 @@
-package ACS;
+package acs;
 
 import android.hardware.usb.UsbDevice;
 

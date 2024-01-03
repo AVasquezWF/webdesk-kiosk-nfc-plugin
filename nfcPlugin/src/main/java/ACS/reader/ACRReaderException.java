@@ -1,4 +1,4 @@
-package ACS.reader;
+package acs.reader;
 
 
 public class ACRReaderException extends RuntimeException {

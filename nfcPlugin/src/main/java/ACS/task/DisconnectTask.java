@@ -1,10 +1,10 @@
-package ACS.task;
+package acs.task;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import ACS.operate.DisconnectReader;
-import ACS.params.BaseParams;
-import ACS.params.DisconnectParams;
+import acs.operate.DisconnectReader;
+import acs.params.BaseParams;
+import acs.params.DisconnectParams;
 
 /**
  * Created by kevin on 16/3/25.

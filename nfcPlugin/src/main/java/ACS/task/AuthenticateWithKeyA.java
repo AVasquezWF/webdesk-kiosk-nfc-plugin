@@ -1,12 +1,12 @@
-package ACS.task;
+package acs.task;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
-import ACS.Util;
-import ACS.apdu.command.Authentication;
-import ACS.apdu.command.LoadAuthentication;
-import ACS.params.AuthParams;
+import acs.Util;
+import acs.apdu.command.Authentication;
+import acs.apdu.command.LoadAuthentication;
+import acs.params.AuthParams;
 
 
 /**

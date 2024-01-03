@@ -1,16 +1,16 @@
-package ACS.task;
+package acs.task;
 
 import android.util.Log;
 import com.acs.smartcard.ReaderException;
-import ACS.NFCReader;
-import ACS.apdu.OnGetResultListener;
-import ACS.apdu.Result;
-import ACS.apdu.command.Beep;
-import ACS.apdu.command.card.NTagAuth;
-import ACS.apdu.command.card.StartSession;
-import ACS.apdu.command.card.StopSession;
-import ACS.params.BaseParams;
-import ACS.params.InitNTAGParams;
+import acs.NFCReader;
+import acs.apdu.OnGetResultListener;
+import acs.apdu.Result;
+import acs.apdu.command.Beep;
+import acs.apdu.command.card.NTagAuth;
+import acs.apdu.command.card.StartSession;
+import acs.apdu.command.card.StopSession;
+import acs.params.BaseParams;
+import acs.params.InitNTAGParams;
 
 /**
  * Created by kevin on 8/12/15.

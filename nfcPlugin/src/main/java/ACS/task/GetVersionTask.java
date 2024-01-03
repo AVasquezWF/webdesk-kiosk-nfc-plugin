@@ -1,9 +1,9 @@
-package ACS.task;
+package acs.task;
 
 import android.os.AsyncTask;
 
-import ACS.apdu.command.GetVersion;
-import ACS.params.BaseParams;
+import acs.apdu.command.GetVersion;
+import acs.params.BaseParams;
 
 /**
  * Created by kevin on 6/2/15.

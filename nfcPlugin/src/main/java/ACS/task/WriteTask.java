@@ -1,12 +1,12 @@
-package ACS.task;
+package acs.task;
 
 import android.os.AsyncTask;
 
-import ACS.apdu.command.Beep;
-import ACS.apdu.command.UpdateBinaryBlock;
-import ACS.apdu.command.card.StopSession;
-import ACS.params.BaseParams;
-import ACS.params.WriteParams;
+import acs.apdu.command.Beep;
+import acs.apdu.command.UpdateBinaryBlock;
+import acs.apdu.command.card.StopSession;
+import acs.params.BaseParams;
+import acs.params.WriteParams;
 
 /**
  * Created by kevin on 6/2/15.

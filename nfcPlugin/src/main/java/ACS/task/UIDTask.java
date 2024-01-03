@@ -1,8 +1,8 @@
-package ACS.task;
+package acs.task;
 
 import android.os.AsyncTask;
-import ACS.apdu.command.UID;
-import ACS.params.BaseParams;
+import acs.apdu.command.UID;
+import acs.params.BaseParams;
 
 /**
  * Created by kevin on 6/2/15.

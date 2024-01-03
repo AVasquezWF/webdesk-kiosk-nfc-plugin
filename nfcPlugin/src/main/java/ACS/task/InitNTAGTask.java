@@ -1,15 +1,15 @@
-package ACS.task;
+package acs.task;
 
 import android.os.AsyncTask;
 
 import android.util.Log;
 import com.acs.smartcard.ReaderException;
-import ACS.apdu.Result;
-import ACS.apdu.command.card.InitChip;
-import ACS.apdu.command.card.NTagAuth;
-import ACS.apdu.command.card.StartSession;
-import ACS.apdu.command.card.StopSession;
-import ACS.params.InitNTAGParams;
+import acs.apdu.Result;
+import acs.apdu.command.card.InitChip;
+import acs.apdu.command.card.NTagAuth;
+import acs.apdu.command.card.StartSession;
+import acs.apdu.command.card.StopSession;
+import acs.params.InitNTAGParams;
 
 /**
  * Created by kevin on 6/2/15.

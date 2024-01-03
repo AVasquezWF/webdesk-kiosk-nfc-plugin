@@ -1,7 +1,7 @@
-package ACS.params;
+package acs.params;
 
-import ACS.NFCReader;
-import ACS.apdu.OnGetResultListener;
+import acs.NFCReader;
+import acs.apdu.OnGetResultListener;
 
 /**
  * Created by kevin on 6/23/15.

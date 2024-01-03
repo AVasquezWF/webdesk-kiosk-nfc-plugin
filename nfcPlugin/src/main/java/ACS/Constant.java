@@ -1,4 +1,4 @@
-package ACS;
+package acs;
 
 public class Constant {
     public static final String TAG = "ACR";

@@ -1,8 +1,8 @@
-package ACS.task;
+package acs.task;
 
 import android.os.AsyncTask;
-import ACS.apdu.command.GetFirmwareVersion;
-import ACS.params.BaseParams;
+import acs.apdu.command.GetFirmwareVersion;
+import acs.params.BaseParams;
 
 /**
  * Created by kevin on 16/2/23.

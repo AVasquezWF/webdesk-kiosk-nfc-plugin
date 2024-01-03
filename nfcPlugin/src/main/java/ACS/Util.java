@@ -1,8 +1,8 @@
-package ACS;
+package acs;
 
 import android.util.Log;
 
-import ACS.apdu.Result;
+import acs.apdu.Result;
 
 import org.json.JSONException;
 import org.json.JSONObject;

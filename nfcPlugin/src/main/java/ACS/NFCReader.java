@@ -1,4 +1,4 @@
-package ACS;
+package acs;
 
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -6,12 +6,12 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.acs.smartcard.*;
-import ACS.apdu.OnGetResultListener;
-import ACS.apdu.Result;
-import ACS.reader.ACRReader;
-import ACS.task.*;
+import acs.apdu.OnGetResultListener;
+import acs.apdu.Result;
+import acs.reader.ACRReader;
+import acs.task.*;
 
-import ACS.params.*;
+import acs.params.*;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaWebView;
 
