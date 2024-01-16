@@ -20,7 +20,7 @@ import elatec.RfidModuleUtil;
 public class WebdeskKioskNFCPlugin extends CordovaPlugin {
     Logger logger = Logger.getLogger(getClass().getName());
 
-    static final String NO_RFID_ERROR = "[checkIsReady]: No rfid installed";
+    static final String NO_RFID_ERROR = "[NO_RFID_ERROR]: No rfid installed";
     Context context;
     RfidModuleUtil rfid = null;
 
@@ -57,7 +57,7 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
 
     private boolean readCard(CallbackContext callbackContext) {
         if (rfid == null) {
-            callbackContext.error("[readCard]: No rfid installed");
+            callbackContext.error(NO_RFID_ERROR);
             return false;
         }
         rfid.searchTag();

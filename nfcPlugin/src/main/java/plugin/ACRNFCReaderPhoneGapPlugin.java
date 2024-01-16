@@ -1,25 +1,17 @@
 package plugin;
 
-/**
- * Created by kevin on 5/20/15.
- */
-
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.PendingIntent;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
+import android.os.Build;
 import android.util.Log;
 
-import com.acs.bluetooth.BluetoothReader;
-import com.acs.bluetooth.BluetoothReaderGattCallback;
-import com.acs.bluetooth.BluetoothReaderManager;
 import com.acs.smartcard.Reader;
 
 import org.apache.cordova.CallbackContext;
@@ -29,6 +21,7 @@ import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Timer;
 
@@ -36,7 +29,6 @@ import acs.ACRDevice;
 import acs.NFCReader;
 import acs.Util;
 import acs.apdu.OnGetResultListener;
-import acs.apdu.Result;
 import acs.params.AuthParams;
 import acs.params.BaseParams;
 import acs.params.ClearLCDParams;
@@ -47,7 +39,6 @@ import acs.params.ReadParams;
 import acs.params.SelectFileParams;
 import acs.params.WriteParams;
 import acs.reader.ACRReader;
-import acs.reader.BTReader;
 import acs.reader.USBReader;
 import acs.task.StopSessionTimerTask;
 
@@ -56,10 +47,9 @@ import acs.task.StopSessionTimerTask;
  */
 public class ACRNFCReaderPhoneGapPlugin extends CordovaPlugin {
 
-    private Activity pluginActivity;
-
     private static final String TAG = "ACR";
     private static final String LISTEN = "listen";
+    private static final String ADD_LISTENER = "addListener";
     private static final String READ_UID = "readUID";
     private static final String READ_DATA = "readData";
     private static final String WRITE_DATA = "writeData";
@@ -82,25 +72,14 @@ public class ACRNFCReaderPhoneGapPlugin extends CordovaPlugin {
     private static final String START_SCAN = "startScan";
     private static final String STOP_SCAN = "stopScan";
     private static final String RECONNECT_READER = "reconnectReader";
-    private static final int REQUEST_ENABLE_BT = 1;
-
-    private static boolean isSupportedBlueTooth = true;
-
+    private static final String ON_READY = "onReady";
+    private static final String ON_ATTACH = "onAttach";
+    private static final String ON_DETACH = "onDetach";
     private CordovaWebView webView;
-
     private NFCReader nfcReader;
-
     private UsbManager usbManager;
+    private CallbackContext contextEmitter;
 
-    private BluetoothReaderManager bluetoothReaderManager;
-    private BluetoothManager mBluetoothManager;
-    private BluetoothAdapter mBluetoothAdapter;
-    private BluetoothReader mbluetoothReader;
-    private BluetoothReaderGattCallback mGattCallback;
-
-    private int batteryLevel = -1;
-
-    // private Reader reader;
     PendingIntent mPermissionIntent;
 
     private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
@@ -126,25 +105,10 @@ public class ACRNFCReaderPhoneGapPlugin extends CordovaPlugin {
     public void initialize(CordovaInterface cordova, final CordovaWebView webView) {
         this.webView = webView;
         super.initialize(cordova, webView);
-        this.pluginActivity = cordova.getActivity();
 
-        Log.d(TAG, "initializing...");
-        /*
-         * if (pluginActivity.getPackageManager().hasSystemFeature(PackageManager.
-         * FEATURE_BLUETOOTH_LE)) { mBluetoothManager = (BluetoothManager)
-         * pluginActivity.getSystemService(Context.BLUETOOTH_SERVICE); mBluetoothAdapter
-         * = mBluetoothManager.getAdapter(); if (mBluetoothAdapter == null ||
-         * !mBluetoothAdapter.isEnabled()) { Intent enableBtIntent = new
-         * Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-         * cordova.getActivity().startActivityForResult(enableBtIntent,
-         * REQUEST_ENABLE_BT); } useBluetoothReader(cordova, webView);
-         * 
-         * } else {
-         */
-        isSupportedBlueTooth = false;
+        Log.d(TAG, "Initializing...");
+
         useUsbReader(cordova, webView);
-        // }
-
     }
 
     private Timer timer;
@@ -155,83 +119,47 @@ public class ACRNFCReaderPhoneGapPlugin extends CordovaPlugin {
         timer.schedule(task, 10000, 5000);
     }
 
-    private void useBluetoothReader(CordovaInterface cordova, final CordovaWebView webView) {
-        ACRReader reader = new BTReader(mBluetoothManager, getActivity());
-
-        nfcReader = new NFCReader(reader, webView);
-
-        nfcReader.setOnStatusChangeListener(new ACRReader.StatusChangeListener() {
-
-            @Override
-            public void onReady(ACRReader reader) {
-                Log.d(TAG, "onReady");
-                initReader(null, null);
-                webView.sendJavascript("ACR.onReady('" + reader.getReaderName() + "');");
-            }
-
-            @Override
-            public void onAttach(ACRDevice device) {
-                Log.d(TAG, "onAttach");
-                webView.sendJavascript("ACR.onAttach('" + ((BluetoothDevice) device.getDevice()).getName() + "');");
-            }
-
-            @Override
-            public void onDetach(ACRDevice device) {
-                Log.d(TAG, "onDetach");
-                webView.sendJavascript("ACR.onDetach('" + ((BluetoothDevice) device.getDevice()).getName() + "');");
-            }
-        });
-        nfcReader.start();
-    }
-
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
     private void useUsbReader(CordovaInterface cordova, final CordovaWebView webView) {
         usbManager = (UsbManager) cordova.getActivity().getSystemService(Context.USB_SERVICE);
         ACRReader reader = new USBReader(usbManager);
         nfcReader = new NFCReader(reader);
-        nfcReader.setOnStateChangeListener(new Reader.OnStateChangeListener() {
+        nfcReader.setOnStateChangeListener((slotNumber, previousState, currentState) -> {
+            Log.d(TAG, "slotNumber " + slotNumber);
+            Log.d(TAG, "previousState " + previousState);
+            Log.d(TAG, "currentState " + currentState);
 
-            @Override
-            public void onStateChange(int slotNumber, int previousState, int currentState) {
-                // if (!nfcReader.isProcessing()) {
-                Log.d(TAG, "slotNumber " + slotNumber);
-                Log.d(TAG, "previousState " + previousState);
-                Log.d(TAG, "currentState " + currentState);
-
-                if (slotNumber == 0 && currentState == Reader.CARD_PRESENT) {
-                    Log.d(TAG, "Ready to read!!!!");
-                    nfcReader.reset(slotNumber);
-                } else {// if (currentState == Reader.CARD_ABSENT && previousState ==
-                        // Reader.CARD_PRESENT) {
-                    Log.d(TAG, "Card Lost");
-                    webView.sendJavascript("ACR.runCardAbsent();");
-                }
-                // }
+            if (slotNumber == 0 && currentState == Reader.CARD_PRESENT) {
+                Log.d(TAG, "Ready to read!!!!");
+                nfcReader.reset(slotNumber);
+            } else {
+                Log.d(TAG, "Card Lost");
+                webView.sendJavascript("ACR.runCardAbsent();");
             }
         });
 
         nfcReader.setOnStatusChangeListener(new ACRReader.StatusChangeListener() {
-
             @Override
             public void onReady(ACRReader reader) {
-                Log.d(TAG, "onReady");
+                Log.d(TAG, ON_READY);
                 initReader(null, null);
-                webView.sendJavascript("ACR.onReady();");
+                emitPluginResult(ON_READY, null);
             }
 
             @Override
             public void onAttach(ACRDevice device) {
-                Log.d(TAG, "onAttach");
-                webView.sendJavascript("ACR.onAttach('" + ((UsbDevice) device.getDevice()).getDeviceName() + "');");
-            }
+                Log.d(TAG, ON_ATTACH);
+                emitPluginResult(ON_ATTACH, ((UsbDevice) device.getDevice()).getDeviceName());
+             }
 
             @Override
             public void onDetach(ACRDevice device) {
-                Log.d(TAG, "onDetach");
-                webView.sendJavascript("ACR.onDetach('" + ((UsbDevice) device.getDevice()).getDeviceName() + "');");
+                Log.d(TAG, ON_DETACH);
+                emitPluginResult(ON_DETACH, ((UsbDevice) device.getDevice()).getDeviceName());
             }
         });
-        // Register receiver for USB permission
 
+        // Register receiver for USB permission
         mPermissionIntent = PendingIntent.getBroadcast(getActivity(), 0, new Intent(ACTION_USB_PERMISSION), 0);
         nfcReader.setPermissionIntent(mPermissionIntent);
         IntentFilter filter = new IntentFilter();
@@ -245,10 +173,11 @@ public class ACRNFCReaderPhoneGapPlugin extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
 
-        Log.d(TAG, "execute " + action);
+        Log.d(TAG, "Execute action: " + action);
 
-        // TODO call error callback if there is no reader
-        if (action.equalsIgnoreCase(LISTEN)) {
+        if (action.equalsIgnoreCase(ADD_LISTENER)) {
+            return addListener(callbackContext);
+        }else if (action.equalsIgnoreCase(LISTEN)) {
             listen(callbackContext);
         } else if (action.equalsIgnoreCase(READ_UID)) {
             readUID(callbackContext);
@@ -283,7 +212,6 @@ public class ACRNFCReaderPhoneGapPlugin extends CordovaPlugin {
         } else if (action.equalsIgnoreCase(GET_BATTERY_LEVEL)) {
             getBatteryLevel(callbackContext);
         } else if (action.equalsIgnoreCase(CONNECT_READER)) {
-            // connectReader(callbackContext);
             connectReader(callbackContext, data);
         } else if (action.equalsIgnoreCase(DISCONNECT_READER)) {
             disconnectReader();
@@ -303,8 +231,34 @@ public class ACRNFCReaderPhoneGapPlugin extends CordovaPlugin {
         return true;
     }
 
+    private boolean addListener(CallbackContext callbackContext) {
+        this.contextEmitter = callbackContext;
+        return true;
+    }
+
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
+    private void emitPluginResult (String key, String payload){
+        try {
+            JSONObject jsonPayload = new JSONObject();
+            jsonPayload.put("key", key);
+            jsonPayload.put("payload", payload);
+
+        boolean isEmptyResult = payload == null || payload.isEmpty();
+        PluginResult result = isEmptyResult
+                ? new PluginResult(PluginResult.Status.OK)
+                : new PluginResult(PluginResult.Status.OK, jsonPayload);
+
+        result.setKeepCallback(true);
+        contextEmitter.sendPluginResult(result);
+
+        } catch (JSONException e) {
+            Log.d(e.toString(), e.toString());
+        }
+    }
+
     private void initReader(CallbackContext callbackContext, JSONArray data) {
         nfcReader.updatePICCOperatingParameter(generateResultListener(null));
+        callbackContext.success();
     }
 
     private void initNTAG213(CallbackContext callbackContext, JSONArray data) {
@@ -328,22 +282,14 @@ public class ACRNFCReaderPhoneGapPlugin extends CordovaPlugin {
     private void getBatteryLevel(final CallbackContext callbackContext) {
         BaseParams baseParams = new BaseParams(0);
         baseParams.setOnGetResultListener(generateResultListener(callbackContext));
-        // nfcReader.getBatteryLevel(baseParams);
         callbackContext.success(nfcReader.getReader().getBatteryLevelValue());
     }
-
-    // private void connectReader(final CallbackContext callbackContext) {
-    // if (nfcReader != null) {
-    // Log.d(TAG, "$$$$Try to connect");
-    // nfcReader.connect();
-    // }
-    // }
 
     public void connectReader(final CallbackContext callbackContext, JSONArray data) {
         if (nfcReader != null) {
             try {
                 String mDeviceAddress = data.getString(0);
-                Log.d("ACR", "mdevice data:" + data);
+                Log.d("ACR", "mDevice data:" + data);
                 ConnectParams connectParams = new ConnectParams(mDeviceAddress, callbackContext);
                 connectParams.setOnGetResultListener(generateResultListener(callbackContext));
                 nfcReader.connect(connectParams);
@@ -483,34 +429,27 @@ public class ACRNFCReaderPhoneGapPlugin extends CordovaPlugin {
     }
 
     private OnGetResultListener generateResultListener(final CallbackContext callbackContext) {
-        return new OnGetResultListener() {
-            @Override
-            public void onResult(Result result) {
-                Log.d(TAG, "==========" + result.getCommand() + "==========");
-                Log.d(TAG, result.isSendPlugin() ? "Send to Plugin" : "Does not Send to Plugin");
-                Log.d(TAG, "Success: " + result.isSuccess());
-                Log.d(TAG, "Code: " + result.getCodeString());
-                if (result.getData() != null) {
-                    Log.d(TAG, "Data: " + Util.ByteArrayToHexString(result.getData()));
-                }
-                Log.d(TAG, "====================");
-                if (callbackContext != null && result.isSendPlugin()) {
-                    PluginResult pluginResult = new PluginResult(
-                            result.isSuccess() ? PluginResult.Status.OK : PluginResult.Status.ERROR,
-                            Util.resultToJSON(result));
-                    pluginResult.setKeepCallback(true);
-                    callbackContext.sendPluginResult(pluginResult);
-                }
+        return result -> {
+            Log.d(TAG, "==========" + result.getCommand() + "==========");
+            Log.d(TAG, result.isSendPlugin() ? "Send to Plugin" : "Does not Send to Plugin");
+            Log.d(TAG, "Success: " + result.isSuccess());
+            Log.d(TAG, "Code: " + result.getCodeString());
+            if (result.getData() != null) {
+                Log.d(TAG, "Data: " + Util.ByteArrayToHexString(result.getData()));
+            }
+            Log.d(TAG, "====================");
+            if (callbackContext != null && result.isSendPlugin()) {
+                PluginResult pluginResult = new PluginResult(
+                        result.isSuccess() ? PluginResult.Status.OK : PluginResult.Status.ERROR,
+                        Util.resultToJSON(result));
+                pluginResult.setKeepCallback(true);
+                callbackContext.sendPluginResult(pluginResult);
             }
         };
     }
 
     private Activity getActivity() {
         return this.cordova.getActivity();
-    }
-
-    private Intent getIntent() {
-        return getActivity().getIntent();
     }
 
     @Override
