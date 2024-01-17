@@ -15,8 +15,8 @@ export const useACROriginalImpl = (pluginName: string) => {
         AID: "F222222228",
     };
 
-    const start = () => {
-        if (cordova.platformId !== "android") return;
+    const start: UseExecTemplate = (success, error) => {
+        if (cordova.platformId !== "android") return error(false);
 
         const onSuccess: CordovaCallback = (res) => {
             state.metadata = res.metadata;
@@ -29,6 +29,8 @@ export const useACROriginalImpl = (pluginName: string) => {
         setTimeout(() => {
             useBasicExecutor("listen")(onSuccess, onError);
         }, 10);
+
+        success(true);
     };
 
     const setAID = (aid: string) => {
@@ -255,7 +257,7 @@ export const useACROriginalImpl = (pluginName: string) => {
         readUID,
 
         //Internally used
-        onAttach, 
+        onAttach,
         onDetach,
         onReady,
         onScan,

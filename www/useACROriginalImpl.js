@@ -14,9 +14,9 @@ const useACROriginalImpl = (pluginName) => {
         },
         AID: "F222222228",
     };
-    const start = () => {
+    const start = (success, error) => {
         if (cordova.platformId !== "android")
-            return;
+            return error(false);
         const onSuccess = (res) => {
             state.metadata = res.metadata;
             events.tagSuccessListener(res);
@@ -27,6 +27,7 @@ const useACROriginalImpl = (pluginName) => {
         setTimeout(() => {
             useBasicExecutor("listen")(onSuccess, onError);
         }, 10);
+        success(true);
     };
     const setAID = (aid) => {
         state.AID = aid;
