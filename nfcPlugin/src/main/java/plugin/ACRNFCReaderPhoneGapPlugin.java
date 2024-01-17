@@ -232,6 +232,11 @@ public class ACRNFCReaderPhoneGapPlugin extends CordovaPlugin {
     }
 
     private boolean addListener(CallbackContext callbackContext) {
+        this.listen(callbackContext);
+        return true;
+    }
+
+    private boolean setContextEmitter(CallbackContext callbackContext) {
         this.contextEmitter = callbackContext;
         return true;
     }
