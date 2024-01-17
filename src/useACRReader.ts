@@ -1,9 +1,7 @@
 import { useACROriginalImpl } from "./useACROriginalImpl";
 import {
-    CordovaCallback,
     KioskReaderPlugin,
     Methods,
-    UseExecTemplate,
     useKioskReader,
 } from "./useReader";
 

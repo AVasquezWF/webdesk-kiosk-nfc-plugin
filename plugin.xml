@@ -37,15 +37,15 @@
 
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="WebdeskKioskNFCPlugin">
-                <param name="android-package" value="WebdeskKioskNFCPlugin" />
+                <param name="android-package" value="WebdeskKioskNFCPlugin.plugin" />
             </feature>
         </config-file>
 
         <!-- source-files -->
         <framework src="plugin.build.gradle" custom="true" type="gradleReference" />
         <!-- Plugin -->
-        <source-file src="nfcPlugin/src/main/java/plugin/WebdeskKioskNFCPlugin.java" target-dir="src" />
-        <source-file src="nfcPlugin/src/main/java/plugin/ACRNFCReaderPhoneGapPlugin.java" target-dir="src" />
+        <source-file src="nfcPlugin/src/main/java/plugin/WebdeskKioskNFCPlugin.java" target-dir="src/plugin" />
+        <source-file src="nfcPlugin/src/main/java/plugin/ACRNFCReaderPhoneGapPlugin.java" target-dir="src/plugin" />
         <!-- elatec -->
         <source-file src="nfcPlugin/src/main/java/elatec/HexUtil.java" target-dir="src/elatec/" />
         <source-file src="nfcPlugin/src/main/java/elatec/SerialReadThread.java"
