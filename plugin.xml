@@ -24,6 +24,11 @@
         <runs />
     </js-module>
 
+    <js-module src="www/useACROriginalImpl.js" name="useACROriginalImpl" />
+    <js-module src="www/useACRReader.js" name="useACRReader" />
+    <js-module src="www/useElatecReader.js" name="useElatecReader" />
+    <js-module src="www/useReader.js" name="useReader" />
+    
     <platform name="android">
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.NFC" />
