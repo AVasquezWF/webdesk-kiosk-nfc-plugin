@@ -14,8 +14,9 @@ const useElatecReader = () => {
         addListener: useBasicExecutor(useReader_1.Methods.addListener),
         readCard: useBasicExecutor(useReader_1.Methods.readCard),
         init: (success, error) => {
+            useBasicExecutor(useReader_1.Methods.init)(success, error);
             clearInterval(initInterval);
-            initInterval = setInterval(() => useBasicExecutor(useReader_1.Methods.init)(success, error), 10000);
+            initInterval = setInterval(() => useBasicExecutor(useReader_1.Methods.reconnectReader)(() => { }, () => { }), 10000);
         },
     };
 };

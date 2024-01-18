@@ -39,6 +39,8 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         switch (action) {
             case "init":
                 return init(callbackContext);
+            case "reconnect":
+                return reconnectReader(callbackContext);
             case "checkIsReady":
                 return checkIsReady(callbackContext);
             case "addListener":
@@ -79,6 +81,11 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
 
     private boolean addListener(CallbackContext callbackContext) {
         this.listener = callbackContext;
+        return true;
+    }
+
+    private boolean reconnectReader(CallbackContext callbackContext) {
+        rfid.connectSerialPort();
         return true;
     }
 

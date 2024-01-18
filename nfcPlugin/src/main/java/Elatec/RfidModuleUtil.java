@@ -53,7 +53,7 @@ public class RfidModuleUtil {
         }
     }
 
-    private int connectSerialPort (){
+    public int connectSerialPort (){
         if (this.finder == null) {
             this.finder = new SerialPortFinder();
         }

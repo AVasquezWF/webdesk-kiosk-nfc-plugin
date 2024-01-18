@@ -5,6 +5,7 @@ export enum Methods {
     sendReaderCommand = "sendReaderCommand",
     checkIsReady = "checkIsReady",
     addListener = "addListener",
+    reconnectReader = "reconnectReader",
     readCard = "readCard",
     init = "init",
 }

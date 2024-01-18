@@ -8,6 +8,7 @@ var Methods;
     Methods["sendReaderCommand"] = "sendReaderCommand";
     Methods["checkIsReady"] = "checkIsReady";
     Methods["addListener"] = "addListener";
+    Methods["reconnectReader"] = "reconnectReader";
     Methods["readCard"] = "readCard";
     Methods["init"] = "init";
 })(Methods || (exports.Methods = Methods = {}));
