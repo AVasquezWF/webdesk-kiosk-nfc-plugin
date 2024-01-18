@@ -8,10 +8,10 @@ import {
 const pluginName = "ACRNFCReaderPhoneGapPlugin";
 
 export const useACRReader = (): KioskReaderPlugin => {
-    const { asPromise, useBasicExecutor } = useKioskReader(pluginName);
+    const { asPromise } = useKioskReader(pluginName);
 
     const ACR = useACROriginalImpl(pluginName);
-
+   
     // We assign it here as it is the original object which 
     // the Java side interacts with.
     (window as any).ACR = ACR
@@ -23,12 +23,8 @@ export const useACRReader = (): KioskReaderPlugin => {
         sendReaderCommand: (command: string) =>
             asPromise(Methods.sendReaderCommand, command),
         checkIsReady: ACR.isReady,
-        addListener: (success, error) => {
-            setTimeout(() => {
-                useBasicExecutor(Methods.addListener)(success, error);
-            }, 10);
-        },
+        addListener: ACR.addTagListener,
         readCard: ACR.readUID,
-        init: (success, error) => { success("Initialized") },
+        init: ACR.start,
     };
 };
