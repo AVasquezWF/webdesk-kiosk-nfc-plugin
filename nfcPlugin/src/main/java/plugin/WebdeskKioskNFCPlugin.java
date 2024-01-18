@@ -101,6 +101,8 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
             @Override
             public void onDataReceive(String cardType, String cardData) {
                 if (listener == null){
+                    logger.info("[addListener.onGetDataListener]: No listener is attached, ignoring");
+
                     return;
                 }
 
