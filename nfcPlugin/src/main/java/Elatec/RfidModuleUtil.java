@@ -262,9 +262,13 @@ public class RfidModuleUtil {
 
     public void listenForTag() {
         this.thread.setOnIterationExecute(() -> {
-            this.searchTag();
-            this.readTag();
-            this.connectSerialPort();
+            try {
+                this.searchTag();
+                this.readTag();
+                this.connectSerialPort();
+            } catch (Exception exception){
+                logger.info(exception.toString());
+            }
         });
     }
 
