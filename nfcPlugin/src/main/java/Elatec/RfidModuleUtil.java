@@ -22,7 +22,7 @@ public class RfidModuleUtil {
     Logger logger = Logger.getLogger(getClass().getName());
     
     private onGetDataListener onDataListener = null;
-    private SerialReadThread thread = null;
+    public SerialReadThread thread = null;
     private SerialPort serialPort = null;
     private String COM = "/dev/ttyACM1";
     private long sleepTime = 250L;
@@ -68,6 +68,9 @@ public class RfidModuleUtil {
         if (ret == 0) {
             try {
                 this.serialPort = new SerialPort(new File(this.COM), this.baudrate, 0);
+                if (this.thread != null) {
+                    this.thread.setSerialPort(this.serialPort);
+                }
                 ret = 1;
             } catch (IOException ioException) {
                 Toast.makeText(mContext, "Failed to open serial port", Toast.LENGTH_SHORT).show();
