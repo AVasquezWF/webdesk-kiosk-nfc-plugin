@@ -21,7 +21,7 @@ const useACRReader = () => {
             }, 10);
         },
         readCard: ACR.readUID,
-        init: ACR.start,
+        init: (success, error) => { success("Initialized"); },
     };
 };
 exports.useACRReader = useACRReader;

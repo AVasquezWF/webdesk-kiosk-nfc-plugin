@@ -29,6 +29,6 @@ export const useACRReader = (): KioskReaderPlugin => {
             }, 10);
         },
         readCard: ACR.readUID,
-        init: ACR.start,
+        init: (success, error) => { success("Initialized") },
     };
 };
