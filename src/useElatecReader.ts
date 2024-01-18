@@ -3,6 +3,8 @@ import { KioskReaderPlugin, Methods, useKioskReader } from "./useReader";
 const pluginName = "WebdeskKioskNFCPlugin";
 
 export const useElatecReader = (): KioskReaderPlugin => {
+
+    let initInterval: any = 0;
     const { useBasicExecutor, asPromise } = useKioskReader(pluginName);
 
     return {
@@ -12,6 +14,9 @@ export const useElatecReader = (): KioskReaderPlugin => {
         checkIsReady: useBasicExecutor(Methods.checkIsReady),
         addListener: useBasicExecutor(Methods.addListener),
         readCard: useBasicExecutor(Methods.readCard),
-        init: (success, error) => setInterval(() => useBasicExecutor(Methods.init)(success, error), 10000),
+        init: (success, error) => {
+            clearInterval(initInterval);
+            initInterval = setInterval(() => useBasicExecutor(Methods.init)(success, error), 10000)
+        },
     };
 };
