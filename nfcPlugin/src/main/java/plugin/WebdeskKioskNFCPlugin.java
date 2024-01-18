@@ -39,7 +39,7 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         switch (action) {
             case "init":
                 return init(callbackContext);
-            case "reconnect":
+            case "reconnectReader":
                 return reconnectReader(callbackContext);
             case "checkIsReady":
                 return checkIsReady(callbackContext);
