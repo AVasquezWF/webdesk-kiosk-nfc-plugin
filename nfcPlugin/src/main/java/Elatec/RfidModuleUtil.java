@@ -265,7 +265,6 @@ public class RfidModuleUtil {
             try {
                 this.searchTag();
                 this.readTag();
-                this.connectSerialPort();
             } catch (Exception exception){
                 logger.info(exception.toString());
             }

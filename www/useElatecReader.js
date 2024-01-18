@@ -12,7 +12,7 @@ const useElatecReader = () => {
         checkIsReady: useBasicExecutor(useReader_1.Methods.checkIsReady),
         addListener: useBasicExecutor(useReader_1.Methods.addListener),
         readCard: useBasicExecutor(useReader_1.Methods.readCard),
-        init: useBasicExecutor(useReader_1.Methods.init),
+        init: (success, error) => setInterval(() => useBasicExecutor(useReader_1.Methods.init)(success, error), 10000),
     };
 };
 exports.useElatecReader = useElatecReader;

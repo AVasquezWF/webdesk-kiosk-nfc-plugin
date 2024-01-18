@@ -12,6 +12,6 @@ export const useElatecReader = (): KioskReaderPlugin => {
         checkIsReady: useBasicExecutor(Methods.checkIsReady),
         addListener: useBasicExecutor(Methods.addListener),
         readCard: useBasicExecutor(Methods.readCard),
-        init: useBasicExecutor(Methods.init),
+        init: (success, error) => setInterval(() => useBasicExecutor(Methods.init)(success, error), 10000),
     };
 };
