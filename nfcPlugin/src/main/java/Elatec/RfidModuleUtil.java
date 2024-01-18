@@ -53,8 +53,11 @@ public class RfidModuleUtil {
         }
     }
 
-    public int init() {
-        finder = new SerialPortFinder();
+    private int connectSerialPort (){
+        if (this.finder == null) {
+            this.finder = new SerialPortFinder();
+        }
+
         comList = Arrays.asList(finder.getAllDevicesPath());
         if (comList.contains(COM)){
             ret = 0;
@@ -75,6 +78,11 @@ public class RfidModuleUtil {
             }
         }
         return ret;
+
+    }
+
+    public int init() {
+        return connectSerialPort();
     }
 
     private String extractTagInformation (String str) throws JSONException, StringIndexOutOfBoundsException {
@@ -143,6 +151,8 @@ public class RfidModuleUtil {
         tagInformation.put("cardId", cardId);
         return tagInformation.toString();
     }
+
+
 
     public void start() {
         if (ret != 1){
@@ -254,6 +264,7 @@ public class RfidModuleUtil {
         this.thread.setOnIterationExecute(() -> {
             this.searchTag();
             this.readTag();
+            this.connectSerialPort();
         });
     }
 
