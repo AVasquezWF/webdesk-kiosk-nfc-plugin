@@ -53,7 +53,7 @@ public class RfidModuleUtil {
         }
     }
 
-    public int connectSerialPort (){
+    public int init (){
         if (this.finder == null) {
             this.finder = new SerialPortFinder();
         }
@@ -68,9 +68,6 @@ public class RfidModuleUtil {
         if (ret == 0) {
             try {
                 this.serialPort = new SerialPort(new File(this.COM), this.baudrate, 0);
-                if (this.thread != null) {
-                    this.thread.setSerialPort(this.serialPort);
-                }
                 ret = 1;
             } catch (IOException ioException) {
                 Toast.makeText(mContext, "Failed to open serial port", Toast.LENGTH_SHORT).show();
@@ -84,8 +81,30 @@ public class RfidModuleUtil {
 
     }
 
-    public int init() {
-        return connectSerialPort();
+    private SerialPort connectSerialPort() {
+        try {
+            return new SerialPort(new File(this.COM), this.baudrate, 0);
+        } catch (IOException ioException) {
+            Toast.makeText(mContext, "Failed to open serial port", Toast.LENGTH_SHORT).show();
+            ioException.printStackTrace();
+        } catch (SecurityException securityException) {
+            Toast.makeText(mContext, "Failed to open serial port: no read / write permission", Toast.LENGTH_SHORT).show();
+            securityException.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean reconnectSerialPort() {
+        SerialPort newSerialPort = connectSerialPort();
+        if(newSerialPort == null) return false;
+
+        this.thread.shutdownThread();
+
+        this.serialPort = newSerialPort;
+        this.thread.setSerialPort(this.serialPort);
+
+        this.thread.start();
+        return true;
     }
 
     private String extractTagInformation (String str) throws JSONException, StringIndexOutOfBoundsException {

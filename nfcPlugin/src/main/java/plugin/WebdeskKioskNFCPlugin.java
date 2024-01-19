@@ -85,8 +85,13 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
     }
 
     private boolean reconnectReader(CallbackContext callbackContext) {
-        rfid.connectSerialPort();
-        callbackContext.success();
+        boolean result = rfid.reconnectSerialPort();
+        if (result) {
+            callbackContext.success();
+        } else {
+            callbackContext.error("[reconnectReader] A problem occurred while attempting a reconnection");
+        }
+        
         return true;
     }
 
