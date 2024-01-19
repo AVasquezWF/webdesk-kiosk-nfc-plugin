@@ -19,6 +19,7 @@ export interface KioskReaderPlugin {
     checkIsReady: UseExecTemplate;
     addListener: UseExecTemplate;
     readCard: UseExecTemplate;
+    reconnectReader: UseExecTemplate;
     init: UseExecTemplate;
 }
 

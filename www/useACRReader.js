@@ -16,6 +16,7 @@ const useACRReader = () => {
         sendReaderCommand: (command) => asPromise(useReader_1.Methods.sendReaderCommand, command),
         checkIsReady: ACR.isReady,
         addListener: ACR.addTagListener,
+        reconnectReader: ACR.start,
         readCard: ACR.readUID,
         init: ACR.start,
     };
