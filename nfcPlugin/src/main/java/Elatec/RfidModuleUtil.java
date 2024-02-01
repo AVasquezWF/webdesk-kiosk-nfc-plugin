@@ -95,15 +95,20 @@ public class RfidModuleUtil {
     }
 
     public boolean reconnectSerialPort() {
-        SerialPort newSerialPort = connectSerialPort();
-        if(newSerialPort == null) return false;
+        thread.setThreadStopped(true);
 
-        this.thread.shutdownThread();
+        try {
+            serialPort.close();
+            serialPort.getInputStream().close();
+            serialPort.getOutputStream().close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        this.serialPort = newSerialPort;
-        this.thread.setSerialPort(this.serialPort);
+        serialPort = connectSerialPort();
+        thread.setSerialPort(serialPort);
 
-        this.thread.start();
+        thread.setThreadStopped(false);
         return true;
     }
 
@@ -181,7 +186,7 @@ public class RfidModuleUtil {
             return;
         }
         this.thread = new SerialReadThread();
-        SerialReadThread.isStop = false;
+        this.thread.setThreadStopped(false);
         this.thread.setSerialPort(this.serialPort);
         this.thread.setSleepTime(this.sleepTime);
         this.thread.start();

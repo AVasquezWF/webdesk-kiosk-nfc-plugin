@@ -14,7 +14,7 @@ public class SerialReadThread extends Thread {
     
     private OnDataReceiveListener onDataReceiveListener = null;
     private OnIterationExecute onIterationExecute = null;
-    public static boolean isStop = false;
+    private boolean isThreadStopped = false;
     private InputStream inputStream = null;
     private OutputStream outputStream = null;
     private long sleepTime = 500;
@@ -36,6 +36,13 @@ public class SerialReadThread extends Thread {
         return serialPort;
     }
 
+    public boolean isThreadStopped() {
+        return isThreadStopped;
+    }
+    public void setThreadStopped(boolean threadStopped) {
+        isThreadStopped = threadStopped;
+    }
+
     public interface OnDataReceiveListener {
         void onDataReceive(byte[] buffer, int size);
     }
@@ -55,14 +62,19 @@ public class SerialReadThread extends Thread {
     @Override
     public void run() {
         super.run();
-        while (!isStop) {
-            if (serialPort == null){
-                logger.info("[run] Stop thread ");   
-                return;
-            }
+        while (true) {
             try {
+                if (serialPort == null){
+                    logger.info("[run] Ignore iteration as there is not a serialPort active");
+                    continue;
+                }
+
                 logger.info("[run] Start thread iteration");
-                Thread.sleep(sleepTime);
+                sleep(sleepTime);
+                if(isThreadStopped()){
+                    logger.info("[run] Ignore iteration as thread is stopped ");
+                    continue;
+                }
 
                 if (null != onIterationExecute) {
                     onIterationExecute.executeEveryIteration();
@@ -80,18 +92,18 @@ public class SerialReadThread extends Thread {
 
                 if (size == 0) continue;
 
-                logger.info("[run] Data was read");      
-          
+                logger.info("[run] Data was read");
+
                 if (null != onDataReceiveListener) {
                     logger.info("[run] On receive data");
                     onDataReceiveListener.onDataReceive(buffer, size);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                shutdownThread();
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 shutdownThread();
+                return;
             }
         }
     }
@@ -166,7 +178,7 @@ public class SerialReadThread extends Thread {
     }
 
     public void shutdownThread(){
-        isStop = true;
+        setThreadStopped(true);
         this.interrupt();
         if (serialPort != null){
             try {
