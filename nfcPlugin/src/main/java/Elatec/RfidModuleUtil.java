@@ -1,6 +1,9 @@
 package elatec;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.serialport.SerialPort;
 import android.serialport.SerialPortFinder;
 import android.text.TextUtils;
@@ -68,6 +71,7 @@ public class RfidModuleUtil {
         if (ret == 0) {
             try {
                 this.serialPort = new SerialPort(new File(this.COM), this.baudrate, 0);
+                useReceiver();
                 ret = 1;
             } catch (IOException ioException) {
                 Toast.makeText(mContext, "Failed to open serial port", Toast.LENGTH_SHORT).show();
@@ -92,6 +96,31 @@ public class RfidModuleUtil {
             securityException.printStackTrace();
         }
         return null;
+    }
+
+    private void useReceiver () {
+        BroadcastReceiver receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                try{
+                    boolean isConnected = Objects.requireNonNull(intent.getExtras()).getBoolean("connected");
+                    if (isConnected) {
+                        //start doing something for state - connected
+                        logger.info("[useReceiver] USB connected");
+                    } else {
+                        //start doing something for state - disconnected
+                        logger.info("[useReceiver] USB disconnected");
+                    }
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.hardware.usb.action.USB_STATE");
+
+        mContext.registerReceiver(receiver, filter);
     }
 
     public boolean reconnectSerialPort() {
