@@ -121,6 +121,8 @@ public class RfidModuleUtil {
         filter.addAction("android.hardware.usb.action.USB_STATE");
 
         mContext.registerReceiver(receiver, filter);
+        logger.info("[useReceiver] USB can be listened");
+
     }
 
     public boolean reconnectSerialPort() {
