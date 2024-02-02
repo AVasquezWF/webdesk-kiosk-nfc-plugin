@@ -100,6 +100,7 @@ public class SerialReadThread extends Thread {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                this.serialPort = null;
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 shutdownThread();
