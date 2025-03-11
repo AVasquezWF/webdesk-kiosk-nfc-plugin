@@ -85,14 +85,14 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
     }
 
     private boolean checkIsReady(CallbackContext callbackContext) {
-        /*
-        if (rfid == null) {
-            callbackContext.error(NO_RFID_ERROR);
+        try{
+            reader.getCapabilities();
+            callbackContext.success();
+            return true;
+        } catch (Exception e) {
+            callbackContext.error(e.toString());
             return false;
-        }
-        */
-        callbackContext.success();
-        return true;
+        }   
     }
 
     private boolean addListener(CallbackContext callbackContext) {
@@ -180,8 +180,7 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
                             return;
                         }
                         try {
-                            Reader.Capabilities capabilities = reader.checkDevice(cordova.getActivity());
-                            Toast.makeText(context, capabilities.toString(), Toast.LENGTH_SHORT).show();
+                            reader.checkDevice(cordova.getActivity());
                         } catch (UareUException e) {
                             Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
                         }

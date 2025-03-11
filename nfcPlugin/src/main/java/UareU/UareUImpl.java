@@ -18,8 +18,13 @@ public class UareUImpl {
     String deviceName;
 
 
+    public Reader.Capabilities getCapabilities() {
+        Reader.Capabilities cap = reader.GetCapabilities();
+        Log.e("Capabilities --- ", cap.toString());
+        return cap;
+    }
 
-    public Reader.Capabilities checkDevice(Activity activity) throws UareUException {
+    public void checkDevice(Activity activity) throws UareUException {
         prepare(activity);
         reader.Open(Reader.Priority.EXCLUSIVE);
         Reader.CaptureResult result =
@@ -31,8 +36,8 @@ public class UareUImpl {
 
         Log.e("Reader --- ",result.toString());
         Reader.Capabilities cap = reader.GetCapabilities();
+        Log.e("Capabilities --- ", cap.toString());
         reader.Close();
-        return cap;
     }
 
     void prepare(Activity activity) {
