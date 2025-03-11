@@ -44,7 +44,7 @@ public class UareUImpl {
     void prepare(Activity activity) {
         try 
 		{
-            deviceName = Objects.requireNonNull(activity.getIntent().getExtras()).getString("device_name");
+            deviceName = activity.getIntent().getExtras().getString("device_name");
             Log.e("DeviceName --- ", deviceName);
             Globals.DefaultImageProcessing = Reader.ImageProcessing.IMG_PROC_DEFAULT;
             Context applicationContext = activity.getApplicationContext();
