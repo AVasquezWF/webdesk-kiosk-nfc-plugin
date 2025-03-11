@@ -182,6 +182,7 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
                             return;
                         }
                         try {
+                            Toast.makeText(context, device.getDeviceName(), Toast.LENGTH_SHORT).show();
                             reader.checkDevice(cordova.getActivity());
                         } catch (UareUException e) {
                             Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
