@@ -45,14 +45,15 @@ public class UareUImpl {
         try 
 		{
             deviceName = Objects.requireNonNull(activity.getIntent().getExtras()).getString("device_name");
+            Log.e("DeviceName --- ", deviceName);
             Globals.DefaultImageProcessing = Reader.ImageProcessing.IMG_PROC_DEFAULT;
-            Context applContext = activity.getApplicationContext();
-			reader = Globals.getInstance().getReader(deviceName, applContext);
+            Context applicationContext = activity.getApplicationContext();
+			reader = Globals.getInstance().getReader(deviceName, applicationContext);
+            if (reader == null) throw new Exception("[prepare]: No reader assigned");
 			reader.Open(Reader.Priority.EXCLUSIVE);
 			DPI = Globals.GetFirstDPI(reader);
-            if(reader == null) throw new Exception("No reader");
         } catch (Exception e) {
-			Log.w("UareUSampleJava", "error during init of reader");
+			Log.w("UareUSampleJava", e);
 			deviceName = "";
 		}
     }
