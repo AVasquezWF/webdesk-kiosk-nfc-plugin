@@ -225,10 +225,10 @@
 
 
         <!-- libs-->
-        <source-file src="nfcPlugin/lib/acssmc-1.1.4.jar" target-dir="src/libs" />
-        <source-file src="nfcPlugin/lib/acsbt-1.0.0preview7.jar" target-dir="src/libs" />
-        <source-file src="nfcPlugin/lib/dpuareu.jar" target-dir="src/libs" />
-        <source-file src="nfcPlugin/lib/dpuareu.aar" target-dir="src/libs" />
+        <source-file src="nfcPlugin/lib/acssmc-1.1.4.jar" target-dir="src/lib" />
+        <source-file src="nfcPlugin/lib/acsbt-1.0.0preview7.jar" target-dir="src/lib" />
+        <source-file src="nfcPlugin/lib/dpuareu.jar" target-dir="src/lib" />
+        <source-file src="nfcPlugin/lib/dpuareu.aar" target-dir="src/lib" />
     </platform>
 
 </plugin>
