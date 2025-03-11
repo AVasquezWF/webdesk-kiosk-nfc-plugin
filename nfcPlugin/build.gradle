@@ -6,11 +6,15 @@ android {
     compileSdk 28
     defaultConfig {
         minSdkVersion 28
-        targetSdk 28
+        ndk {
+            abiFilters "armeabi-v7a", "x86", "armeabi", "mips"
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
+
     }
+
 }
 
 

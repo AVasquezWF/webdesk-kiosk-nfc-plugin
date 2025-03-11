@@ -51,7 +51,7 @@ public class UareUImpl {
             deviceName = readerCollection.get(0).GetDescription().name;
             Log.e("DeviceName --- ", deviceName);
             Globals.DefaultImageProcessing = Reader.ImageProcessing.IMG_PROC_DEFAULT;
-			reader = Globals.getInstance().getReader(deviceName, applicationContext);
+            reader = Globals.getInstance().getReader(deviceName, applicationContext);
             if (reader == null) throw new Exception("[prepare]: No reader assigned");
 			reader.Open(Reader.Priority.EXCLUSIVE);
 			DPI = Globals.GetFirstDPI(reader);
