@@ -7,6 +7,7 @@ import android.util.Log;
 import com.digitalpersona.uareu.Fid;
 import com.digitalpersona.uareu.Quality;
 import com.digitalpersona.uareu.Reader;
+import com.digitalpersona.uareu.ReaderCollection;
 import com.digitalpersona.uareu.UareUException;
 import com.digitalpersona.uareu.jni.DpfjQuality;
 
@@ -44,10 +45,11 @@ public class UareUImpl {
     void prepare(Activity activity) {
         try 
 		{
-            deviceName = activity.getIntent().getExtras().getString("device_name");
+            Context applicationContext = activity.getApplicationContext();
+            ReaderCollection readerCollection = Globals.getInstance().getReaders(activity.getApplicationContext());
+            deviceName = readerCollection.get(0).GetDescription().name;
             Log.e("DeviceName --- ", deviceName);
             Globals.DefaultImageProcessing = Reader.ImageProcessing.IMG_PROC_DEFAULT;
-            Context applicationContext = activity.getApplicationContext();
 			reader = Globals.getInstance().getReader(deviceName, applicationContext);
             if (reader == null) throw new Exception("[prepare]: No reader assigned");
 			reader.Open(Reader.Priority.EXCLUSIVE);
