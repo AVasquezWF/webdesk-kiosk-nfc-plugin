@@ -117,7 +117,7 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
         filter.addAction(ACTION_USB_PERMISSION);
         filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
         cordova.getActivity().registerReceiver(broadcastReceiver, filter);
-     
+
         callbackContext.success();
         return true;
     }
@@ -180,7 +180,7 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
                             return;
                         }
                         try {
-                            Reader.Capabilities capabilities = reader.CheckDevice();
+                            Reader.Capabilities capabilities = reader.checkDevice(cordova.getActivity());
                             Toast.makeText(context, capabilities.toString(), Toast.LENGTH_SHORT).show();
                         } catch (UareUException e) {
                             Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
