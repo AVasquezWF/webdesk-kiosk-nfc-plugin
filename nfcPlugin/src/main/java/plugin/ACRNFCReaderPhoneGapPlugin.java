@@ -25,22 +25,22 @@ import org.json.JSONObject;
 
 import java.util.Timer;
 
-import acs.ACRDevice;
-import acs.NFCReader;
-import acs.Util;
-import acs.apdu.OnGetResultListener;
-import acs.params.AuthParams;
-import acs.params.BaseParams;
-import acs.params.ClearLCDParams;
-import acs.params.ConnectParams;
-import acs.params.DisplayParams;
-import acs.params.InitNTAGParams;
-import acs.params.ReadParams;
-import acs.params.SelectFileParams;
-import acs.params.WriteParams;
-import acs.reader.ACRReader;
-import acs.reader.USBReader;
-import acs.task.StopSessionTimerTask;
+import acsimpl.ACRDevice;
+import acsimpl.NFCReader;
+import acsimpl.Util;
+import acsimpl.apdu.OnGetResultListener;
+import acsimpl.params.AuthParams;
+import acsimpl.params.BaseParams;
+import acsimpl.params.ClearLCDParams;
+import acsimpl.params.ConnectParams;
+import acsimpl.params.DisplayParams;
+import acsimpl.params.InitNTAGParams;
+import acsimpl.params.ReadParams;
+import acsimpl.params.SelectFileParams;
+import acsimpl.params.WriteParams;
+import acsimpl.reader.ACRReader;
+import acsimpl.reader.USBReader;
+import acsimpl.task.StopSessionTimerTask;
 
 /**
  * This class echoes a string called from JavaScript.
