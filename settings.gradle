@@ -11,5 +11,5 @@ dependencyResolutionManagement {
         }
     }
 }
-rootProject.name = "WebdeskKioskNFCPlugin"
+rootProject.name = "webdesk-kiosk-nfc-plugin"
 include ":nfcPlugin"

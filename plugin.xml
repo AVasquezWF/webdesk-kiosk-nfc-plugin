@@ -2,7 +2,7 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    id="WebdeskKioskNFCPlugin" version="1.0.0">
+    id="webdesk-kiosk-nfc-plugin" version="1.0.0">
 
     <name>Webdesk Kiosk NFC plugin</name>
     <license>MIT</license>
@@ -20,7 +20,7 @@
         <engine name="cordova-android" version=">=9.0.0" />
     </engines>
 
-    <js-module src="www/index.js" name="WebdeskKioskNFCPlugin">
+    <js-module src="www/index.js" name="webdesk-kiosk-nfc-plugin">
         <runs />
     </js-module>
 
