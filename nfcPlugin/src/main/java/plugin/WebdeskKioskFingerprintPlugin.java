@@ -117,62 +117,8 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
         filter.addAction(ACTION_USB_PERMISSION);
         filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
         cordova.getActivity().registerReceiver(broadcastReceiver, filter);
-        /*
-        if (rfid != null) {
-           rfid.stop();
-        }
-
-        rfid = new RfidModuleUtil(context);
-        rfid.setBeep(false);
-
-        rfid.getData(new RfidModuleUtil.onGetDataListener() {
-            @Override
-            public void onDataReceive(String cardType, String cardData) {
-                if (listener == null){
-                    logger.info("[addListener.onGetDataListener]: No listener is attached, ignoring");
-
-                    return;
-                }
-
-                logger.info("[addListener.onGetDataListener]: Data was retrieved: " + cardType + " - " + cardData);
-
-                if (cardType == null) {
-                    logger.info("[addListener.onGetDataListener] Error found: " + cardData);
-                    PluginResult result = new PluginResult(PluginResult.Status.ERROR, cardData);
-                    result.setKeepCallback(true);
-                    listener.sendPluginResult(result);
-
-                } else {
-                    logger.info("[addListener.onGetDataListener]" + cardType + " => " + cardData);
-                    PluginResult result = new PluginResult(PluginResult.Status.OK, cardData);
-                    result.setKeepCallback(true);
-                    listener.sendPluginResult(result);
-                }
-            }
-
-            @Override
-            public void onTagDetached() {
-                logger.info("[onTagDetached]");
-            }
-
-            @Override
-            public void onTagAttached() {
-                logger.info("[onTagAttached]");
-            }
-        });
-
-        int result = rfid.init();
-
-        if (result == 1){
-            logger.info("[init] elatec.RfidModuleUtil initialized");
-            rfid.start();
-            logger.info("[init] elatec.RfidModuleUtil started");
-            rfid.listenForTag();
-            callbackContext.success();
-        } else {
-            callbackContext.error(result);
-        }
-        */
+     
+        callbackContext.success();
         return true;
     }
 
