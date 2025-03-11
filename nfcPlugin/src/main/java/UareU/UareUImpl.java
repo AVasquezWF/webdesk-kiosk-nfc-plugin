@@ -46,7 +46,8 @@ public class UareUImpl {
         try 
 		{
             Context applicationContext = activity.getApplicationContext();
-            ReaderCollection readerCollection = Globals.getInstance().getReaders(activity.getApplicationContext());
+            ReaderCollection readerCollection = Globals.getInstance().getReaders(applicationContext);
+            Log.e("Reader collection --- ", readerCollection.toString());
             deviceName = readerCollection.get(0).GetDescription().name;
             Log.e("DeviceName --- ", deviceName);
             Globals.DefaultImageProcessing = Reader.ImageProcessing.IMG_PROC_DEFAULT;
