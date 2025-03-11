@@ -86,13 +86,13 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
 
     private boolean checkIsReady(CallbackContext callbackContext) {
         try{
-            reader.getCapabilities();
+            reader.getCapabilities(cordova.getActivity());
             callbackContext.success();
             return true;
         } catch (Exception e) {
             callbackContext.error(e.toString());
             return false;
-        }   
+        }
     }
 
     private boolean addListener(CallbackContext callbackContext) {

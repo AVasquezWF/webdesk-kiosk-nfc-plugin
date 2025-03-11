@@ -18,9 +18,11 @@ public class UareUImpl {
     String deviceName;
 
 
-    public Reader.Capabilities getCapabilities() {
+    public Reader.Capabilities getCapabilities(Activity activity) throws UareUException {
+        prepare(activity);
         Reader.Capabilities cap = reader.GetCapabilities();
         Log.e("Capabilities --- ", cap.toString());
+        reader.Close();
         return cap;
     }
 
