@@ -9,7 +9,7 @@
     <author>Adrian Vasquez</author>
 
     <description>
-        A
+        Workflow internal plugin for different types of readers.
     </description>
     <keywords></keywords>
     <repo></repo>
@@ -43,6 +43,9 @@
             <feature name="ACRNFCReaderPhoneGapPlugin">
                 <param name="android-package" value="plugin.ACRNFCReaderPhoneGapPlugin" />
             </feature>
+            <feature name="WebdeskKioskFingerprintPlugin">
+                <param name="android-package" value="plugin.WebdeskKioskFingerprintPlugin" />
+            </feature>
         </config-file>
 
         <!-- source-files -->
@@ -52,6 +55,11 @@
             target-dir="src/plugin" />
         <source-file src="nfcPlugin/src/main/java/plugin/ACRNFCReaderPhoneGapPlugin.java"
             target-dir="src/plugin" />
+        <source-file src="nfcPlugin/src/main/java/plugin/WebdeskKioskFingerprintPlugin.java"
+            target-dir="src/plugin" />
+        <!-- fingerprint -->
+        <source-file src="nfcPlugin/src/main/java/UareU/UareUImpl.java"
+            target-dir="src/UareU" />
         <!-- elatec -->
         <source-file src="nfcPlugin/src/main/java/elatec/HexUtil.java" target-dir="src/elatec/" />
         <source-file src="nfcPlugin/src/main/java/elatec/SerialReadThread.java"
@@ -219,6 +227,8 @@
         <!-- libs-->
         <source-file src="nfcPlugin/lib/acssmc-1.1.4.jar" target-dir="src/libs" />
         <source-file src="nfcPlugin/lib/acsbt-1.0.0preview7.jar" target-dir="src/libs" />
+        <source-file src="nfcPlugin/lib/dpuareu.jar" target-dir="src/libs" />
+        <source-file src="nfcPlugin/lib/dpuareu.aar" target-dir="src/libs" />
     </platform>
 
 </plugin>

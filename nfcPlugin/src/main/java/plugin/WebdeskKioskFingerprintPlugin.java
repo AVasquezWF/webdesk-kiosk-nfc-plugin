@@ -1,6 +1,15 @@
 package plugin;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
+import android.widget.Toast;
+
+import com.digitalpersona.uareu.Reader;
+import com.digitalpersona.uareu.UareUException;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
@@ -12,6 +21,8 @@ import org.json.JSONException;
 
 import java.util.logging.Logger;
 
+import UareU.UareUImpl;
+
 
 /**
  *
@@ -20,7 +31,9 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
     Logger logger = Logger.getLogger(getClass().getName());
 
     static final String NO_RFID_ERROR = "[NO_RFID_ERROR]: No rfid installed";
+    private static final String ACTION_USB_PERMISSION = "com.digitalpersona.uareu.dpfpddusbhost.USB_PERMISSION";
     Context context;
+    UareUImpl reader = new UareUImpl();
    // RfidModuleUtil rfid = null;
 
     CallbackContext listener = null;
@@ -100,6 +113,10 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
     }
 
     private boolean init(CallbackContext callbackContext) {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ACTION_USB_PERMISSION);
+        filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
+        cordova.getActivity().registerReceiver(broadcastReceiver, filter);
         /*
         if (rfid != null) {
            rfid.stop();
@@ -172,7 +189,7 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
             boolean res = true;
             callbackContext.success(data + " " + res);
             return res;
-        } catch (JSONException e) {
+        } catch (Exception e) {
             callbackContext.error(e.toString());
             e.printStackTrace();
             return false;
@@ -191,10 +208,44 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
             //  rfid.setSleepTime(data.getLong(0));
             callbackContext.success(data);
             return true;
-        } catch (JSONException e) {
+        } catch (Exception e) {
             callbackContext.error(e.toString());
             e.printStackTrace();
             return false;
         }
     }
+
+
+    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver()
+    {
+        public void onReceive(Context context, Intent intent)
+        {
+            String action = intent.getAction();
+            if (ACTION_USB_PERMISSION.equals(action))
+            {
+                synchronized (this)
+                {
+                    UsbDevice device = (UsbDevice)intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+                    if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false))
+                    {
+                        if (device == null)
+                        {
+                            Toast.makeText(context, "No device found", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        try {
+                            Reader.Capabilities capabilities = reader.CheckDevice();
+                            Toast.makeText(context, capabilities.toString(), Toast.LENGTH_SHORT).show();
+                        } catch (UareUException e) {
+                            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(context, "No permissions to manage USB", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }
+    };
 }
