@@ -32,6 +32,8 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
 
     static final String NO_RFID_ERROR = "[NO_RFID_ERROR]: No rfid installed";
     private static final String ACTION_USB_PERMISSION = "com.digitalpersona.uareu.dpfpddusbhost.USB_PERMISSION";
+    private static final String RECEIVER_EXPORTED = "com.digitalpersona.uareu.dpfpddusbhost.RECEIVER_EXPORTED";
+    private static final String RECEIVER_NOT_EXPORTED = "com.digitalpersona.uareu.dpfpddusbhost.RECEIVER_NOT_EXPORTED";
     Context context;
     UareUImpl reader = new UareUImpl();
    // RfidModuleUtil rfid = null;

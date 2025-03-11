@@ -28,7 +28,6 @@ public class UareUImpl {
 
     public void checkDevice(Activity activity) throws UareUException {
         prepare(activity);
-        reader.Open(Reader.Priority.EXCLUSIVE);
         Reader.CaptureResult result =
                 reader.Capture(
                         Fid.Format.ANSI_381_2004,
@@ -36,7 +35,7 @@ public class UareUImpl {
                         DPI,
                         -1);
 
-        Log.e("Reader --- ",result.toString());
+        Log.e("Reader --- ", result.toString());
         Reader.Capabilities cap = reader.GetCapabilities();
         Log.e("Capabilities --- ", cap.toString());
         reader.Close();
@@ -51,7 +50,8 @@ public class UareUImpl {
 			reader = Globals.getInstance().getReader(deviceName, applContext);
 			reader.Open(Reader.Priority.EXCLUSIVE);
 			DPI = Globals.GetFirstDPI(reader);
-		} catch (Exception e) {
+            if(reader == null) throw new Exception("No reader");
+        } catch (Exception e) {
 			Log.w("UareUSampleJava", "error during init of reader");
 			deviceName = "";
 		}
