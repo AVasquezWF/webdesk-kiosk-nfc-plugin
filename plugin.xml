@@ -231,6 +231,16 @@
         <source-file src="nfcPlugin/lib/acsbt-1.0.0preview7.jar" target-dir="libs" />
         <source-file src="nfcPlugin/lib/dpuareu.jar" target-dir="libs" />
         <source-file src="nfcPlugin/lib/dpuareu.aar" target-dir="libs" />
+        <source-file src="nfcPlugin/lib/x86/libdpfj.so" target-dir="libs" />
+        <source-file src="nfcPlugin/lib/x86/libdpfpdd.so" target-dir="libs" />
+        <source-file src="nfcPlugin/lib/x86/libdpfpdd7k.so" target-dir="libs" />
+        <source-file src="nfcPlugin/lib/x86/libdpfpdd5000.so" target-dir="libs" />
+        <source-file src="nfcPlugin/lib/x86/libdpfpdd_4k.so" target-dir="libs" />
+        <source-file src="nfcPlugin/lib/x86/libdpfpdd_ptapi.so" target-dir="libs" />
+        <source-file src="nfcPlugin/lib/x86/libdpfr6.so" target-dir="libs" />
+        <source-file src="nfcPlugin/lib/x86/libdpfr7.so" target-dir="libs" />
+        <source-file src="nfcPlugin/lib/x86/libdppuareu_ini.so" target-dir="libs" />
+        <source-file src="nfcPlugin/lib/x86/libtfm.so" target-dir="libs" />
     </platform>
 
 </plugin>
