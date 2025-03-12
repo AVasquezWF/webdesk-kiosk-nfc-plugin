@@ -9,11 +9,12 @@ import com.digitalpersona.uareu.Quality;
 import com.digitalpersona.uareu.Reader;
 import com.digitalpersona.uareu.ReaderCollection;
 import com.digitalpersona.uareu.UareUException;
-import com.digitalpersona.uareu.jni.DpfjQuality;
+import com.digitalpersona.uareu.jni.Dpfpdd;
 
 import java.util.Objects;
 
 public class UareUImpl {
+    Dpfpdd dpfpdd = new Dpfpdd();
     Reader reader;
     int DPI;
     String deviceName;
@@ -46,6 +47,7 @@ public class UareUImpl {
         try 
 		{
             Context applicationContext = activity.getApplicationContext();
+            dpfpdd.init(applicationContext, null);
             ReaderCollection readerCollection = Globals.getInstance().getReaders(applicationContext);
             Log.e("Reader collection --- ", readerCollection.toString());
             deviceName = readerCollection.get(0).GetDescription().name;
