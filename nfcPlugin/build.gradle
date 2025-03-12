@@ -26,7 +26,7 @@ android {
 dependencies {
     implementation 'org.apache.cordova:framework:9.0.0'
     implementation 'com.github.licheedev.Android-SerialPort-API:serialport:1.0.1'
-    implementation fileTree(dir: 'lib', include: ['*.jar'])
+    implementation fileTree(dir: 'lib', include: ['*.jar', '*.aar'])
     implementation fileTree(dir: 'lib/x86', include: ['*.so'])
     implementation fileTree(dir: 'lib/arm64-v8a', include: ['*.so'])
     implementation fileTree(dir: 'lib/armeabi-v7a', include: ['*.so'])

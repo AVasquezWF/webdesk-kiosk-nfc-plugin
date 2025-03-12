@@ -1,0 +1,146 @@
+{
+  "abi": "X86",
+  "info": {
+    "abi": "X86",
+    "bitness": 32,
+    "deprecated": false,
+    "default": true
+  },
+  "cxxBuildFolder": "/Users/avasquez/dev/webdesk-kiosk-fingerprint-plugin/nfcPlugin/build/.cxx/Debug/221d2f1q/x86",
+  "soFolder": "/Users/avasquez/dev/webdesk-kiosk-fingerprint-plugin/nfcPlugin/build/intermediates/cxx/Debug/221d2f1q/obj/local/x86",
+  "soRepublishFolder": "/Users/avasquez/dev/webdesk-kiosk-fingerprint-plugin/nfcPlugin/build/intermediates/ndkBuild/debug/obj/local/x86",
+  "abiPlatformVersion": 28,
+  "variant": {
+    "buildSystemArgumentList": [],
+    "cFlagsList": [],
+    "cppFlagsList": [],
+    "variantName": "debug",
+    "isDebuggableEnabled": true,
+    "validAbiList": [
+      "ARMEABI",
+      "ARMEABI_V7A",
+      "X86",
+      "X86_64"
+    ],
+    "buildTargetSet": [],
+    "implicitBuildTargetSet": [],
+    "cmakeSettingsConfiguration": "android-gradle-plugin-predetermined-name",
+    "module": {
+      "cxxFolder": "/Users/avasquez/dev/webdesk-kiosk-fingerprint-plugin/nfcPlugin/build/.cxx",
+      "intermediatesBaseFolder": "/Users/avasquez/dev/webdesk-kiosk-fingerprint-plugin/nfcPlugin/build/intermediates",
+      "intermediatesFolder": "/Users/avasquez/dev/webdesk-kiosk-fingerprint-plugin/nfcPlugin/build/intermediates/cxx",
+      "gradleModulePathName": ":nfcPlugin",
+      "moduleRootFolder": "/Users/avasquez/dev/webdesk-kiosk-fingerprint-plugin/nfcPlugin",
+      "moduleBuildFile": "/Users/avasquez/dev/webdesk-kiosk-fingerprint-plugin/nfcPlugin/build.gradle",
+      "makeFile": "/Users/avasquez/dev/webdesk-kiosk-fingerprint-plugin/nfcPlugin/lib",
+      "buildSystem": "NDK_BUILD",
+      "ndkFolder": "/Users/avasquez/Library/Android/sdk/ndk/23.1.7779620",
+      "ndkVersion": "23.1.7779620",
+      "ndkSupportedAbiList": [
+        "ARMEABI_V7A",
+        "ARM64_V8A",
+        "X86",
+        "X86_64"
+      ],
+      "ndkDefaultAbiList": [
+        "ARMEABI_V7A",
+        "ARM64_V8A",
+        "X86",
+        "X86_64"
+      ],
+      "ndkDefaultStl": "SYSTEM",
+      "ndkMetaPlatforms": {
+        "min": 16,
+        "max": 31,
+        "aliases": {
+          "20": 19,
+          "25": 24,
+          "J": 16,
+          "J-MR1": 17,
+          "J-MR2": 18,
+          "K": 19,
+          "L": 21,
+          "L-MR1": 22,
+          "M": 23,
+          "N": 24,
+          "N-MR1": 24,
+          "O": 26,
+          "O-MR1": 27,
+          "P": 28,
+          "Q": 29,
+          "R": 30,
+          "S": 31
+        }
+      },
+      "ndkMetaAbiList": [
+        {
+          "abi": "ARMEABI_V7A",
+          "bitness": 32,
+          "deprecated": false,
+          "default": true
+        },
+        {
+          "abi": "ARM64_V8A",
+          "bitness": 64,
+          "deprecated": false,
+          "default": true
+        },
+        {
+          "abi": "X86",
+          "bitness": 32,
+          "deprecated": false,
+          "default": true
+        },
+        {
+          "abi": "X86_64",
+          "bitness": 64,
+          "deprecated": false,
+          "default": true
+        }
+      ],
+      "cmakeToolchainFile": "/Users/avasquez/Library/Android/sdk/ndk/23.1.7779620/build/cmake/android.toolchain.cmake",
+      "stlSharedObjectMap": {
+        "LIBCXX_SHARED": {
+          "ARMEABI_V7A": "/Users/avasquez/Library/Android/sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/arm-linux-androideabi/libc++_shared.so",
+          "ARM64_V8A": "/Users/avasquez/Library/Android/sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/libc++_shared.so",
+          "X86": "/Users/avasquez/Library/Android/sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/i686-linux-android/libc++_shared.so",
+          "X86_64": "/Users/avasquez/Library/Android/sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/x86_64-linux-android/libc++_shared.so"
+        },
+        "LIBCXX_STATIC": {},
+        "NONE": {},
+        "SYSTEM": {}
+      },
+      "project": {
+        "rootBuildGradleFolder": "/Users/avasquez/dev/webdesk-kiosk-fingerprint-plugin",
+        "sdkFolder": "/Users/avasquez/Library/Android/sdk",
+        "isBuildOnlyTargetAbiEnabled": true,
+        "isCmakeBuildCohabitationEnabled": false,
+        "isPrefabEnabled": false
+      },
+      "outputOptions": []
+    },
+    "prefabClassPaths": [],
+    "prefabPackages": [],
+    "prefabPackageConfigurations": [],
+    "stlType": "system",
+    "optimizationTag": "Debug"
+  },
+  "buildSettings": {
+    "environmentVariables": []
+  },
+  "prefabFolder": "/Users/avasquez/dev/webdesk-kiosk-fingerprint-plugin/nfcPlugin/build/.cxx/Debug/221d2f1q/prefab/x86",
+  "isActiveAbi": true,
+  "fullConfigurationHash": "221d2f1q1b5c6zl6a6z5x3n3k2n3l43165c5m615w651k49h2u224p2a303d5k",
+  "fullConfigurationHashKey": "# Values used to calculate the hash in this folder name.\n# Should not depend on the absolute path of the project itself.\n#   - AGP: 7.4.2.\n#   - $NDK is the path to NDK 23.1.7779620.\n#   - $PROJECT is the path to the parent folder of the root Gradle build file.\n#   - $ABI is the ABI to be built with. The specific value doesn\u0027t contribute to the value of the hash.\n#   - $HASH is the hash value computed from this text.\nNDK_PROJECT_PATH\u003dnull\nAPP_BUILD_SCRIPT\u003d$PROJECT/nfcPlugin/lib/Android.mk\nAPP_ABI\u003d$ABI\nNDK_ALL_ABIS\u003d$ABI\nNDK_DEBUG\u003d1\nAPP_PLATFORM\u003dandroid-28\nNDK_OUT\u003d$PROJECT/nfcPlugin/build/intermediates/cxx/Debug/$HASH/obj\nNDK_LIBS_OUT\u003d$PROJECT/nfcPlugin/build/intermediates/cxx/Debug/$HASH/lib",
+  "configurationArguments": [
+    "NDK_PROJECT_PATH\u003dnull",
+    "APP_BUILD_SCRIPT\u003d/Users/avasquez/dev/webdesk-kiosk-fingerprint-plugin/nfcPlugin/lib/Android.mk",
+    "APP_ABI\u003dx86",
+    "NDK_ALL_ABIS\u003dx86",
+    "NDK_DEBUG\u003d1",
+    "APP_PLATFORM\u003dandroid-28",
+    "NDK_OUT\u003d/Users/avasquez/dev/webdesk-kiosk-fingerprint-plugin/nfcPlugin/build/intermediates/cxx/Debug/221d2f1q/obj",
+    "NDK_LIBS_OUT\u003d/Users/avasquez/dev/webdesk-kiosk-fingerprint-plugin/nfcPlugin/build/intermediates/cxx/Debug/221d2f1q/lib"
+  ],
+  "intermediatesParentFolder": "/Users/avasquez/dev/webdesk-kiosk-fingerprint-plugin/nfcPlugin/build/intermediates/cxx/Debug/221d2f1q"
+}

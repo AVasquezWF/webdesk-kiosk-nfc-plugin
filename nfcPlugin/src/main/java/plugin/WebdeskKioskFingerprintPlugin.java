@@ -18,6 +18,7 @@ import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.logging.Logger;
 
@@ -72,18 +73,21 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
     }
 
     private boolean readCard(CallbackContext callbackContext) {
-        /*
-        if (rfid == null) {
-            callbackContext.error(NO_RFID_ERROR);
-            return false;
-        }
-        rfid.searchTag();
-        logger.info("[CheckIsReady] Tag searched");
-        rfid.readTag();
-        logger.info("[CheckIsReady] Tag read");
-        */
-        callbackContext.success();
-        return true;
+       try {
+           Reader.CaptureResult result = reader.capture(cordova.getActivity());
+           logger.info("[readCard] Read success");
+
+           JSONObject res = new JSONObject();
+           res.put("image", result.image.toString());
+           res.put("score", result.score);
+           res.put("quality", result.quality);
+           callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, res));
+           callbackContext.success();
+           return true;
+       } catch (Exception e) {
+           callbackContext.error(e.toString());
+           return false;
+       }
     }
 
     private boolean checkIsReady(CallbackContext callbackContext) {

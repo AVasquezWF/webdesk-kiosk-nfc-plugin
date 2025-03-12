@@ -13,6 +13,8 @@ import com.digitalpersona.uareu.jni.Dpfpdd;
 
 import java.util.Objects;
 
+import acsimpl.apdu.Result;
+
 public class UareUImpl {
     Dpfpdd dpfpdd = new Dpfpdd();
     Reader reader;
@@ -28,7 +30,20 @@ public class UareUImpl {
         return cap;
     }
 
-    public void checkDevice(Activity activity) throws UareUException {
+    public Reader.CaptureResult capture(Activity activity) throws  UareUException {
+        prepare(activity);
+        Reader.CaptureResult result =
+                reader.Capture(
+                        Fid.Format.ANSI_381_2004,
+                        Globals.DefaultImageProcessing,
+                        DPI,
+                        -1);
+
+        reader.Close();
+        return result;
+    }
+
+    public Reader.CaptureResult checkDevice(Activity activity) throws UareUException {
         prepare(activity);
         Reader.CaptureResult result =
                 reader.Capture(
@@ -40,7 +55,9 @@ public class UareUImpl {
         Log.e("Reader --- ", result.toString());
         Reader.Capabilities cap = reader.GetCapabilities();
         Log.e("Capabilities --- ", cap.toString());
+
         reader.Close();
+        return result;
     }
 
     void prepare(Activity activity) {

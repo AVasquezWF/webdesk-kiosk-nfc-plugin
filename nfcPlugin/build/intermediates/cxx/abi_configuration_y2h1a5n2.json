@@ -1,0 +1,14 @@
+{
+  "allAbis": [
+    "armeabi",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+  ],
+  "validAbis": [
+    "ARMEABI",
+    "ARMEABI_V7A",
+    "X86",
+    "X86_64"
+  ]
+}
