@@ -232,7 +232,6 @@
         <source-file src="nfcPlugin/lib/dpuareu.jar" target-dir="libs" />
         <source-file src="nfcPlugin/lib/dpuareu.aar" target-dir="libs" />
 
-        <source-file src="nfcPlugin/lib/arm64-v8a/libtfm.so" target-dir="libs/arm64-v8a" />
         <source-file src="nfcPlugin/lib/arm64-v8a/libdpfj.so" target-dir="libs/arm64-v8a" />
         <source-file src="nfcPlugin/lib/arm64-v8a/libdpfpdd.so" target-dir="libs/arm64-v8a" />
         <source-file src="nfcPlugin/lib/arm64-v8a/libdpfpdd7k.so" target-dir="libs/arm64-v8a" />
