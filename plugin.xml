@@ -239,7 +239,7 @@
         <source-file src="nfcPlugin/lib/x86/libdpfpdd_ptapi.so" target-dir="libs/x86" />
         <source-file src="nfcPlugin/lib/x86/libdpfr6.so" target-dir="libs/x86" />
         <source-file src="nfcPlugin/lib/x86/libdpfr7.so" target-dir="libs/x86" />
-        <source-file src="nfcPlugin/lib/x86/libdpuareu_ini.so" target-dir="libs/x86" />
+        <source-file src="nfcPlugin/lib/x86/libdpuareu_jni.so" target-dir="libs/x86" />
         <source-file src="nfcPlugin/lib/x86/libtfm.so" target-dir="libs/x86" />
     </platform>
 
