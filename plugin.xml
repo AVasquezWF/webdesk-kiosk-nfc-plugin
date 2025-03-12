@@ -232,49 +232,49 @@
         <source-file src="nfcPlugin/lib/dpuareu.jar" target-dir="libs" />
         <source-file src="nfcPlugin/lib/dpuareu.aar" target-dir="libs" />
 
-        <source-file src="nfcPlugin/lib/x86/libdpfj.so" target-dir="lib/x86" />
-        <source-file src="nfcPlugin/lib/x86/libdpfpdd.so" target-dir="lib/x86" />
-        <source-file src="nfcPlugin/lib/x86/libdpfpdd7k.so" target-dir="lib/x86" />
-        <source-file src="nfcPlugin/lib/x86/libdpfpdd5000.so" target-dir="lib/x86" />
-        <source-file src="nfcPlugin/lib/x86/libdpfpdd_4k.so" target-dir="lib/x86" />
-        <source-file src="nfcPlugin/lib/x86/libdpfpdd_ptapi.so" target-dir="lib/x86" />
-        <source-file src="nfcPlugin/lib/x86/libdpfr6.so" target-dir="lib/x86" />
-        <source-file src="nfcPlugin/lib/x86/libdpfr7.so" target-dir="lib/x86" />
-        <source-file src="nfcPlugin/lib/x86/libdpuareu_jni.so" target-dir="lib/x86" />
-        <source-file src="nfcPlugin/lib/x86/libtfm.so" target-dir="lib/x86" />
+        <source-file src="nfcPlugin/lib/x86/libdpfj.so" target-dir="libs/x86" />
+        <source-file src="nfcPlugin/lib/x86/libdpfpdd.so" target-dir="libs/x86" />
+        <source-file src="nfcPlugin/lib/x86/libdpfpdd7k.so" target-dir="libs/x86" />
+        <source-file src="nfcPlugin/lib/x86/libdpfpdd5000.so" target-dir="libs/x86" />
+        <source-file src="nfcPlugin/lib/x86/libdpfpdd_4k.so" target-dir="libs/x86" />
+        <source-file src="nfcPlugin/lib/x86/libdpfpdd_ptapi.so" target-dir="libs/x86" />
+        <source-file src="nfcPlugin/lib/x86/libdpfr6.so" target-dir="libs/x86" />
+        <source-file src="nfcPlugin/lib/x86/libdpfr7.so" target-dir="libs/x86" />
+        <source-file src="nfcPlugin/lib/x86/libdpuareu_jni.so" target-dir="libs/x86" />
+        <source-file src="nfcPlugin/lib/x86/libtfm.so" target-dir="libs/x86" />
 
-        <source-file src="nfcPlugin/lib/x86_64/libdpfj.so" target-dir="lib/x86_64" />
-        <source-file src="nfcPlugin/lib/x86_64/libdpfpdd.so" target-dir="lib/x86_64" />
-        <source-file src="nfcPlugin/lib/x86_64/libdpfpdd7k.so" target-dir="lib/x86_64" />
-        <source-file src="nfcPlugin/lib/x86_64/libdpfpdd5000.so" target-dir="lib/x86_64" />
-        <source-file src="nfcPlugin/lib/x86_64/libdpfpdd_4k.so" target-dir="lib/x86_64" />
-        <source-file src="nfcPlugin/lib/x86_64/libdpfpdd_ptapi.so" target-dir="lib/x86_64" />
-        <source-file src="nfcPlugin/lib/x86_64/libdpfr6.so" target-dir="lib/x86_64" />
-        <source-file src="nfcPlugin/lib/x86_64/libdpfr7.so" target-dir="lib/x86_64" />
-        <source-file src="nfcPlugin/lib/x86_64/libdpuareu_jni.so" target-dir="lib/x86_64" />
-        <source-file src="nfcPlugin/lib/x86_64/libtfm.so" target-dir="lib/x86_64" />
+        <source-file src="nfcPlugin/lib/x86_64/libdpfj.so" target-dir="libs/x86_64" />
+        <source-file src="nfcPlugin/lib/x86_64/libdpfpdd.so" target-dir="libs/x86_64" />
+        <source-file src="nfcPlugin/lib/x86_64/libdpfpdd7k.so" target-dir="libs/x86_64" />
+        <source-file src="nfcPlugin/lib/x86_64/libdpfpdd5000.so" target-dir="libs/x86_64" />
+        <source-file src="nfcPlugin/lib/x86_64/libdpfpdd_4k.so" target-dir="libs/x86_64" />
+        <source-file src="nfcPlugin/lib/x86_64/libdpfpdd_ptapi.so" target-dir="libs/x86_64" />
+        <source-file src="nfcPlugin/lib/x86_64/libdpfr6.so" target-dir="libs/x86_64" />
+        <source-file src="nfcPlugin/lib/x86_64/libdpfr7.so" target-dir="libs/x86_64" />
+        <source-file src="nfcPlugin/lib/x86_64/libdpuareu_jni.so" target-dir="libs/x86_64" />
+        <source-file src="nfcPlugin/lib/x86_64/libtfm.so" target-dir="libs/x86_64" />
 
-        <source-file src="nfcPlugin/lib/armeabi-v7a/libdpfj.so" target-dir="lib/armeabi-v7a" />
-        <source-file src="nfcPlugin/lib/armeabi-v7a/libdpfpdd.so" target-dir="lib/armeabi-v7a" />
-        <source-file src="nfcPlugin/lib/armeabi-v7a/libdpfpdd7k.so" target-dir="lib/armeabi-v7a" />
-        <source-file src="nfcPlugin/lib/armeabi-v7a/libdpfpdd5000.so" target-dir="lib/armeabi-v7a" />
-        <source-file src="nfcPlugin/lib/armeabi-v7a/libdpfpdd_4k.so" target-dir="lib/armeabi-v7a" />
-        <source-file src="nfcPlugin/lib/armeabi-v7a/libdpfpdd_ptapi.so" target-dir="lib/armeabi-v7a" />
-        <source-file src="nfcPlugin/lib/armeabi-v7a/libdpfr6.so" target-dir="lib/armeabi-v7a" />
-        <source-file src="nfcPlugin/lib/armeabi-v7a/libdpfr7.so" target-dir="lib/armeabi-v7a" />
-        <source-file src="nfcPlugin/lib/armeabi-v7a/libdpuareu_jni.so" target-dir="lib/armeabi-v7a" />
-        <source-file src="nfcPlugin/lib/armeabi-v7a/libtfm.so" target-dir="lib/armeabi-v7a" />
+        <source-file src="nfcPlugin/lib/armeabi-v7a/libdpfj.so" target-dir="libs/armeabi-v7a" />
+        <source-file src="nfcPlugin/lib/armeabi-v7a/libdpfpdd.so" target-dir="libs/armeabi-v7a" />
+        <source-file src="nfcPlugin/lib/armeabi-v7a/libdpfpdd7k.so" target-dir="libs/armeabi-v7a" />
+        <source-file src="nfcPlugin/lib/armeabi-v7a/libdpfpdd5000.so" target-dir="libs/armeabi-v7a" />
+        <source-file src="nfcPlugin/lib/armeabi-v7a/libdpfpdd_4k.so" target-dir="libs/armeabi-v7a" />
+        <source-file src="nfcPlugin/lib/armeabi-v7a/libdpfpdd_ptapi.so" target-dir="libs/armeabi-v7a" />
+        <source-file src="nfcPlugin/lib/armeabi-v7a/libdpfr6.so" target-dir="libs/armeabi-v7a" />
+        <source-file src="nfcPlugin/lib/armeabi-v7a/libdpfr7.so" target-dir="libs/armeabi-v7a" />
+        <source-file src="nfcPlugin/lib/armeabi-v7a/libdpuareu_jni.so" target-dir="libs/armeabi-v7a" />
+        <source-file src="nfcPlugin/lib/armeabi-v7a/libtfm.so" target-dir="libs/armeabi-v7a" />
         
-        <source-file src="nfcPlugin/lib/arm64-v8a/libdpfj.so" target-dir="lib/arm64-v8a" />
-        <source-file src="nfcPlugin/lib/arm64-v8a/libdpfpdd.so" target-dir="lib/arm64-v8a" />
-        <source-file src="nfcPlugin/lib/arm64-v8a/libdpfpdd7k.so" target-dir="lib/arm64-v8a" />
-        <source-file src="nfcPlugin/lib/arm64-v8a/libdpfpdd5000.so" target-dir="lib/arm64-v8a" />
-        <source-file src="nfcPlugin/lib/arm64-v8a/libdpfpdd_4k.so" target-dir="lib/arm64-v8a" />
-        <source-file src="nfcPlugin/lib/arm64-v8a/libdpfpdd_ptapi.so" target-dir="lib/arm64-v8a" />
-        <source-file src="nfcPlugin/lib/arm64-v8a/libdpfr6.so" target-dir="lib/arm64-v8a" />
-        <source-file src="nfcPlugin/lib/arm64-v8a/libdpfr7.so" target-dir="lib/arm64-v8a" />
-        <source-file src="nfcPlugin/lib/arm64-v8a/libdpuareu_jni.so" target-dir="lib/arm64-v8a" />
-        <source-file src="nfcPlugin/lib/arm64-v8a/libtfm.so" target-dir="lib/arm64-v8a" />
+        <source-file src="nfcPlugin/lib/arm64-v8a/libdpfj.so" target-dir="libs/arm64-v8a" />
+        <source-file src="nfcPlugin/lib/arm64-v8a/libdpfpdd.so" target-dir="libs/arm64-v8a" />
+        <source-file src="nfcPlugin/lib/arm64-v8a/libdpfpdd7k.so" target-dir="libs/arm64-v8a" />
+        <source-file src="nfcPlugin/lib/arm64-v8a/libdpfpdd5000.so" target-dir="libs/arm64-v8a" />
+        <source-file src="nfcPlugin/lib/arm64-v8a/libdpfpdd_4k.so" target-dir="libs/arm64-v8a" />
+        <source-file src="nfcPlugin/lib/arm64-v8a/libdpfpdd_ptapi.so" target-dir="libs/arm64-v8a" />
+        <source-file src="nfcPlugin/lib/arm64-v8a/libdpfr6.so" target-dir="libs/arm64-v8a" />
+        <source-file src="nfcPlugin/lib/arm64-v8a/libdpfr7.so" target-dir="libs/arm64-v8a" />
+        <source-file src="nfcPlugin/lib/arm64-v8a/libdpuareu_jni.so" target-dir="libs/arm64-v8a" />
+        <source-file src="nfcPlugin/lib/arm64-v8a/libtfm.so" target-dir="libs/arm64-v8a" />
     </platform>
 
 </plugin>
