@@ -76,15 +76,15 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
     private boolean readCard(CallbackContext callbackContext) {
        try {
            reader.prepare(cordova.getActivity());
-           Reader.CaptureResult result = reader.capture();
+           //  Reader.CaptureResult result = reader.capture();
            logger.info("[readCard] Read success");
 
            JSONObject res = new JSONObject();
            res.put("image", reader.getImageAsBase64());
-           res.put("resolution", result.image.getScanResolution());
-           res.put("format", result.image.getFormat());
-           res.put("score", result.score);
-           res.put("quality", result.quality);
+           //  res.put("resolution", result.image.getScanResolution());
+           //  res.put("format", result.image.getFormat());
+           //  res.put("score", result.score);
+           //  res.put("quality", result.quality);
 
            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, res));
            callbackContext.success();
@@ -180,30 +180,26 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
         public void onReceive(Context context, Intent intent)
         {
             String action = intent.getAction();
-            if (ACTION_USB_PERMISSION.equals(action))
-            {
-                synchronized (this)
-                {
-                    UsbDevice device = (UsbDevice)intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
-                    if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false))
-                    {
-                        if (device == null)
-                        {
-                            Toast.makeText(context, "No device found", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        try {
-                            Toast.makeText(context, device.getDeviceName(), Toast.LENGTH_SHORT).show();
-                            reader.prepare(cordova.getActivity());
-                            reader.checkDevice();
-                        } catch (UareUException e) {
-                            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
-                        }
+            if (!ACTION_USB_PERMISSION.equals(action)){
+                return;
+            }
+
+            synchronized (this) {
+                UsbDevice device = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+                if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
+                    if (device == null) {
+                        Toast.makeText(context, "No device found", Toast.LENGTH_SHORT).show();
+                        return;
                     }
-                    else
-                    {
-                        Toast.makeText(context, "No permissions to manage USB", Toast.LENGTH_SHORT).show();
+                    try {
+                        Toast.makeText(context, device.getDeviceName(), Toast.LENGTH_SHORT).show();
+                        reader.prepare(cordova.getActivity());
+                        reader.checkDevice();
+                    } catch (UareUException e) {
+                        Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
                     }
+                } else {
+                    Toast.makeText(context, "No permissions to manage USB", Toast.LENGTH_SHORT).show();
                 }
             }
         }
