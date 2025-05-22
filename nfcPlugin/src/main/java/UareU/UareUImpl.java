@@ -55,7 +55,7 @@ public class UareUImpl {
             }
 
             Fid fid = reader.GetStreamImage(
-                    Fid.Format.ANSI_381_2004,
+                    Fid.Format.ISO_19794_4_2005,
                     Reader.ImageProcessing.IMG_PROC_DEFAULT,
                     DPI).image;
 
