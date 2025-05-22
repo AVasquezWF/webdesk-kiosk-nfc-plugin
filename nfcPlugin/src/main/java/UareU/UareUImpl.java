@@ -31,20 +31,15 @@ public class UareUImpl {
     public Reader.Capabilities getCapabilities() throws UareUException {
         Reader.Capabilities cap = reader.GetCapabilities();
         Log.e("Capabilities --- ", cap.toString());
-        reader.Close();
         return cap;
     }
 
     public Reader.CaptureResult capture() throws  UareUException {
-         Reader.CaptureResult result =
-                reader.Capture(
+        return reader.Capture(
                         Fid.Format.ANSI_381_2004,
                         Globals.DefaultImageProcessing,
                         DPI,
                         -1);
-
-        reader.Close();
-        return result;
     }
 
     /**
@@ -53,15 +48,32 @@ public class UareUImpl {
      * @return String image as base64.
      * @throws UareUException if capture fails.
      */
-    public String captureStreamImage() throws UareUException {
-        Fid fid = reader.GetStreamImage(Fid.Format.ANSI_381_2004, Reader.ImageProcessing.IMG_PROC_DEFAULT, 500).image;
-        Fid.Fiv view = fid.getViews()[0];
-        byte[] rawImageData = view.getImageData();
-        int width = view.getWidth();
-        int height = view.getHeight();
+    public String getImageAsBase64() {
+        try {
+            if (reader == null) {
+                throw new IllegalStateException("Reader is not initialized. Call prepare() first.");
+            }
 
-        Log.d("UareU", Arrays.toString(rawImageData));
-        return encodeFingerprintImageToBase64(rawImageData, width, height);
+            Fid fid = reader.GetStreamImage(
+                    Fid.Format.ANSI_381_2004,
+                    Reader.ImageProcessing.IMG_PROC_DEFAULT,
+                    DPI).image;
+
+            if (fid == null || fid.getViews() == null || fid.getViews().length == 0) {
+                throw new RuntimeException("No fingerprint image captured");
+            }
+
+            Fid.Fiv view = fid.getViews()[0];
+            byte[] rawImage = view.getImageData();
+            int width = view.getWidth();
+            int height = view.getHeight();
+
+            return encodeFingerprintImageToBase64(rawImage, width, height);
+
+        } catch (Exception e) {
+            Log.e("UareUImpl", "Error capturing fingerprint: ", e);
+            return null;
+        }
     }
 
     public static String encodeFingerprintImageToBase64(byte[] imageData, int width, int height) {
@@ -94,8 +106,6 @@ public class UareUImpl {
         Log.e("Reader --- ", result.toString());
         Reader.Capabilities cap = reader.GetCapabilities();
         Log.e("Capabilities --- ", cap.toString());
-
-        reader.Close();
         return result;
     }
 

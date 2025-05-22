@@ -80,7 +80,7 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
            logger.info("[readCard] Read success");
 
            JSONObject res = new JSONObject();
-           res.put("image", reader.captureStreamImage());
+           res.put("image", reader.getImageAsBase64());
            res.put("resolution", result.image.getScanResolution());
            res.put("format", result.image.getFormat());
            res.put("score", result.score);
