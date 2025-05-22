@@ -21,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 import UareU.UareUImpl;
@@ -76,15 +77,15 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
     private boolean readCard(CallbackContext callbackContext) {
        try {
            reader.prepare(cordova.getActivity());
-           //  Reader.CaptureResult result = reader.capture();
+           Reader.CaptureResult result = reader.capture();
            logger.info("[readCard] Read success");
 
            JSONObject res = new JSONObject();
-           res.put("image", reader.getImageAsBase64());
-           //  res.put("resolution", result.image.getScanResolution());
-           //  res.put("format", result.image.getFormat());
-           //  res.put("score", result.score);
-           //  res.put("quality", result.quality);
+           res.put("image", Arrays.toString(result.image.getData()));
+           res.put("resolution", result.image.getScanResolution());
+           res.put("format", result.image.getFormat());
+           res.put("score", result.score);
+           res.put("quality", result.quality);
 
            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, res));
            callbackContext.success();
