@@ -11,6 +11,11 @@ import com.digitalpersona.uareu.ReaderCollection;
 import com.digitalpersona.uareu.UareUException;
 import com.digitalpersona.uareu.jni.Dpfpdd;
 
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.util.Base64;
+import java.io.ByteArrayOutputStream;
+
 import java.util.Objects;
 
 import acsimpl.apdu.Result;
@@ -22,17 +27,15 @@ public class UareUImpl {
     String deviceName;
 
 
-    public Reader.Capabilities getCapabilities(Activity activity) throws UareUException {
-        prepare(activity);
+    public Reader.Capabilities getCapabilities() throws UareUException {
         Reader.Capabilities cap = reader.GetCapabilities();
         Log.e("Capabilities --- ", cap.toString());
         reader.Close();
         return cap;
     }
 
-    public Reader.CaptureResult capture(Activity activity) throws  UareUException {
-        prepare(activity);
-        Reader.CaptureResult result =
+    public Reader.CaptureResult capture() throws  UareUException {
+         Reader.CaptureResult result =
                 reader.Capture(
                         Fid.Format.ANSI_381_2004,
                         Globals.DefaultImageProcessing,
@@ -43,8 +46,42 @@ public class UareUImpl {
         return result;
     }
 
-    public Reader.CaptureResult checkDevice(Activity activity) throws UareUException {
-        prepare(activity);
+    /**
+     * Captures one frame from the fingerprint stream and returns it as a BufferedImage.
+     *
+     * @return String image as base64.
+     * @throws UareUException if capture fails.
+     */
+    public String captureStreamImage() throws UareUException {
+        Fid fid = reader.GetStreamImage(Fid.Format.ANSI_381_2004, Reader.ImageProcessing.IMG_PROC_DEFAULT, 500).image;
+        Fid.Fiv view = fid.getViews()[0];
+        byte[] rawImageData = view.getImageData();
+        int width = view.getWidth();
+        int height = view.getHeight();
+
+        return encodeFingerprintImageToBase64(rawImageData, width, height);
+    }
+
+    public static String encodeFingerprintImageToBase64(byte[] imageData, int width, int height) {
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Config.ALPHA_8);
+
+        // Fill bitmap pixel-by-pixel
+        int index = 0;
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int gray = imageData[index++] & 0xFF;
+                bitmap.setPixel(x, y, 0xFF000000 | (gray << 16) | (gray << 8) | gray);
+            }
+        }
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+
+        byte[] pngBytes = baos.toByteArray();
+        return Base64.encodeToString(pngBytes, Base64.NO_WRAP);
+    }
+
+    public Reader.CaptureResult checkDevice() throws UareUException {
         Reader.CaptureResult result =
                 reader.Capture(
                         Fid.Format.ANSI_381_2004,
@@ -60,8 +97,8 @@ public class UareUImpl {
         return result;
     }
 
-    void prepare(Activity activity) {
-        try 
+    public void prepare(Activity activity) {
+        try
 		{
             Context applicationContext = activity.getApplicationContext();
             dpfpdd.init(applicationContext, null);

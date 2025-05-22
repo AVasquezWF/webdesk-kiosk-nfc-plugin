@@ -39,8 +39,7 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
     private static final String RECEIVER_NOT_EXPORTED = "com.digitalpersona.uareu.dpfpddusbhost.RECEIVER_NOT_EXPORTED";
     Context context;
     UareUImpl reader = new UareUImpl();
-   // RfidModuleUtil rfid = null;
-
+    
     CallbackContext listener = null;
 
     @Override
@@ -76,15 +75,17 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
 
     private boolean readCard(CallbackContext callbackContext) {
        try {
-           Reader.CaptureResult result = reader.capture(cordova.getActivity());
+           reader.prepare(cordova.getActivity());
+           Reader.CaptureResult result = reader.capture();
            logger.info("[readCard] Read success");
 
            JSONObject res = new JSONObject();
-           res.put("image", result.image.getData());
+           res.put("image", reader.captureStreamImage());
            res.put("resolution", result.image.getScanResolution());
            res.put("format", result.image.getFormat());
            res.put("score", result.score);
            res.put("quality", result.quality);
+
            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, res));
            callbackContext.success();
            return true;
@@ -96,7 +97,8 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
 
     private boolean checkIsReady(CallbackContext callbackContext) {
         try{
-            reader.getCapabilities(cordova.getActivity());
+            reader.prepare(cordova.getActivity());
+            reader.getCapabilities();
             callbackContext.success();
             return true;
         } catch (Exception e) {
@@ -192,7 +194,8 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
                         }
                         try {
                             Toast.makeText(context, device.getDeviceName(), Toast.LENGTH_SHORT).show();
-                            reader.checkDevice(cordova.getActivity());
+                            reader.prepare(cordova.getActivity());
+                            reader.checkDevice();
                         } catch (UareUException e) {
                             Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
                         }
