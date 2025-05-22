@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.digitalpersona.uareu.Reader;
@@ -29,6 +30,7 @@ import UareU.UareUImpl;
  *
  */
 public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
+    private static final String TAG = "WebdeskKioskFingerprintPlugin";
     Logger logger = Logger.getLogger(getClass().getName());
 
     static final String NO_RFID_ERROR = "[NO_RFID_ERROR]: No rfid installed";
@@ -78,7 +80,9 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
            logger.info("[readCard] Read success");
 
            JSONObject res = new JSONObject();
-           res.put("image", result.image.toString());
+           res.put("image", result.image.getData());
+           res.put("resolution", result.image.getScanResolution());
+           res.put("format", result.image.getFormat());
            res.put("score", result.score);
            res.put("quality", result.quality);
            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, res));
@@ -138,6 +142,7 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
         */
         try {
            // boolean res = rfid.sendCommand(data.getString(0));
+            Log.d(TAG, "sendReaderCommand: Not supported");
             boolean res = true;
             callbackContext.success(data + " " + res);
             return res;
