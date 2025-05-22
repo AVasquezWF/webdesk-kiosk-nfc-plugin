@@ -16,6 +16,7 @@ import android.graphics.Bitmap.Config;
 import android.util.Base64;
 import java.io.ByteArrayOutputStream;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import acsimpl.apdu.Result;
@@ -59,6 +60,7 @@ public class UareUImpl {
         int width = view.getWidth();
         int height = view.getHeight();
 
+        Log.d("UareU", Arrays.toString(rawImageData));
         return encodeFingerprintImageToBase64(rawImageData, width, height);
     }
 
