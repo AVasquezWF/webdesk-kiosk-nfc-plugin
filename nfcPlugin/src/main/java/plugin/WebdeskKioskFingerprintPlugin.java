@@ -1,5 +1,6 @@
 package plugin;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -18,10 +19,8 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Arrays;
 import java.util.logging.Logger;
 
 import UareU.UareUImpl;
@@ -76,16 +75,11 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
 
     private boolean readCard(CallbackContext callbackContext) {
        try {
-           reader.prepare(cordova.getActivity());
-           Reader.CaptureResult result = reader.capture();
-           logger.info("[readCard] Read success");
+           String result = reader.getImageAsBase64();
+           Log.d(TAG,"[readCard] Read success");
 
            JSONObject res = new JSONObject();
-           res.put("image", Arrays.toString(result.image.getData()));
-           res.put("resolution", result.image.getScanResolution());
-           res.put("format", result.image.getFormat());
-           res.put("score", result.score);
-           res.put("quality", result.quality);
+           res.put("byteImage", result);
 
            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, res));
            callbackContext.success();
@@ -114,17 +108,18 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
     }
 
     private boolean reconnectReader(CallbackContext callbackContext) {
-        /*
-        boolean result = rfid.reconnectSerialPort();
-        if (result) {
-            callbackContext.success();
-        } else {
+       try {
+           reader.prepare(cordova.getActivity());
+           callbackContext.success();
+       }
+       catch (Exception e) {
             callbackContext.error("[reconnectReader] A problem occurred while attempting a reconnection");
-        }
-        */
-        return true;
+       }
+
+       return true;
     }
 
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     private boolean init(CallbackContext callbackContext) {
         IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_USB_PERMISSION);
@@ -136,16 +131,10 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
     }
 
     private boolean sendReaderCommand(CallbackContext callbackContext, JSONArray data) {
-        /*
-        if (rfid == null) {
-
-            callbackContext.error(NO_RFID_ERROR);
-            return false;
-        }
-        */
         try {
-           // boolean res = rfid.sendCommand(data.getString(0));
-            Log.d(TAG, "sendReaderCommand: Not supported");
+            Reader.ParamId id = Reader.ParamId.values()[data.getInt(0)];
+            byte[] bytes = data.getString(1).getBytes();
+            reader.getReader().SetParameter(id, bytes);
             boolean res = true;
             callbackContext.success(data + " " + res);
             return res;

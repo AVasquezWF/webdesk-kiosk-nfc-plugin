@@ -34,6 +34,9 @@
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.NFC" />
             <uses-permission android:name="android.permission.USB" />
+            <uses-feature android:name="android.hardware.usb.host" />
+            <uses-permission android:name="android.permission.USB_PERMISSION" />
+            <uses-permission android:name="android.permission.CAMERA" />
         </config-file>
 
         <config-file parent="/*" target="res/xml/config.xml">

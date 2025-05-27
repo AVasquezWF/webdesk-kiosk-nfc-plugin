@@ -5,7 +5,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.digitalpersona.uareu.Fid;
-import com.digitalpersona.uareu.Quality;
 import com.digitalpersona.uareu.Reader;
 import com.digitalpersona.uareu.ReaderCollection;
 import com.digitalpersona.uareu.UareUException;
@@ -15,31 +14,28 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.util.Base64;
 import java.io.ByteArrayOutputStream;
-
 import java.util.Arrays;
-import java.util.Objects;
-
-import acsimpl.apdu.Result;
 
 public class UareUImpl {
+    String TAG = "UareUImpl";
     Dpfpdd dpfpdd = new Dpfpdd();
-    Reader reader;
+    private Reader reader;
     int DPI;
     String deviceName;
 
 
     public Reader.Capabilities getCapabilities() throws UareUException {
-        Reader.Capabilities cap = reader.GetCapabilities();
+        Reader.Capabilities cap = getReader().GetCapabilities();
         Log.e("Capabilities --- ", cap.toString());
         return cap;
     }
 
     public Reader.CaptureResult capture() throws  UareUException {
-        return reader.Capture(
-                        Fid.Format.ANSI_381_2004,
-                        Globals.DefaultImageProcessing,
-                        DPI,
-                        -1);
+        return getReader().Capture(
+                Fid.Format.ANSI_381_2004,
+                Globals.DefaultImageProcessing,
+                DPI,
+                -1);
     }
 
     /**
@@ -50,46 +46,57 @@ public class UareUImpl {
      */
     public String getImageAsBase64() {
         try {
-            if (reader == null) {
-                throw new IllegalStateException("Reader is not initialized. Call prepare() first.");
-            }
 
-            Fid fid = reader.GetStreamImage(
-                    Fid.Format.ISO_19794_4_2005,
-                    Reader.ImageProcessing.IMG_PROC_DEFAULT,
-                    DPI).image;
-
+            Reader.CaptureResult res = capture();
+            Fid fid = res.image;
             if (fid == null || fid.getViews() == null || fid.getViews().length == 0) {
-                throw new RuntimeException("No fingerprint image captured");
+                throw new UareUException(96076126);
             }
 
             Fid.Fiv view = fid.getViews()[0];
-            byte[] rawImage = view.getImageData();
+            byte[] rawImage = view.getData();
             int width = view.getWidth();
             int height = view.getHeight();
 
+            Log.e(TAG, "Width " + width);
+            Log.e(TAG, "Height " + height);
+            Log.e(TAG, "Views " + fid.getViews().length);
+            Log.e(TAG, "Image data length: " + rawImage.length);
             return encodeFingerprintImageToBase64(rawImage, width, height);
 
         } catch (Exception e) {
-            Log.e("UareUImpl", "Error capturing fingerprint: ", e);
+            Log.e(TAG, "Error capturing fingerprint: ", e);
             return null;
         }
     }
 
-    public static String encodeFingerprintImageToBase64(byte[] imageData, int width, int height) {
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Config.ALPHA_8);
+    public String encodeFingerprintImageToBase64(byte[] imageData, int width, int height) {
+        if (imageData == null) {
+            throw new IllegalArgumentException("Invalid image data, the image is empty");
+        }
+        if (imageData.length >= width * height) {
+            Log.w(TAG,(width * height) + " is smaller than the provided " + imageData.length);
+            imageData = Arrays.copyOf(imageData, width * height);
+        } else {
+            throw new IllegalArgumentException("Not enough image data");
+        }
 
-        // Fill bitmap pixel-by-pixel
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
         int index = 0;
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 int gray = imageData[index++] & 0xFF;
-                bitmap.setPixel(x, y, 0xFF000000 | (gray << 16) | (gray << 8) | gray);
+                int pixel = 0xFF000000 | (gray << 16) | (gray << 8) | gray; // ARGB format
+                bitmap.setPixel(x, y, pixel);
             }
         }
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        boolean success = bitmap.compress(Bitmap.CompressFormat.WEBP, 80, baos);
+        if (!success) {
+            throw new RuntimeException("Failed to compress bitmap");
+        }
 
         byte[] pngBytes = baos.toByteArray();
         return Base64.encodeToString(pngBytes, Base64.NO_WRAP);
@@ -97,35 +104,47 @@ public class UareUImpl {
 
     public Reader.CaptureResult checkDevice() throws UareUException {
         Reader.CaptureResult result =
-                reader.Capture(
+                getReader().Capture(
                         Fid.Format.ANSI_381_2004,
                         Globals.DefaultImageProcessing,
                         DPI,
                         -1);
 
-        Log.e("Reader --- ", result.toString());
-        Reader.Capabilities cap = reader.GetCapabilities();
-        Log.e("Capabilities --- ", cap.toString());
+        Log.d(TAG,"Reader --- "+ result.toString());
+        Reader.Capabilities cap = getReader().GetCapabilities();
+        Log.d(TAG,"Capabilities --- " + cap.toString());
         return result;
     }
 
     public void prepare(Activity activity) {
+        if(reader != null) return;
         try
 		{
             Context applicationContext = activity.getApplicationContext();
             dpfpdd.init(applicationContext, null);
             ReaderCollection readerCollection = Globals.getInstance().getReaders(applicationContext);
-            Log.e("Reader collection --- ", readerCollection.toString());
+            Log.d(TAG,"Reader collection --- " + readerCollection.toString());
             deviceName = readerCollection.get(0).GetDescription().name;
-            Log.e("DeviceName --- ", deviceName);
+            Log.d(TAG,"DeviceName --- " + deviceName);
             Globals.DefaultImageProcessing = Reader.ImageProcessing.IMG_PROC_DEFAULT;
             reader = Globals.getInstance().getReader(deviceName, applicationContext);
-            if (reader == null) throw new Exception("[prepare]: No reader assigned");
-			reader.Open(Reader.Priority.EXCLUSIVE);
-			DPI = Globals.GetFirstDPI(reader);
+            if (getReader() == null) throw new UareUException(96075807);
+            getReader().Open(Reader.Priority.EXCLUSIVE);
+            DPI = Globals.GetFirstDPI(getReader());
+            if (DPI <= 0) {
+                DPI = 500;
+                Log.w(TAG, "DPI invalid. Falling back to default 500 DPI.");
+            }
         } catch (Exception e) {
-			Log.w("UareUSampleJava", e);
+			Log.w(TAG, e);
 			deviceName = "";
 		}
+    }
+
+    public Reader getReader() {
+        if (reader == null) {
+            throw new IllegalStateException("Reader is not initialized. Call prepare() first.");
+        }
+        return reader;
     }
 }
