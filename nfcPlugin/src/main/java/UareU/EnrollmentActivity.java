@@ -5,7 +5,7 @@
  * copyright (c) 2013 DigitalPersona Inc.
  */
 
-package UareU;
+package uareu;
 
 import com.digitalpersona.uareu.Engine;
 import com.digitalpersona.uareu.Engine.PreEnrollmentFmd;

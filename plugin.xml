@@ -61,12 +61,12 @@
         <source-file src="nfcPlugin/src/main/java/plugin/WebdeskKioskFingerprintPlugin.java"
             target-dir="src/plugin" />
         <!-- fingerprint -->
-        <source-file src="nfcPlugin/src/main/java/UareU/UareUImpl.java"
-            target-dir="src/UareU" />
-        <source-file src="nfcPlugin/src/main/java/UareU/Globals.java"
-            target-dir="src/UareU" />
-        <source-file src="nfcPlugin/src/main/java/UareU/FmdConverter.java"
-            target-dir="src/UareU" />
+        <source-file src="nfcPlugin/src/main/java/uareu/UareUImpl.java"
+            target-dir="src/uareu" />
+        <source-file src="nfcPlugin/src/main/java/uareu/Globals.java"
+            target-dir="src/uareu" />
+        <source-file src="nfcPlugin/src/main/java/uareu/FmdConverter.java"
+            target-dir="src/uareu" />
         <!-- elatec -->
         <source-file src="nfcPlugin/src/main/java/elatec/HexUtil.java" target-dir="src/elatec/" />
         <source-file src="nfcPlugin/src/main/java/elatec/SerialReadThread.java"

@@ -5,7 +5,7 @@
  * copyright (c) 2013 DigitalPersona Inc.
  */
 
-package UareU;
+package uareu;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package UareU;
+package uareu;
 
 import android.app.Activity;
 import android.content.Context;

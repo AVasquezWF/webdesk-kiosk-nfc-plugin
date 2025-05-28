@@ -1,6 +1,4 @@
-package UareU;
-
-import android.util.Log;
+package uareu;
 
 import com.digitalpersona.uareu.Fmd;
 
@@ -8,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Arrays;
 import java.util.Base64;
 
 public class FmdConverter {
