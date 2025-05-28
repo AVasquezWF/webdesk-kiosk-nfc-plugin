@@ -10,8 +10,11 @@ import android.hardware.usb.UsbManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.digitalpersona.uareu.Fmd;
 import com.digitalpersona.uareu.Reader;
 import com.digitalpersona.uareu.UareUException;
+import com.digitalpersona.uareu.UareUGlobal;
+import java.util.Arrays;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
@@ -19,10 +22,12 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.logging.Logger;
 
+import UareU.FmdConverter;
 import UareU.UareUImpl;
 
 
@@ -75,13 +80,24 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
 
     private boolean readCard(CallbackContext callbackContext) {
        try {
-           String result = reader.getImageAsBase64();
+           Reader.CaptureResult res = reader.capture();
+
+           String result = reader.getImageAsBase64(res);
            Log.d(TAG,"[readCard] Read success");
 
-           JSONObject res = new JSONObject();
-           res.put("byteImage", result);
+           JSONObject jsonResult = new JSONObject();
+           jsonResult.put("base64Image", result);
 
-           callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, res));
+           try {
+               Fmd fmd = UareUGlobal.GetEngine().CreateFmd(res.image, Fmd.Format.ANSI_378_2004);
+               Log.d(TAG, Arrays.toString(fmd.getData()));
+               JSONObject fmdObject = FmdConverter.fmdToJson(fmd);
+               jsonResult.put("fmd", fmdObject);
+           } catch (Exception e) {
+               Log.e(TAG, e.toString());
+           }
+
+           callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, jsonResult));
            callbackContext.success();
            return true;
        } catch (Exception e) {
@@ -146,15 +162,8 @@ public class WebdeskKioskFingerprintPlugin extends CordovaPlugin {
     }
 
     private boolean setListenerInterval(CallbackContext callbackContext, JSONArray data) {
-        /*
-        if (rfid == null) {
-
-            callbackContext.error(NO_RFID_ERROR);
-            return false;
-        }
-        */
         try {
-            //  rfid.setSleepTime(data.getLong(0));
+            Log.w(TAG, "setListenerInterval is not supported");
             callbackContext.success(data);
             return true;
         } catch (Exception e) {

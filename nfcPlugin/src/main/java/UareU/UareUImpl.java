@@ -2,6 +2,8 @@ package UareU;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.Base64;
 import android.util.Log;
 
 import com.digitalpersona.uareu.Fid;
@@ -10,9 +12,6 @@ import com.digitalpersona.uareu.ReaderCollection;
 import com.digitalpersona.uareu.UareUException;
 import com.digitalpersona.uareu.jni.Dpfpdd;
 
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
-import android.util.Base64;
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 
@@ -30,7 +29,7 @@ public class UareUImpl {
         return cap;
     }
 
-    public Reader.CaptureResult capture() throws  UareUException {
+    public Reader.CaptureResult capture() throws UareUException {
         return getReader().Capture(
                 Fid.Format.ANSI_381_2004,
                 Globals.DefaultImageProcessing,
@@ -44,10 +43,8 @@ public class UareUImpl {
      * @return String image as base64.
      * @throws UareUException if capture fails.
      */
-    public String getImageAsBase64() {
+    public String getImageAsBase64(Reader.CaptureResult res) {
         try {
-
-            Reader.CaptureResult res = capture();
             Fid fid = res.image;
             if (fid == null || fid.getViews() == null || fid.getViews().length == 0) {
                 throw new UareUException(96076126);
@@ -58,10 +55,10 @@ public class UareUImpl {
             int width = view.getWidth();
             int height = view.getHeight();
 
-            Log.e(TAG, "Width " + width);
-            Log.e(TAG, "Height " + height);
-            Log.e(TAG, "Views " + fid.getViews().length);
-            Log.e(TAG, "Image data length: " + rawImage.length);
+            Log.d(TAG, "Width " + width);
+            Log.d(TAG, "Height " + height);
+            Log.d(TAG, "Views " + fid.getViews().length);
+            Log.d(TAG, "Image data length: " + rawImage.length);
             return encodeFingerprintImageToBase64(rawImage, width, height);
 
         } catch (Exception e) {
