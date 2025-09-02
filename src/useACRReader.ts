@@ -11,13 +11,14 @@ export const useACRReader = (): KioskReaderPlugin => {
     const { asPromise } = useKioskReader(pluginName);
 
     const ACR = useACROriginalImpl(pluginName);
-   
+
     // We assign it here as it is the original object which 
     // the Java side interacts with.
     (window as any).ACR = ACR
 
     return {
         name: pluginName,
+        call: (methodName, ...args) => asPromise(methodName as Methods, ...args),
         setListenerInterval: (interval: number) =>
             asPromise(Methods.setListenerInterval, interval),
         sendReaderCommand: (command: string) =>

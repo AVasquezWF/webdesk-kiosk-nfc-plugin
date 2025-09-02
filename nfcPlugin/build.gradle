@@ -4,11 +4,33 @@ plugins {
 
 android {
     compileSdk 28
+    defaultConfig {
+        minSdkVersion 28
+        ndk{
+            abiFilters 'armeabi', 'armeabi-v7a', 'x86', 'x86_64'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            path "lib"
+        }
+    }
 }
+
+
 
 dependencies {
     implementation 'org.apache.cordova:framework:9.0.0'
-    implementation 'com.github.licheedev.Android-SerialPort-API:serialport:1.0.1'
-    implementation fileTree(dir: 'lib', include: ['*.jar'])
+    implementation 'com.github.licheedev:Android-SerialPort-API:1.0.1'
+    implementation 'ar.com.hjg:pngj:2.1.0'
+    implementation fileTree(dir: 'lib', include: ['*.jar', '*.aar'])
+    implementation fileTree(dir: 'lib/x86', include: ['*.so'])
+    implementation fileTree(dir: 'lib/arm64-v8a', include: ['*.so'])
+    implementation fileTree(dir: 'lib/armeabi-v7a', include: ['*.so'])
+    implementation fileTree(dir: 'lib/x86_64', include: ['*.so'])
 }
 

@@ -4,11 +4,11 @@ const pluginName = "WebdeskKioskNFCPlugin";
 
 export const useElatecReader = (): KioskReaderPlugin => {
 
-    let initInterval: any = 0;
     const { useBasicExecutor, asPromise } = useKioskReader(pluginName);
 
     return {
         name: pluginName,
+        call: (methodName, ...args) => asPromise(methodName as Methods, ...args),
         setListenerInterval: (interval: number) => asPromise(Methods.setListenerInterval, interval),
         sendReaderCommand: (command: string) => asPromise(Methods.sendReaderCommand, command),
         checkIsReady: useBasicExecutor(Methods.checkIsReady),

@@ -25,22 +25,22 @@ import org.json.JSONObject;
 
 import java.util.Timer;
 
-import acs.ACRDevice;
-import acs.NFCReader;
-import acs.Util;
-import acs.apdu.OnGetResultListener;
-import acs.params.AuthParams;
-import acs.params.BaseParams;
-import acs.params.ClearLCDParams;
-import acs.params.ConnectParams;
-import acs.params.DisplayParams;
-import acs.params.InitNTAGParams;
-import acs.params.ReadParams;
-import acs.params.SelectFileParams;
-import acs.params.WriteParams;
-import acs.reader.ACRReader;
-import acs.reader.USBReader;
-import acs.task.StopSessionTimerTask;
+import acsimpl.ACRDevice;
+import acsimpl.NFCReader;
+import acsimpl.Util;
+import acsimpl.apdu.OnGetResultListener;
+import acsimpl.params.AuthParams;
+import acsimpl.params.BaseParams;
+import acsimpl.params.ClearLCDParams;
+import acsimpl.params.ConnectParams;
+import acsimpl.params.DisplayParams;
+import acsimpl.params.InitNTAGParams;
+import acsimpl.params.ReadParams;
+import acsimpl.params.SelectFileParams;
+import acsimpl.params.WriteParams;
+import acsimpl.reader.ACRReader;
+import acsimpl.reader.USBReader;
+import acsimpl.task.StopSessionTimerTask;
 
 /**
  * This class echoes a string called from JavaScript.
@@ -119,7 +119,6 @@ public class ACRNFCReaderPhoneGapPlugin extends CordovaPlugin {
         timer.schedule(task, 10000, 5000);
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
     private void useUsbReader(CordovaInterface cordova, final CordovaWebView webView) {
         usbManager = (UsbManager) cordova.getActivity().getSystemService(Context.USB_SERVICE);
         ACRReader reader = new USBReader(usbManager);
@@ -142,7 +141,7 @@ public class ACRNFCReaderPhoneGapPlugin extends CordovaPlugin {
             @Override
             public void onReady(ACRReader reader) {
                 Log.d(TAG, ON_READY);
-                initReader(null, null);
+                initReader(contextEmitter, null);
                 emitPluginResult(ON_READY, null);
             }
 
@@ -177,7 +176,7 @@ public class ACRNFCReaderPhoneGapPlugin extends CordovaPlugin {
 
         if (action.equalsIgnoreCase(ADD_LISTENER)) {
             return addListener(callbackContext);
-        }else if (action.equalsIgnoreCase(LISTEN)) {
+        } else if (action.equalsIgnoreCase(LISTEN)) {
             listen(callbackContext);
         } else if (action.equalsIgnoreCase(READ_UID)) {
             readUID(callbackContext);
@@ -233,6 +232,7 @@ public class ACRNFCReaderPhoneGapPlugin extends CordovaPlugin {
 
     private boolean addListener(CallbackContext callbackContext) {
         this.listen(callbackContext);
+        setContextEmitter(callbackContext);
         return true;
     }
 
@@ -241,20 +241,20 @@ public class ACRNFCReaderPhoneGapPlugin extends CordovaPlugin {
         return true;
     }
 
-    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     private void emitPluginResult (String key, String payload){
         try {
             JSONObject jsonPayload = new JSONObject();
             jsonPayload.put("key", key);
             jsonPayload.put("payload", payload);
 
-        boolean isEmptyResult = payload == null || payload.isEmpty();
-        PluginResult result = isEmptyResult
-                ? new PluginResult(PluginResult.Status.OK)
-                : new PluginResult(PluginResult.Status.OK, jsonPayload);
+            boolean isEmptyResult = payload == null || payload.isEmpty();
+            PluginResult result = isEmptyResult
+                    ? new PluginResult(PluginResult.Status.OK)
+                    : new PluginResult(PluginResult.Status.OK, jsonPayload);
 
-        result.setKeepCallback(true);
-        contextEmitter.sendPluginResult(result);
+            result.setKeepCallback(true);
+
+            if(contextEmitter != null) contextEmitter.sendPluginResult(result);
 
         } catch (JSONException e) {
             Log.d(e.toString(), e.toString());
@@ -263,7 +263,7 @@ public class ACRNFCReaderPhoneGapPlugin extends CordovaPlugin {
 
     private void initReader(CallbackContext callbackContext, JSONArray data) {
         nfcReader.updatePICCOperatingParameter(generateResultListener(null));
-        callbackContext.success();
+        if(callbackContext != null) callbackContext.success();
     }
 
     private void initNTAG213(CallbackContext callbackContext, JSONArray data) {

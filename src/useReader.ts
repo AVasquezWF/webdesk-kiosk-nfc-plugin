@@ -14,6 +14,7 @@ export type CordovaCallback = (data: any) => any;
 export type UseExecTemplate = (success: CordovaCallback, error: CordovaCallback) => void;
 export interface KioskReaderPlugin {
     name: string;
+    call: (methodName: string, args: any[]) => Promise<void>;
     sendReaderCommand: (command: string) => Promise<void>;
     setListenerInterval: (interval: number) => Promise<void>;
     checkIsReady: UseExecTemplate;
@@ -27,6 +28,13 @@ export const useKioskReader = (pluginName: string) => {
     const asPromise = <T>(method: Methods, ...args: any) =>
         new Promise<T>((res, rej) => {
             exec(res, rej, pluginName, method, [...args]);
+            console.log({ [`${pluginName}.${method}`]: args })
+        }).then(res => {
+            console.log({ [`${pluginName}.${method}`]: res });
+            return res;
+        }).catch(err => {
+            console.error({ [`${pluginName}.${method}`]: err });
+            throw err;
         });
 
     const useBasicExecutor =

@@ -15,6 +15,13 @@ var Methods;
 const useKioskReader = (pluginName) => {
     const asPromise = (method, ...args) => new Promise((res, rej) => {
         (0, cordova_1.exec)(res, rej, pluginName, method, [...args]);
+        console.log({ [`${pluginName}.${method}`]: args });
+    }).then(res => {
+        console.log({ [`${pluginName}.${method}`]: res });
+        return res;
+    }).catch(err => {
+        console.error({ [`${pluginName}.${method}`]: err });
+        throw err;
     });
     const useBasicExecutor = (method, args = []) => (success, error) => {
         console.log({ pluginName, method });

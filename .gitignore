@@ -7,4 +7,6 @@ out
 app
 !app/src/main
 
+nfcPlugin/build
+
 local.properties

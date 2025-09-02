@@ -1,9 +1,12 @@
 import { useACRReader } from "./useACRReader"
 import { useElatecReader } from "./useElatecReader";
+import { useFingerprintReader } from "./useFingerprintReader";
 
-const init = ()=> {
-    (window as any).ACRPlugin = useACRReader();
-    (window as any).ElatecPlugin = useElatecReader();
+const _window: any = window;
+const init = () => {
+    _window.ACRPlugin = useACRReader();
+    _window.ElatecPlugin = useElatecReader();
+    _window.FingerprintPlugin = useFingerprintReader();
 }
 
 init();

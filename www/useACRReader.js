@@ -12,6 +12,7 @@ const useACRReader = () => {
     window.ACR = ACR;
     return {
         name: pluginName,
+        call: (methodName, ...args) => asPromise(methodName, ...args),
         setListenerInterval: (interval) => asPromise(useReader_1.Methods.setListenerInterval, interval),
         sendReaderCommand: (command) => asPromise(useReader_1.Methods.sendReaderCommand, command),
         checkIsReady: ACR.isReady,
