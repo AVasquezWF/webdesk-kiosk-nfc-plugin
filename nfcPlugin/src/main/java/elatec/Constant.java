@@ -31,4 +31,5 @@ public class Constant {
     public static final String LFTAG_HIDPROX = "HID Prox"; //49
     public static final String LFTAG_LEGICPRIME = "Legic Prime"; //83
     public static final String LFTAG_HITAGS = "Hitag S"; //41
+    
 }

@@ -103,7 +103,7 @@ public class WebdeskKioskNFCPlugin extends CordovaPlugin {
         rfid = new RfidModuleUtil(context);
         rfid.setBeep(false);
 
-        rfid.getData(new RfidModuleUtil.onGetDataListener() {
+        rfid.getData(new RfidModuleUtil.OnGetDataListener() {
             @Override
             public void onDataReceive(String cardType, String cardData) {
                 if (listener == null){
